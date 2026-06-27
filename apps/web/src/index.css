@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "DM Sans", sans-serif;
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  :root {
+    /* Editorial Light Minimalist Theme */
+    --background: 40 33% 98%; /* Warm off-white */
+    --foreground: 240 10% 10%; /* Deep charcoal/near black */
+    
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    
+    --primary: 240 10% 10%; /* Monochromatic primary */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 40 20% 93%;
+    --secondary-foreground: 240 10% 10%;
+    
+    --muted: 40 20% 93%;
+    --muted-foreground: 240 5% 45%;
+    
+    --accent: 40 20% 90%;
+    --accent-foreground: 240 10% 10%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 40 10% 85%;
+    --input: 40 10% 85%;
+    --ring: 240 10% 10%;
+    
+    --radius: 0.25rem; /* Crisper, editorial edges */
+
+    --sidebar-background: 40 33% 98%;
+    --sidebar-foreground: 240 10% 10%;
+    --sidebar-primary: 240 10% 10%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 20% 93%;
+    --sidebar-accent-foreground: 240 10% 10%;
+    --sidebar-border: 40 10% 85%;
+    --sidebar-ring: 240 10% 10%;
+  }
+
+  .dark {
+    /* Muted dark mode for editorial feel */
+    --background: 240 10% 10%;
+    --foreground: 40 33% 98%;
+    
+    --card: 240 8% 12%;
+    --card-foreground: 40 33% 98%;
+    
+    --popover: 240 8% 12%;
+    --popover-foreground: 40 33% 98%;
+    
+    --primary: 40 33% 98%;
+    --primary-foreground: 240 10% 10%;
+    
+    --secondary: 240 8% 15%;
+    --secondary-foreground: 40 33% 98%;
+    
+    --muted: 240 8% 15%;
+    --muted-foreground: 240 5% 65%;
+    
+    --accent: 240 8% 15%;
+    --accent-foreground: 40 33% 98%;
+    
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 240 5% 20%;
+    --input: 240 5% 20%;
+    --ring: 40 33% 98%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+}
+
+@layer utilities {
+  /* Minimalist image framing - resembling physical photos/cards */
+  .editorial-frame {
+    background: hsl(var(--card));
+    padding: 0.5rem;
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Sharp minimalist shadows */
+  .shadow-editorial {
+    box-shadow: 4px 4px 0px 0px hsl(var(--border));
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .shadow-editorial:hover {
+    box-shadow: 8px 8px 0px 0px hsl(var(--border));
+    transform: translate(-4px, -4px);
+  }
+
+  /* Continuous Scrolling Animation */
+  .animate-scroll {
+    animation: scroll 40s linear infinite;
+  }
+
+  .fade-left-edge {
+    mask-image: linear-gradient(to right, transparent, black 15%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 100%);
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Translate by 100% of the element's width plus the 2rem (gap-8) spacing */
+    transform: translateX(calc(-100% - 2rem));
+  }
+}

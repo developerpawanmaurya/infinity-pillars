@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Environment variables (contains secrets)
+.env
+.env.local
+.env.production
+
+# Build output
+dist/
+
+# PocketBase binary and data
+apps/pocketbase/pocketbase
+apps/pocketbase/pb_data/
+
+# SQLite local DB
+apps/api/data/*.db
+apps/api/data/*.db-shm
+apps/api/data/*.db-wal
+
+# OS
+.DS_Store
+Thumbs.db
