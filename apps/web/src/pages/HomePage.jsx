@@ -92,7 +92,8 @@ const HomePage = () => {
 
   const localBusinesses = [
     'The Daily Brew Coffee', 
-    'Riverside Bakery', 
+    'Riverside Bakery',
+    'Pinch of Spice', 
     'Urban Tech Solutions', 
     'Green Leaf Landscaping', 
     'Coastal Fitness Studio', 
