@@ -20,7 +20,7 @@ const HomePage = () => {
 
   const services = [
     {
-      title: 'Search Engine Optimization Tool',
+      title: 'Search Engine Optimization',
       description: 'Increase organic visibility, outrank competitors, and drive highly qualified traffic to your website.',
       link: '/services'
     },
