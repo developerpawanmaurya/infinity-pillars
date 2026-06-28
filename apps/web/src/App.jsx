@@ -9,6 +9,8 @@ import PortfolioPage from './pages/PortfolioPage.jsx';
 import CaseStudyPage from './pages/CaseStudyPage.jsx';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage.jsx';
 import TermsOfServicePage from './pages/TermsOfServicePage.jsx';
+import BlogPage from './pages/BlogPage.jsx';
+import BlogPostPage from './pages/BlogPostPage.jsx';
 import BookingModal from './components/BookingModal.jsx';
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
                 <Route path="/portfolio/:slug" element={<CaseStudyPage />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                 <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
             </Routes>
         </Router>
     );
