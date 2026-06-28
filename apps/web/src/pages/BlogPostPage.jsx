@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Header from '@/components/Header';
@@ -100,7 +100,7 @@ function TOC({ headings, activeId }) {
       <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-4">
         Contents
       </p>
-      {headings.map((h, i) => (
+      {headings.map((h) => (
         <a
           key={h.id}
           href={`#${h.id}`}
@@ -370,6 +370,27 @@ const BlogPostPage = () => {
 
         </div>
       </div>
+
+      {/* ── NEWSLETTER CTA ── */}
+      <section className="border-t border-border bg-muted/40">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 py-20 text-center">
+          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground mb-4">
+            Infinity Pillars / Weekly
+          </p>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
+            Stay ahead of the curve.
+          </h2>
+          <p className="text-muted-foreground max-w-md mx-auto mb-10 leading-relaxed">
+            Get our weekly roundup of the strategies and insights that are actually moving the needle for digital brands.
+          </p>
+          <Link
+            to="/#booking"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background text-xs font-black uppercase tracking-widest hover:opacity-85 transition-opacity duration-200"
+          >
+            Work with us <span>→</span>
+          </Link>
+        </div>
+      </section>
 
       <Footer />
     </>
