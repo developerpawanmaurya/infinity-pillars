@@ -15,8 +15,17 @@ function strip(html = '') {
   return html.replace(/<[^>]+>/g, '').trim();
 }
 function firstImg(html = '') {
-  const m = html.match(/src="(https?[^"]+)"/);
-  return m ? m[1].replace(/&#0*38;|&amp;/g, '&') : null;
+  if (!html) return null;
+  const patterns = [
+    /\bsrc="(https?:\/\/[^"]{10,})"/,
+    /\bsrc='(https?:\/\/[^']{10,})'/,
+    /\bsrc=(https?:\/\/[^\s>"']{10,})/,
+  ];
+  for (const p of patterns) {
+    const m = html.match(p);
+    if (m) return m[1].replace(/&#0*38;/g, '&').replace(/&amp;/g, '&');
+  }
+  return null;
 }
 
 /* ── Skeleton ─────────────────────────────────────────── */

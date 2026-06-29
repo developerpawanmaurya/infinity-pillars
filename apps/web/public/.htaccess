@@ -1,6 +1,14 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
+
+	# Explicitly route /blog and /blog/* to the React SPA BEFORE Apache checks
+	# for a physical directory (prevents the /blog → /blog/ redirect that
+	# exposes a WordPress install in the /blog/ folder).
+	RewriteRule ^blog$ /index.html [L]
+	RewriteRule ^blog/.*$ /index.html [L]
+
+	# Standard SPA fallback for all other routes
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^ index.html [L]

@@ -25,10 +25,19 @@ function extractHeadings(html) {
   }));
 }
 
-/** Pull first image src from HTML (WordPress encodes & as &#038;) */
+/** Pull first image src from HTML (WordPress encodes & as &#038; or &amp;) */
 function firstImg(html = '') {
-  const m = html.match(/src="(https?[^"]+)"/);
-  return m ? m[1].replace(/&#0*38;|&amp;/g, '&') : null;
+  if (!html) return null;
+  const patterns = [
+    /\bsrc="(https?:\/\/[^"]{10,})"/,
+    /\bsrc='(https?:\/\/[^']{10,})'/,
+    /\bsrc=(https?:\/\/[^\s>"']{10,})/,
+  ];
+  for (const p of patterns) {
+    const m = html.match(p);
+    if (m) return m[1].replace(/&#0*38;/g, '&').replace(/&amp;/g, '&');
+  }
+  return null;
 }
 
 /** Remove the leading wp-block-image figure we embed as hero */
@@ -41,17 +50,23 @@ function addNotProse(html = '') {
   return html.replace(/<div class="(ip-[^"]+)"/g, '<div class="not-prose $1"');
 }
 
-function extractFAQs(html) {
+/** Extract FAQs from .faq-section, remove it + author bio from the HTML, return both */
+function extractAndStripFAQs(html) {
   const tmp = document.createElement('div');
   tmp.innerHTML = html;
   const faqs = [];
-  const sel = tmp.querySelector('.faq-section,[id*="faq"],[class*="faq"]');
-  const root = sel || tmp;
-  root.querySelectorAll('h3,h4').forEach(q => {
-    let ans = q.nextElementSibling;
-    if (ans) faqs.push({ q: q.textContent.trim(), a: ans.textContent.trim() });
-  });
-  return faqs;
+  const faqSection = tmp.querySelector('.faq-section');
+  if (faqSection) {
+    faqSection.querySelectorAll('h3,h4').forEach(q => {
+      const ans = q.nextElementSibling;
+      if (ans) faqs.push({ q: q.textContent.trim(), a: ans.textContent.trim() });
+    });
+    faqSection.remove();
+  }
+  // Remove WP-rendered author bio — we render a static React component instead
+  const authorBio = tmp.querySelector('.ip-author-bio');
+  if (authorBio) authorBio.remove();
+  return { faqs, cleanHtml: tmp.innerHTML };
 }
 
 function buildArticleSchema(post, url, thumbnail, faqs) {
@@ -66,7 +81,7 @@ function buildArticleSchema(post, url, thumbnail, faqs) {
         image: thumbnail ? { '@type': 'ImageObject', url: thumbnail } : undefined,
         datePublished: post.date,
         dateModified: post.modified || post.date,
-        author: { '@type': 'Organization', name: 'Infinity Pillars' },
+        author: { '@type': 'Person', name: 'Abhishek Singh' },
         publisher: {
           '@type': 'Organization',
           name: 'Infinity Pillars',
@@ -89,6 +104,23 @@ function buildArticleSchema(post, url, thumbnail, faqs) {
 }
 
 /* ── sub-components ──────────────────────────────────────────── */
+function AuthorBio() {
+  return (
+    <div className="mt-14 pt-10 border-t border-border flex gap-5 items-start">
+      <div className="shrink-0 w-14 h-14 bg-foreground flex items-center justify-center text-background text-xl font-black select-none">
+        A
+      </div>
+      <div>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-1">Author</p>
+        <p className="font-black text-base tracking-tight text-foreground">Abhishek Singh</p>
+        <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+          Founder &amp; Digital Strategist at Infinity Pillars. Helping ambitious brands grow through performance marketing, SEO, and brand strategy.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function ProgressBar() {
   const [pct, setPct] = useState(0);
   useEffect(() => {
@@ -266,12 +298,13 @@ const BlogPostPage = () => {
   const minutes     = readingTime(post.content.rendered);
   const date        = new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const titleClean  = post.title.rendered.replace(/<[^>]+>/g, '');
-  // Strip leading hero figure (used above) then protect IP blocks from prose overrides
-  const contentClean   = addNotProse(stripLeadingFigure(post.content.rendered));
-  const contentWithIds = addIds(contentClean);
-  const headings    = extractHeadings(contentWithIds);
-  const faqs        = extractFAQs(contentClean);
-  const pageUrl     = window.location.href;
+  // Strip hero figure → protect IP blocks from prose → extract/remove FAQ + author bio
+  const stripped           = stripLeadingFigure(post.content.rendered);
+  const notProed           = addNotProse(stripped);
+  const { faqs, cleanHtml } = extractAndStripFAQs(notProed);
+  const contentWithIds     = addIds(cleanHtml);
+  const headings           = extractHeadings(contentWithIds);
+  const pageUrl            = window.location.href;
 
   return (
     <>
@@ -336,7 +369,7 @@ const BlogPostPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-0 lg:gap-20 py-16">
 
           {/* article */}
-          <article ref={contentRef}>
+          <article ref={contentRef} className="blog-article">
             <div
               className="
                 prose prose-neutral dark:prose-invert max-w-none
@@ -357,7 +390,10 @@ const BlogPostPage = () => {
               dangerouslySetInnerHTML={{ __html: contentWithIds }}
             />
 
+            {/* FAQ is always the last content section */}
             <FAQAccordion faqs={faqs} />
+
+            <AuthorBio />
 
             {/* tags */}
             {tags.length > 0 && (
