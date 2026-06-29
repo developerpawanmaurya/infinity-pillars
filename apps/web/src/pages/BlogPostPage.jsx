@@ -250,8 +250,31 @@ function Skeleton() {
   );
 }
 
+const IP_PLUGIN_BASE = 'https://blog.infinitypillars.com/wp-content/plugins/ip-blocks/build';
+
+function injectPluginAssets() {
+  if (!document.getElementById('ip-blocks-css')) {
+    const link = document.createElement('link');
+    link.id   = 'ip-blocks-css';
+    link.rel  = 'stylesheet';
+    link.href = `${IP_PLUGIN_BASE}/frontend.css`;
+    document.head.appendChild(link);
+  }
+  if (!document.getElementById('ip-blocks-js')) {
+    const script    = document.createElement('script');
+    script.id       = 'ip-blocks-js';
+    script.src      = `${IP_PLUGIN_BASE}/frontend.js`;
+    script.onload   = () => window.ipBlocksInit?.();
+    document.body.appendChild(script);
+  } else {
+    // Script already loaded — just re-run init for new content
+    setTimeout(() => window.ipBlocksInit?.(), 150);
+  }
+}
+
 /* ── main page ───────────────────────────────────────────────── */
 const BlogPostPage = () => {
+  // Works for both /blog/:slug (old) and /:category/:slug (new)
   const { slug } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -270,6 +293,12 @@ const BlogPostPage = () => {
       })
       .catch(() => { setError('Failed to load post.'); setLoading(false); });
   }, [slug]);
+
+  // Inject plugin CSS + JS and init GSAP animations after content renders
+  useEffect(() => {
+    if (!post) return;
+    injectPluginAssets();
+  }, [post]);
 
   // active TOC heading on scroll
   useEffect(() => {

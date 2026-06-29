@@ -11,6 +11,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage.jsx';
 import TermsOfServicePage from './pages/TermsOfServicePage.jsx';
 import BlogPage from './pages/BlogPage.jsx';
 import BlogPostPage from './pages/BlogPostPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 import BookingModal from './components/BookingModal.jsx';
 
 function App() {
@@ -28,7 +29,9 @@ function App() {
                 <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                 <Route path="/terms-of-service" element={<TermsOfServicePage />} />
                 <Route path="/blog" element={<BlogPage />} />
-                <Route path="/blog/:slug" element={<BlogPostPage />} />
+                {/* /:category/:slug handles headless WP post URLs */}
+                <Route path="/:category/:slug" element={<BlogPostPage />} />
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Router>
     );

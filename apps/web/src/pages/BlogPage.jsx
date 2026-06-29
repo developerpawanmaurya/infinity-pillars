@@ -65,14 +65,16 @@ function SkeletonCard({ big }) {
 function FeaturedCard({ post }) {
   const thumb    = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
                    || firstImg(post.content?.rendered);
-  const category = decode(post._embedded?.['wp:term']?.[0]?.[0]?.name ?? '');
+  const catTerm  = post._embedded?.['wp:term']?.[0]?.[0];
+  const category = decode(catTerm?.name ?? '');
+  const catSlug  = catTerm?.slug ?? 'blog';
   const mins     = readTime(post.content?.rendered);
-  const title    = strip(post.title?.rendered);
+  const title    = decode(strip(post.title?.rendered));
   const excerpt  = strip(post.excerpt?.rendered).slice(0, 160) + '…';
 
   return (
     <Link
-      to={`/blog/${post.slug}`}
+      to={`/${catSlug}/${post.slug}`}
       className="group grid grid-cols-1 lg:grid-cols-[55%_45%] border border-border hover:border-foreground transition-all duration-300 overflow-hidden"
     >
       {/* Image */}
@@ -123,13 +125,15 @@ function FeaturedCard({ post }) {
 function PostCard({ post }) {
   const thumb    = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
                    || firstImg(post.content?.rendered);
-  const category = decode(post._embedded?.['wp:term']?.[0]?.[0]?.name ?? '');
+  const catTerm  = post._embedded?.['wp:term']?.[0]?.[0];
+  const category = decode(catTerm?.name ?? '');
+  const catSlug  = catTerm?.slug ?? 'blog';
   const mins     = readTime(post.content?.rendered);
-  const title    = strip(post.title?.rendered);
+  const title    = decode(strip(post.title?.rendered));
 
   return (
     <Link
-      to={`/blog/${post.slug}`}
+      to={`/${catSlug}/${post.slug}`}
       className="group flex flex-col border border-border hover:border-foreground transition-all duration-300 overflow-hidden"
     >
       {/* Image */}

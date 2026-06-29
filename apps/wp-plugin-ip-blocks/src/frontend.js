@@ -4,12 +4,17 @@ import './frontend.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function ready(fn) {
-  if (document.readyState !== 'loading') fn();
-  else document.addEventListener('DOMContentLoaded', fn);
-}
+function initAll() {
+  // Kill any existing plugin triggers before re-initialising (headless navigation)
+  ScrollTrigger.getAll()
+    .filter(t => {
+      const el = t.trigger || t.pin;
+      return el && el.closest && el.closest(
+        '.ip-sc3d,.ip-timeline-3d,.ip-tilt-grid,.ip-flip3d,.ip-parallax-hero,.ip-process-steps,.ip-spotlight-cta,.ip-quote-rotator,.ip-exploding-takeaways,.ip-data-bars'
+      );
+    })
+    .forEach(t => t.kill());
 
-ready(() => {
   initStatCounters();
   initScrollTimeline();
   initTiltGrid();
@@ -20,7 +25,17 @@ ready(() => {
   initQuoteRotator();
   initExplodingTakeaways();
   initDataBars();
-});
+}
+
+// Expose for headless WordPress (React SPA calls this after dangerouslySetInnerHTML renders)
+window.ipBlocksInit = initAll;
+
+function ready(fn) {
+  if (document.readyState !== 'loading') fn();
+  else document.addEventListener('DOMContentLoaded', fn);
+}
+
+ready(initAll);
 
 // ─── 1. 3D Stat Counter ──────────────────────────────────────────────────────
 function initStatCounters() {

@@ -1,14 +1,24 @@
+<IfModule mod_dir.c>
+	DirectorySlash Off
+</IfModule>
+
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
 
-	# Explicitly route /blog and /blog/* to the React SPA BEFORE Apache checks
-	# for a physical directory (prevents the /blog → /blog/ redirect that
-	# exposes a WordPress install in the /blog/ folder).
+	# Serve React for /blog and /blog/ — prevents Apache from falling into
+	# the physical /blog/ directory and serving WordPress instead of the SPA.
 	RewriteRule ^blog/?$ /index.html [L]
-	RewriteRule ^blog/.*$ /index.html [L]
 
-	# Standard SPA fallback for all other routes
+	# Allow all WordPress-internal paths to pass through to WP
+	RewriteRule ^blog/wp- - [L]
+	RewriteRule ^blog/xmlrpc\.php - [L]
+	RewriteRule ^blog/wp\.php - [L]
+
+	# All other /blog/* paths → React SPA
+	RewriteRule ^blog/(.+)$ /index.html [L]
+
+	# Standard SPA fallback — handles /:category/:slug and all other React routes
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^ index.html [L]
@@ -17,10 +27,8 @@
 <IfModule mod_headers.c>
 	Header set X-Powered-By "Infinity Pillars"
 
-	# Cache everything on CDN by default
 	Header set Cache-Control "public, s-maxage=604800, max-age=0"
 
-	# Cache in browser all assets
 	<If "%{REQUEST_URI} =~ m#^/assets/.*$#">
 		Header set Cache-Control "public, max-age=604800"
 	</If>
