@@ -1,0 +1,13 @@
+{
+  "name": "ip-blocks",
+  "version": "1.0.0",
+  "description": "Custom Gutenberg blocks for Infinity Pillars blog",
+  "scripts": {
+    "build": "../../node_modules/.bin/wp-scripts build",
+    "start": "../../node_modules/.bin/wp-scripts start",
+    "zip": "npm run build"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0"
+  }
+}
