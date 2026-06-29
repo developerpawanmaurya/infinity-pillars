@@ -12,6 +12,8 @@
     "concurrently": "^10.0.3"
   },
   "workspaces": [
-    "apps/*"
+    "apps/web",
+    "apps/api",
+    "apps/pocketbase"
   ]
 }
