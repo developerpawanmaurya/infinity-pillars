@@ -43,11 +43,14 @@ jobs:
   # ── Gutenberg blocks plugin → …/blog/wp-content/plugins/ip-blocks/ ─────────
   deploy-wp-plugin:
     runs-on: ubuntu-latest
+    env:
+      PLUGIN_DIR: /domains/infinitypillars.com/public_html/blog/wp-content/plugins/ip-blocks
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy plugin to WordPress
+      # Deploy only the root PHP file (rarely changes, tiny payload)
+      - name: Deploy plugin PHP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
@@ -56,9 +59,24 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: ./apps/wp-plugin-ip-blocks/
-          server-dir: /domains/infinitypillars.com/public_html/blog/wp-content/plugins/ip-blocks/
-          exclude: '["**/.git*", "**/node_modules/**", "**/src/**", "package.json", "package-lock.json", ".gitignore"]'
-          timeout: 60000
+          server-dir: ${{ env.PLUGIN_DIR }}/
+          exclude: |
+            ["**/.git*", "**/node_modules/**", "**/src/**", "**/build/**",
+             "package.json", "package-lock.json", "webpack.config.js", ".gitignore"]
+          timeout: 120000
+
+      # Deploy only the 6 compiled build files (changes on every plugin update)
+      - name: Deploy plugin build assets
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./apps/wp-plugin-ip-blocks/build/
+          server-dir: ${{ env.PLUGIN_DIR }}/build/
+          timeout: 120000
 
   # ── Custom theme → …/blog/wp-content/themes/ip-theme/ ─────────────────────
   deploy-wp-theme:
