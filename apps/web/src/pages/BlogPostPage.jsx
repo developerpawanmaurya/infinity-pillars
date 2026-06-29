@@ -25,6 +25,13 @@ function extractHeadings(html) {
   }));
 }
 
+/** Decode HTML entities — WP returns &amp; in _embedded term names */
+function decode(str = '') {
+  const el = document.createElement('textarea');
+  el.innerHTML = str;
+  return el.value;
+}
+
 /** Pull first image src from HTML (WordPress encodes & as &#038; or &amp;) */
 function firstImg(html = '') {
   if (!html) return null;
@@ -294,7 +301,7 @@ const BlogPostPage = () => {
                       || firstImg(post.content.rendered);
   const categories  = post._embedded?.['wp:term']?.[0] ?? [];
   const tags        = post._embedded?.['wp:term']?.[1] ?? [];
-  const category    = categories[0]?.name;
+  const category    = decode(categories[0]?.name ?? '');
   const minutes     = readingTime(post.content.rendered);
   const date        = new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const titleClean  = post.title.rendered.replace(/<[^>]+>/g, '');
@@ -356,7 +363,7 @@ const BlogPostPage = () => {
               {tags.length > 0 && (
                 <>
                   <span className="w-px h-4 bg-white/20" />
-                  <span>{tags.slice(0, 2).map(t => t.name).join(', ')}</span>
+                  <span>{tags.slice(0, 2).map(t => decode(t.name)).join(', ')}</span>
                 </>
               )}
             </div>
@@ -400,7 +407,7 @@ const BlogPostPage = () => {
               <div className="mt-12 flex flex-wrap gap-2">
                 {tags.map(t => (
                   <span key={t.id} className="px-3 py-1 text-xs font-bold uppercase tracking-widest border border-border text-muted-foreground hover:border-foreground hover:text-foreground transition-all duration-200 cursor-default">
-                    {t.name}
+                    {decode(t.name)}
                   </span>
                 ))}
               </div>

@@ -14,6 +14,12 @@ function fmtDate(d) {
 function strip(html = '') {
   return html.replace(/<[^>]+>/g, '').trim();
 }
+/** Decode HTML entities (WP returns &amp; in _embedded term names) */
+function decode(str = '') {
+  const el = document.createElement('textarea');
+  el.innerHTML = str;
+  return el.value;
+}
 function firstImg(html = '') {
   if (!html) return null;
   const patterns = [
@@ -59,7 +65,7 @@ function SkeletonCard({ big }) {
 function FeaturedCard({ post }) {
   const thumb    = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
                    || firstImg(post.content?.rendered);
-  const category = post._embedded?.['wp:term']?.[0]?.[0]?.name;
+  const category = decode(post._embedded?.['wp:term']?.[0]?.[0]?.name ?? '');
   const mins     = readTime(post.content?.rendered);
   const title    = strip(post.title?.rendered);
   const excerpt  = strip(post.excerpt?.rendered).slice(0, 160) + '…';
@@ -117,7 +123,7 @@ function FeaturedCard({ post }) {
 function PostCard({ post }) {
   const thumb    = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
                    || firstImg(post.content?.rendered);
-  const category = post._embedded?.['wp:term']?.[0]?.[0]?.name;
+  const category = decode(post._embedded?.['wp:term']?.[0]?.[0]?.name ?? '');
   const mins     = readTime(post.content?.rendered);
   const title    = strip(post.title?.rendered);
 
@@ -179,13 +185,13 @@ const BlogPage = () => {
   }, []);
 
   const categories = ['All', ...new Set(
-    posts.flatMap(p => (p._embedded?.['wp:term']?.[0] ?? []).map(c => c.name))
+    posts.flatMap(p => (p._embedded?.['wp:term']?.[0] ?? []).map(c => decode(c.name)))
   )];
 
   const filtered = activeCategory === 'All'
     ? posts
     : posts.filter(p =>
-        (p._embedded?.['wp:term']?.[0] ?? []).some(c => c.name === activeCategory)
+        (p._embedded?.['wp:term']?.[0] ?? []).some(c => decode(c.name) === activeCategory)
       );
 
   const [featured, ...rest] = filtered;
