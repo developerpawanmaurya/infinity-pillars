@@ -1,0 +1,9 @@
+/*
+Theme Name:  Infinity Pillars
+Theme URI:   https://infinitypillars.com
+Description: Headless WordPress theme for the Infinity Pillars blog. The frontend is served by a React SPA; this theme exists to support the block editor, expose the REST API, and handle CORS for the SPA origin.
+Author:      Infinity Pillars
+Version:     1.0.0
+License:     GPL-2.0-or-later
+Text Domain: ip-theme
+*/

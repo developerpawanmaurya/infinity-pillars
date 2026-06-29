@@ -6,9 +6,9 @@ on:
       - master
 
 jobs:
-  deploy:
+  # ── React SPA → /domains/infinitypillars.com/public_html/ ──────────────────
+  deploy-web:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,4 +38,57 @@ jobs:
           port: 21
           local-dir: ./dist/apps/web/
           server-dir: /domains/infinitypillars.com/public_html/
+          timeout: 60000
+
+  # ── Gutenberg blocks plugin → …/blog/wp-content/plugins/ip-blocks/ ─────────
+  deploy-wp-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install plugin dependencies
+        working-directory: apps/wp-plugin-ip-blocks
+        run: npm install
+
+      - name: Build plugin
+        working-directory: apps/wp-plugin-ip-blocks
+        run: npm run build
+
+      - name: Deploy plugin to WordPress
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./apps/wp-plugin-ip-blocks/
+          server-dir: /domains/infinitypillars.com/public_html/blog/wp-content/plugins/ip-blocks/
+          exclude: '["**/.git*", "**/node_modules/**", "**/src/**", "package.json", "package-lock.json", ".gitignore"]'
+          timeout: 60000
+
+  # ── Custom theme → …/blog/wp-content/themes/ip-theme/ ─────────────────────
+  deploy-wp-theme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy theme to WordPress
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./apps/wp-theme-ip/
+          server-dir: /domains/infinitypillars.com/public_html/blog/wp-content/themes/ip-theme/
+          exclude: '["**/.git*"]'
           timeout: 60000
