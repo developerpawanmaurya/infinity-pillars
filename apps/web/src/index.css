@@ -361,3 +361,169 @@ body {
   transition: opacity 0.2s;
 }
 .ip-cta-btn:hover { opacity: 0.85; }
+
+/* ── 20 Additional Block Styles ──────────────────────────────────────────── */
+
+/* 7. Process Timeline */
+.ip-timeline { margin: 2.5rem 0; position: relative; }
+.ip-timeline::before { content:''; position:absolute; left:1.1rem; top:0; bottom:0; width:1px; background:hsl(var(--border)); }
+.ip-timeline-item { display:flex; gap:1.5rem; padding-bottom:2rem; position:relative; }
+.ip-timeline-item:last-child { padding-bottom:0; }
+.ip-timeline-marker { flex-shrink:0; width:2.25rem; height:2.25rem; border:1px solid hsl(var(--foreground)); background:hsl(var(--background)); display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:900; letter-spacing:0.05em; color:hsl(var(--foreground)); z-index:1; }
+.ip-timeline-content { padding-top:0.3rem; flex:1; }
+.ip-timeline-title { font-size:1rem; font-weight:800; letter-spacing:-0.02em; color:hsl(var(--foreground)); margin:0 0 0.4rem; }
+.ip-timeline-body { font-size:0.9rem; color:hsl(var(--foreground)/0.75); line-height:1.65; margin:0; }
+
+/* 8. Tool Comparison Table */
+.ip-compare-table-wrap { margin:2.5rem 0; overflow-x:auto; }
+.ip-compare-table { width:100%; border-collapse:collapse; font-size:0.875rem; }
+.ip-compare-table th { padding:0.75rem 1rem; text-align:left; font-size:0.7rem; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:hsl(var(--muted-foreground)); background:hsl(var(--muted)); border:1px solid hsl(var(--border)); }
+.ip-compare-table td { padding:0.75rem 1rem; border:1px solid hsl(var(--border)); color:hsl(var(--foreground)/0.85); vertical-align:top; }
+.ip-compare-table tr:nth-child(even) td { background:hsl(var(--muted)/0.4); }
+.ip-ct-yes { color:hsl(142 70% 38%) !important; font-weight:700; }
+.ip-ct-no  { color:hsl(0 70% 48%)   !important; font-weight:700; }
+.ip-ct-mid { color:hsl(38 92% 42%)  !important; font-weight:700; }
+
+/* 9. Action Checklist */
+.ip-checklist { margin:2.5rem 0; border:1px solid hsl(var(--border)); }
+.ip-checklist-header { padding:0.9rem 1.5rem; font-size:0.7rem; font-weight:900; letter-spacing:0.18em; text-transform:uppercase; border-bottom:1px solid hsl(var(--border)); color:hsl(var(--foreground)); background:hsl(var(--muted)); }
+.ip-checklist-list { margin:0; padding:0; list-style:none; }
+.ip-checklist-item { display:flex; align-items:flex-start; gap:0.9rem; padding:0.85rem 1.5rem; border-bottom:1px solid hsl(var(--border)/0.6); font-size:0.9rem; color:hsl(var(--foreground)/0.85); line-height:1.5; }
+.ip-checklist-item:last-child { border-bottom:none; }
+.ip-check-box { flex-shrink:0; width:1.1rem; height:1.1rem; border:1.5px solid hsl(var(--border)); margin-top:0.15rem; }
+
+/* 10. Large Pull Quote */
+.ip-pull-quote { margin:3.5rem auto; max-width:36rem; text-align:center; padding:0 1rem; }
+.ip-pq-text { font-size:clamp(1.25rem,3vw,1.75rem); font-weight:700; font-style:italic; line-height:1.5; color:hsl(var(--foreground)); margin:0; position:relative; }
+.ip-pq-text::before,.ip-pq-text::after { content:'"'; font-size:3rem; line-height:0; vertical-align:-0.5rem; color:hsl(var(--foreground)/0.15); font-style:normal; }
+.ip-pq-text::after { content:'"'; }
+.ip-pq-source { display:block; margin-top:1rem; font-size:0.75rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:hsl(var(--muted-foreground)); font-style:normal; }
+
+/* 11. Download / Resource Card */
+.ip-download-card { display:flex; align-items:center; gap:1.5rem; padding:1.75rem 2rem; border:1px solid hsl(var(--foreground)/0.2); background:hsl(var(--muted)); margin:2.5rem 0; flex-wrap:wrap; }
+.ip-dl-icon { font-size:2.5rem; flex-shrink:0; }
+.ip-dl-content { flex:1; min-width:180px; }
+.ip-dl-label { font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:hsl(var(--muted-foreground)); margin:0 0 0.25rem; }
+.ip-dl-title { font-size:1.05rem; font-weight:800; color:hsl(var(--foreground)); margin:0 0 0.3rem; letter-spacing:-0.02em; }
+.ip-dl-desc { font-size:0.85rem; color:hsl(var(--muted-foreground)); margin:0; }
+.ip-dl-btn { padding:0.7rem 1.4rem; background:hsl(var(--foreground)); color:hsl(var(--background)); font-size:0.7rem; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; white-space:nowrap; transition:opacity 0.2s; }
+.ip-dl-btn:hover { opacity:0.8; }
+
+/* 12. Author Bio Card */
+.ip-author-bio { display:flex; gap:1.5rem; align-items:flex-start; padding:2rem; border:1px solid hsl(var(--border)); margin:2.5rem 0; background:hsl(var(--muted)/0.4); }
+.ip-author-avatar { flex-shrink:0; width:4rem; height:4rem; background:hsl(var(--foreground)); color:hsl(var(--background)); display:flex; align-items:center; justify-content:center; font-size:1.2rem; font-weight:900; }
+.ip-author-info { flex:1; }
+.ip-author-label { font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:hsl(var(--muted-foreground)); margin:0 0 0.25rem; }
+.ip-author-name { font-size:1.05rem; font-weight:900; color:hsl(var(--foreground)); margin:0 0 0.15rem; letter-spacing:-0.02em; }
+.ip-author-role { font-size:0.8rem; color:hsl(var(--muted-foreground)); margin:0 0 0.6rem; }
+.ip-author-bio-text { font-size:0.875rem; color:hsl(var(--foreground)/0.8); line-height:1.65; margin:0; }
+
+/* 13. Definition Box */
+.ip-definition { margin:2.5rem 0; padding:1.75rem 2rem; border-left:3px solid hsl(var(--foreground)/0.3); background:hsl(var(--muted)/0.5); }
+.ip-def-term { font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:hsl(var(--muted-foreground)); margin-bottom:0.4rem; }
+.ip-def-word { font-size:1.2rem; font-weight:900; color:hsl(var(--foreground)); letter-spacing:-0.03em; margin-bottom:0.6rem; }
+.ip-def-text { font-size:0.925rem; color:hsl(var(--foreground)/0.82); line-height:1.7; margin:0; }
+
+/* 14. Code Block */
+.ip-code-block { margin:2.5rem 0; border:1px solid hsl(var(--border)); overflow:hidden; }
+.ip-code-header { display:flex; align-items:center; justify-content:space-between; padding:0.6rem 1rem; background:hsl(var(--muted)); border-bottom:1px solid hsl(var(--border)); }
+.ip-code-lang { font-size:0.65rem; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:hsl(var(--foreground)); }
+.ip-code-label { font-size:0.65rem; color:hsl(var(--muted-foreground)); }
+.ip-code-pre { margin:0; padding:1.5rem; background:hsl(var(--foreground)/0.04); overflow-x:auto; }
+.ip-code-pre code { font-family:'Fira Code','Cascadia Code','Consolas',monospace; font-size:0.82rem; line-height:1.7; color:hsl(var(--foreground)); }
+
+/* 15. Interview Q&A */
+.ip-qa-block { margin:2.5rem 0; display:flex; flex-direction:column; gap:0; border:1px solid hsl(var(--border)); }
+.ip-qa-item { display:grid; grid-template-rows:auto auto; }
+.ip-qa-q,.ip-qa-a { display:flex; gap:1rem; padding:1.25rem 1.5rem; align-items:flex-start; }
+.ip-qa-q { background:hsl(var(--muted)); border-bottom:1px solid hsl(var(--border)/0.6); font-weight:600; font-size:0.95rem; color:hsl(var(--foreground)); }
+.ip-qa-a { border-bottom:1px solid hsl(var(--border)/0.4); font-size:0.9rem; color:hsl(var(--foreground)/0.82); line-height:1.65; }
+.ip-qa-item:last-child .ip-qa-a { border-bottom:none; }
+.ip-qa-badge { flex-shrink:0; width:1.6rem; height:1.6rem; border:1px solid hsl(var(--foreground)); display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:900; color:hsl(var(--foreground)); margin-top:0.05rem; }
+.ip-qa-a-badge { background:hsl(var(--foreground)); color:hsl(var(--background)) !important; border-color:hsl(var(--foreground)); }
+
+/* 16. Feature Grid (3 col) */
+.ip-feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:hsl(var(--border)); border:1px solid hsl(var(--border)); margin:2.5rem 0; }
+.ip-feature-item { padding:2rem 1.5rem; background:hsl(var(--background)); display:flex; flex-direction:column; gap:0.75rem; }
+.ip-feature-icon { font-size:1.75rem; line-height:1; }
+.ip-feature-title { font-size:0.95rem; font-weight:800; color:hsl(var(--foreground)); letter-spacing:-0.02em; margin:0; }
+.ip-feature-desc { font-size:0.85rem; color:hsl(var(--foreground)/0.72); line-height:1.6; margin:0; }
+@media(max-width:640px){ .ip-feature-grid { grid-template-columns:1fr; } }
+
+/* 17. Success Banner */
+.ip-success-banner { display:flex; align-items:flex-start; gap:1rem; padding:1.25rem 1.75rem; margin:2rem 0; border:1px solid hsl(142 70% 45%/0.35); background:hsl(142 70% 45%/0.06); }
+.ip-success-icon { color:hsl(142 70% 38%); flex-shrink:0; margin-top:0.1rem; }
+.ip-success-body { flex:1; }
+.ip-success-title { font-size:0.75rem; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:hsl(142 70% 38%); margin:0 0 0.3rem; }
+.ip-success-text { font-size:0.9rem; color:hsl(var(--foreground)/0.82); line-height:1.6; margin:0; }
+
+/* 18. Social Proof / Logo Strip */
+.ip-social-proof { margin:2.5rem 0; padding:2rem; border:1px solid hsl(var(--border)); background:hsl(var(--muted)/0.4); text-align:center; }
+.ip-sp-label { font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:hsl(var(--muted-foreground)); margin-bottom:1.5rem; }
+.ip-sp-logos { display:flex; flex-wrap:wrap; justify-content:center; gap:1.5rem 2.5rem; align-items:center; }
+.ip-sp-logo { font-size:0.85rem; font-weight:800; letter-spacing:0.05em; color:hsl(var(--muted-foreground)); text-transform:uppercase; padding:0.4rem 0.8rem; border:1px solid hsl(var(--border)); }
+.ip-sp-quote { margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid hsl(var(--border)); font-size:0.9rem; font-style:italic; color:hsl(var(--foreground)/0.75); }
+.ip-sp-cite { display:block; margin-top:0.5rem; font-style:normal; font-size:0.75rem; font-weight:700; color:hsl(var(--muted-foreground)); }
+
+/* 19. Fun Fact / Did You Know */
+.ip-fun-fact { margin:2.5rem 0; padding:1.75rem 2rem 1.75rem 2.5rem; border-left:4px solid hsl(var(--foreground)); background:hsl(var(--muted)/0.5); position:relative; overflow:hidden; }
+.ip-fun-fact::before { content:'?'; position:absolute; right:1.5rem; top:50%; transform:translateY(-50%); font-size:5rem; font-weight:900; color:hsl(var(--foreground)/0.06); line-height:1; pointer-events:none; }
+.ip-fun-label { font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:hsl(var(--muted-foreground)); margin-bottom:0.5rem; }
+.ip-fun-text { font-size:1rem; font-weight:600; color:hsl(var(--foreground)); line-height:1.65; margin:0; }
+.ip-fun-source { font-size:0.75rem; color:hsl(var(--muted-foreground)); margin-top:0.5rem; }
+
+/* 20. Two-Column Content */
+.ip-two-col { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:hsl(var(--border)); border:1px solid hsl(var(--border)); margin:2.5rem 0; }
+.ip-two-col-side { padding:2rem; background:hsl(var(--background)); }
+.ip-two-col-label { font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:hsl(var(--muted-foreground)); margin-bottom:0.75rem; }
+.ip-two-col-title { font-size:1.05rem; font-weight:800; color:hsl(var(--foreground)); margin:0 0 0.75rem; letter-spacing:-0.02em; }
+.ip-two-col-body { font-size:0.875rem; color:hsl(var(--foreground)/0.8); line-height:1.7; margin:0; }
+@media(max-width:640px){ .ip-two-col { grid-template-columns:1fr; } }
+
+/* 21. Big Single Stat */
+.ip-big-stat { margin:2.5rem 0; padding:2.5rem; border:1px solid hsl(var(--border)); text-align:center; background:hsl(var(--muted)/0.3); }
+.ip-big-stat-number { display:block; font-size:clamp(3rem,8vw,6rem); font-weight:900; letter-spacing:-0.05em; color:hsl(var(--foreground)); line-height:1; }
+.ip-big-stat-label { display:block; font-size:1rem; font-weight:600; color:hsl(var(--foreground)/0.7); margin-top:0.5rem; }
+.ip-big-stat-source { display:block; font-size:0.72rem; color:hsl(var(--muted-foreground)); margin-top:0.5rem; }
+
+/* 22. Curated Resource List */
+.ip-resource-list { margin:2.5rem 0; border:1px solid hsl(var(--border)); }
+.ip-resource-header { padding:0.9rem 1.5rem; font-size:0.7rem; font-weight:900; letter-spacing:0.18em; text-transform:uppercase; border-bottom:1px solid hsl(var(--border)); color:hsl(var(--foreground)); background:hsl(var(--muted)); }
+.ip-resource-item { display:flex; align-items:flex-start; gap:1rem; padding:1rem 1.5rem; border-bottom:1px solid hsl(var(--border)/0.5); }
+.ip-resource-item:last-child { border-bottom:none; }
+.ip-resource-tag { flex-shrink:0; font-size:0.6rem; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; padding:0.2rem 0.5rem; border:1px solid hsl(var(--border)); color:hsl(var(--muted-foreground)); margin-top:0.1rem; }
+.ip-resource-title { font-size:0.9rem; font-weight:700; color:hsl(var(--foreground)); margin:0 0 0.15rem; }
+.ip-resource-desc { font-size:0.8rem; color:hsl(var(--muted-foreground)); margin:0; }
+
+/* 23. Video Embed Card */
+.ip-video-card { margin:2.5rem 0; border:1px solid hsl(var(--border)); overflow:hidden; }
+.ip-video-thumb { position:relative; aspect-ratio:16/9; background:hsl(var(--muted)); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.ip-video-play { width:4rem; height:4rem; border:2px solid hsl(var(--foreground)/0.6); display:flex; align-items:center; justify-content:center; }
+.ip-video-play svg { width:1.5rem; height:1.5rem; fill:hsl(var(--foreground)/0.7); margin-left:0.2rem; }
+.ip-video-meta { padding:1.25rem 1.5rem; display:flex; flex-direction:column; gap:0.25rem; }
+.ip-video-label { font-size:0.65rem; font-weight:900; letter-spacing:0.18em; text-transform:uppercase; color:hsl(var(--muted-foreground)); }
+.ip-video-title { font-size:1rem; font-weight:800; color:hsl(var(--foreground)); margin:0; letter-spacing:-0.02em; }
+
+/* 24. Inline Newsletter */
+.ip-newsletter { margin:2.5rem 0; padding:2.5rem; background:hsl(var(--foreground)); color:hsl(var(--background)); text-align:center; }
+.ip-nl-eyebrow { font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:0.5rem; }
+.ip-nl-heading { font-size:1.4rem; font-weight:900; letter-spacing:-0.03em; margin:0 0 0.5rem; }
+.ip-nl-sub { font-size:0.875rem; opacity:0.7; margin:0 0 1.5rem; }
+.ip-nl-form { display:flex; gap:0; max-width:24rem; margin:0 auto; }
+.ip-nl-input { flex:1; padding:0.75rem 1rem; background:hsl(var(--background)/0.12); border:1px solid hsl(var(--background)/0.3); color:hsl(var(--background)); font-size:0.875rem; outline:none; }
+.ip-nl-input::placeholder { color:hsl(var(--background)/0.5); }
+.ip-nl-btn { padding:0.75rem 1.25rem; background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:0.7rem; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; border:none; cursor:pointer; white-space:nowrap; }
+
+/* 25. Danger Alert variant */
+.ip-alert--danger { border-color:hsl(0 70% 50%/0.4); background:hsl(0 70% 50%/0.05); }
+.ip-alert--danger .ip-alert-icon { color:hsl(0 70% 48%); }
+
+/* 26. Step-by-Step (numbered inline) */
+.ip-steps { margin:2.5rem 0; counter-reset:ip-step; display:flex; flex-direction:column; gap:0; border:1px solid hsl(var(--border)); }
+.ip-step { display:flex; gap:0; border-bottom:1px solid hsl(var(--border)/0.6); counter-increment:ip-step; }
+.ip-step:last-child { border-bottom:none; }
+.ip-step-num { flex-shrink:0; width:3.5rem; display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:900; letter-spacing:0.1em; color:hsl(var(--muted-foreground)); background:hsl(var(--muted)); border-right:1px solid hsl(var(--border)/0.6); }
+.ip-step-num::before { content:counter(ip-step,decimal-leading-zero); }
+.ip-step-body { padding:1.25rem 1.5rem; flex:1; }
+.ip-step-title { font-size:0.95rem; font-weight:800; color:hsl(var(--foreground)); margin:0 0 0.3rem; }
+.ip-step-desc { font-size:0.875rem; color:hsl(var(--foreground)/0.75); line-height:1.6; margin:0; }

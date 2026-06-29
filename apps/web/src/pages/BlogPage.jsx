@@ -154,7 +154,7 @@ const BlogPage = () => {
   const [activeCategory, setActiveCategory] = useState('All');
 
   useEffect(() => {
-    fetch(`${WP_API}/posts?_embed&per_page=30&status=publish`)
+    fetch(`${WP_API}/posts?_embed&per_page=30`)
       .then(r => r.json())
       .then(data => {
         setPosts(data.filter(p => p.status === 'publish' && p.slug !== 'hello-world'));
