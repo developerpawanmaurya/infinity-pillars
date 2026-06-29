@@ -16,3 +16,15 @@ import './blocks/resource-list';
 import './blocks/cta-card';
 import './blocks/faq';
 import './blocks/success-banner';
+
+// 3D animated GSAP blocks
+import './blocks/stat-counter-3d';
+import './blocks/scroll-timeline-3d';
+import './blocks/tilt-feature-grid';
+import './blocks/flip-comparison-3d';
+import './blocks/parallax-hero';
+import './blocks/process-steps-3d';
+import './blocks/spotlight-cta';
+import './blocks/quote-rotator';
+import './blocks/exploding-takeaways';
+import './blocks/data-bar-visual';

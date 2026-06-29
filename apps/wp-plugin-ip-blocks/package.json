@@ -7,6 +7,9 @@
     "start": "wp-scripts start",
     "zip": "npm run build"
   },
+  "dependencies": {
+    "gsap": "^3.12.5"
+  },
   "devDependencies": {
     "@wordpress/scripts": "^27.0.0"
   }
