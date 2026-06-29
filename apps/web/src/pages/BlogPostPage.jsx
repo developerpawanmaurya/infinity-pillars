@@ -25,6 +25,22 @@ function extractHeadings(html) {
   }));
 }
 
+/** Pull first image src from HTML (WordPress encodes & as &#038;) */
+function firstImg(html = '') {
+  const m = html.match(/src="(https?[^"]+)"/);
+  return m ? m[1].replace(/&#0*38;|&amp;/g, '&') : null;
+}
+
+/** Remove the leading wp-block-image figure we embed as hero */
+function stripLeadingFigure(html = '') {
+  return html.replace(/^\s*<figure[^>]*class="wp-block-image[^"]*"[\s\S]*?<\/figure>/i, '');
+}
+
+/** Add not-prose to every ip-* block root so Tailwind prose doesn't override our CSS */
+function addNotProse(html = '') {
+  return html.replace(/<div class="(ip-[^"]+)"/g, '<div class="not-prose $1"');
+}
+
 function extractFAQs(html) {
   const tmp = document.createElement('div');
   tmp.innerHTML = html;
@@ -242,16 +258,19 @@ const BlogPostPage = () => {
     </div>
   );
 
-  const thumbnail   = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+  const thumbnail   = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
+                      || firstImg(post.content.rendered);
   const categories  = post._embedded?.['wp:term']?.[0] ?? [];
   const tags        = post._embedded?.['wp:term']?.[1] ?? [];
   const category    = categories[0]?.name;
   const minutes     = readingTime(post.content.rendered);
   const date        = new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const titleClean  = post.title.rendered.replace(/<[^>]+>/g, '');
-  const contentWithIds = addIds(post.content.rendered);
+  // Strip leading hero figure (used above) then protect IP blocks from prose overrides
+  const contentClean   = addNotProse(stripLeadingFigure(post.content.rendered));
+  const contentWithIds = addIds(contentClean);
   const headings    = extractHeadings(contentWithIds);
-  const faqs        = extractFAQs(post.content.rendered);
+  const faqs        = extractFAQs(contentClean);
   const pageUrl     = window.location.href;
 
   return (

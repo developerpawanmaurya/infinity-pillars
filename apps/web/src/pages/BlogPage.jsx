@@ -14,6 +14,10 @@ function fmtDate(d) {
 function strip(html = '') {
   return html.replace(/<[^>]+>/g, '').trim();
 }
+function firstImg(html = '') {
+  const m = html.match(/src="(https?[^"]+)"/);
+  return m ? m[1].replace(/&#0*38;|&amp;/g, '&') : null;
+}
 
 /* ── Skeleton ─────────────────────────────────────────── */
 function SkeletonCard({ big }) {
@@ -44,7 +48,8 @@ function SkeletonCard({ big }) {
 
 /* ── Featured Card ────────────────────────────────────── */
 function FeaturedCard({ post }) {
-  const thumb    = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+  const thumb    = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
+                   || firstImg(post.content?.rendered);
   const category = post._embedded?.['wp:term']?.[0]?.[0]?.name;
   const mins     = readTime(post.content?.rendered);
   const title    = strip(post.title?.rendered);
@@ -101,7 +106,8 @@ function FeaturedCard({ post }) {
 
 /* ── Post Card ────────────────────────────────────────── */
 function PostCard({ post }) {
-  const thumb    = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+  const thumb    = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
+                   || firstImg(post.content?.rendered);
   const category = post._embedded?.['wp:term']?.[0]?.[0]?.name;
   const mins     = readTime(post.content?.rendered);
   const title    = strip(post.title?.rendered);
