@@ -98,21 +98,27 @@ jobs:
           timeout: 120000
 
   # ── Custom theme → …/blog/wp-content/themes/ip-theme/ ─────────────────────
+  # Uses curl instead of FTP-Deploy-Action to avoid control socket timeouts:
+  # the action does a full remote directory scan before uploading; curl pushes
+  # each file directly with no listing step.
   deploy-wp-theme:
     runs-on: ubuntu-latest
+    env:
+      THEME_DIR: /domains/infinitypillars.com/public_html/blog/wp-content/themes/ip-theme
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy theme to WordPress
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./apps/wp-theme-ip/
-          server-dir: /domains/infinitypillars.com/public_html/blog/wp-content/themes/ip-theme/
-          exclude: '["**/.git*"]'
-          timeout: 60000
+      - name: Deploy theme files via curl
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          for file in apps/wp-theme-ip/functions.php apps/wp-theme-ip/index.php apps/wp-theme-ip/style.css; do
+            filename=$(basename "$file")
+            curl --ssl-reqd --ftp-create-dirs --silent --show-error \
+              -T "$file" \
+              "ftps://${FTP_HOST}${THEME_DIR}/${filename}" \
+              -u "${FTP_USER}:${FTP_PASS}"
+          done
