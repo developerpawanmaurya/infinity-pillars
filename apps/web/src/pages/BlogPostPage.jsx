@@ -253,18 +253,14 @@ function Skeleton() {
 const IP_PLUGIN_BASE = 'https://blog.infinitypillars.com/wp-content/plugins/ip-blocks/build';
 
 function injectPluginAssets() {
-  if (!document.getElementById('ip-blocks-css')) {
-    const link = document.createElement('link');
-    link.id   = 'ip-blocks-css';
-    link.rel  = 'stylesheet';
-    link.href = `${IP_PLUGIN_BASE}/frontend.css`;
-    document.head.appendChild(link);
-  }
+  // CSS is bundled in the React SPA (src/styles/ip-blocks.css) — only inject JS.
+  // Set the headless flag so frontend.js skips its own auto-init on load.
+  window.__ipBlocksHeadless = true;
   if (!document.getElementById('ip-blocks-js')) {
-    const script    = document.createElement('script');
-    script.id       = 'ip-blocks-js';
-    script.src      = `${IP_PLUGIN_BASE}/frontend.js`;
-    script.onload   = () => window.ipBlocksInit?.();
+    const script  = document.createElement('script');
+    script.id     = 'ip-blocks-js';
+    script.src    = `${IP_PLUGIN_BASE}/frontend.js`;
+    script.onload = () => window.ipBlocksInit?.();
     document.body.appendChild(script);
   } else {
     // Script already loaded — just re-run init for new content

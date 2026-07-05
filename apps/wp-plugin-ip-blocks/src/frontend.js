@@ -30,12 +30,12 @@ function initAll() {
 // Expose for headless WordPress (React SPA calls this after dangerouslySetInnerHTML renders)
 window.ipBlocksInit = initAll;
 
-function ready(fn) {
-  if (document.readyState !== 'loading') fn();
-  else document.addEventListener('DOMContentLoaded', fn);
+// On real WordPress pages (not headless), DOMContentLoaded fires before this script;
+// readyState will already be 'complete', so call directly.
+if (typeof window !== 'undefined' && !window.__ipBlocksHeadless) {
+  if (document.readyState !== 'loading') initAll();
+  else document.addEventListener('DOMContentLoaded', initAll);
 }
-
-ready(initAll);
 
 // ─── 1. 3D Stat Counter ──────────────────────────────────────────────────────
 function initStatCounters() {

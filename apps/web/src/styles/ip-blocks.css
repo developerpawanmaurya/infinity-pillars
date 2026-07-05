@@ -1,0 +1,324 @@
+/*
+ * Infinity Pillars — GSAP Block Styles (bundled in React SPA)
+ * Uses the same CSS custom properties as index.css so light/dark mode is automatic.
+ */
+
+/* ── 1. 3D Stat Counter ───────────────────────────────────────────────────── */
+.ip-sc3d { margin: 2.5rem 0; }
+
+.ip-sc3d-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: hsl(var(--border));
+  border: 1px solid hsl(var(--border));
+}
+
+.ip-sc3d-card {
+  position: relative;
+  background: hsl(var(--background));
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  border-top: 3px solid var(--card-color, hsl(var(--blog-accent)));
+}
+
+.ip-sc3d-glow { display: none; }
+
+.ip-sc3d-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ip-sc3d-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.05em;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: hsl(var(--blog-accent));
+}
+
+.ip-sc3d-suffix { font-size: 0.55em; color: hsl(var(--blog-accent)); font-weight: 900; }
+
+.ip-sc3d-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: hsl(var(--foreground) / 0.65);
+  line-height: 1.4;
+  max-width: 140px;
+}
+
+@media (max-width: 640px) { .ip-sc3d-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ── 2. Scroll Timeline ───────────────────────────────────────────────────── */
+.ip-timeline-3d { margin: 2.5rem 0; }
+
+.ip-t3d-heading {
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  color: hsl(var(--foreground));
+  margin: 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.ip-t3d-track { display: flex; flex-direction: column; }
+.ip-t3d-line, .ip-t3d-progress { display: none; }
+
+.ip-t3d-item {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  border: 1px solid hsl(var(--border));
+  border-top: none;
+  will-change: transform, opacity;
+}
+.ip-t3d-item:first-of-type { border-top: 1px solid hsl(var(--border)); }
+.ip-t3d-item.ip-t3d-left,
+.ip-t3d-item.ip-t3d-right { grid-template-columns: 72px 1fr; }
+
+.ip-t3d-dot {
+  background: hsl(var(--muted));
+  border-right: 1px solid hsl(var(--border));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0.5rem;
+}
+.ip-t3d-pulse { display: none; }
+
+.ip-t3d-year {
+  font-size: 0.6rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.ip-t3d-content { padding: 1.25rem 1.5rem; background: hsl(var(--background)); }
+.ip-t3d-content h3 {
+  font-size: 0.9rem; font-weight: 800; color: hsl(var(--foreground));
+  letter-spacing: -0.02em; margin: 0 0 0.35rem;
+}
+.ip-t3d-content p {
+  font-size: 0.85rem; color: hsl(var(--foreground) / 0.7); line-height: 1.65; margin: 0;
+}
+
+@media (max-width: 480px) {
+  .ip-t3d-item { grid-template-columns: 52px 1fr; }
+  .ip-t3d-year { font-size: 0.5rem; }
+}
+
+/* ── 3. Tilt Feature Grid ─────────────────────────────────────────────────── */
+.ip-tilt-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), 1fr);
+  gap: 1px;
+  background: hsl(var(--border));
+  border: 1px solid hsl(var(--border));
+  margin: 2.5rem 0;
+}
+.ip-tilt-card { background: hsl(var(--background)); perspective: 800px; }
+.ip-tilt-inner {
+  position: relative;
+  padding: 2rem 1.5rem;
+  display: flex; flex-direction: column; gap: 0.65rem;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.ip-tilt-shine { display: none; }
+.ip-tilt-icon { font-size: 1.6rem; line-height: 1; }
+.ip-tilt-title { font-size: 0.9rem; font-weight: 800; color: hsl(var(--foreground)); letter-spacing: -0.02em; margin: 0; }
+.ip-tilt-desc { font-size: 0.83rem; color: hsl(var(--foreground) / 0.68); line-height: 1.6; margin: 0; }
+
+@media (max-width: 768px) { .ip-tilt-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 420px)  { .ip-tilt-grid { grid-template-columns: 1fr; } }
+
+/* ── 4. Flip Comparison ───────────────────────────────────────────────────── */
+.ip-flip3d {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: hsl(var(--border));
+  border: 1px solid hsl(var(--border));
+  margin: 2.5rem 0;
+  perspective: 1400px;
+}
+.ip-flip3d-before,
+.ip-flip3d-after { background: hsl(var(--background)); backface-visibility: hidden; will-change: transform; }
+.ip-flip3d-face { padding: 2rem 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
+.ip-flip3d-badge {
+  font-size: 0.58rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.22rem 0.55rem; border: 1px solid; display: inline-flex; align-self: flex-start;
+}
+.ip-flip3d-badge--before { color: hsl(0 65% 45%); border-color: hsl(0 65% 45% / 0.35); background: hsl(0 65% 45% / 0.05); }
+.ip-flip3d-badge--after  { color: hsl(142 60% 35%); border-color: hsl(142 60% 35% / 0.35); background: hsl(142 60% 35% / 0.05); }
+.ip-flip3d-title { font-size: 0.88rem; font-weight: 800; color: hsl(var(--foreground)); letter-spacing: -0.02em; margin: 0; }
+.ip-flip3d-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 0.45rem;
+  border-top: 1px solid hsl(var(--border)); padding-top: 0.8rem;
+}
+.ip-flip3d-before .ip-flip3d-list li,
+.ip-flip3d-after  .ip-flip3d-list li {
+  font-size: 0.83rem; line-height: 1.55; color: hsl(var(--foreground) / 0.75);
+  padding-left: 1.1rem; position: relative;
+}
+.ip-flip3d-before .ip-flip3d-list li::before { content: '−'; position: absolute; left: 0; font-weight: 700; color: hsl(0 65% 45%); }
+.ip-flip3d-after  .ip-flip3d-list li::before { content: '+'; position: absolute; left: 0; font-weight: 700; color: hsl(142 60% 35%); }
+
+@media (max-width: 560px) { .ip-flip3d { grid-template-columns: 1fr; } }
+
+/* ── 5. Parallax Hero ─────────────────────────────────────────────────────── */
+.ip-parallax-hero {
+  position: relative;
+  background: hsl(var(--foreground));
+  overflow: hidden;
+  margin: 2.5rem 0;
+  padding: 3.5rem 2rem;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.75rem;
+  min-height: 200px;
+}
+.ip-ph-bg, .ip-ph-orbs, .ip-ph-orb { display: none; }
+.ip-ph-mid, .ip-ph-fg {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+}
+.ip-ph-badge {
+  display: inline-block; font-size: 0.58rem; font-weight: 900; letter-spacing: 0.25em;
+  text-transform: uppercase; color: hsl(var(--background) / 0.5);
+  border: 1px solid hsl(var(--background) / 0.2); padding: 0.22rem 0.7rem;
+}
+.ip-ph-title {
+  font-size: clamp(1.4rem, 4vw, 2.25rem); font-weight: 900; letter-spacing: -0.04em;
+  line-height: 1.1; color: hsl(var(--background)); margin: 0;
+}
+.ip-ph-sub { font-size: 0.875rem; color: hsl(var(--background) / 0.58); max-width: 34rem; line-height: 1.65; margin: 0; }
+
+/* ── 6. Process Steps ─────────────────────────────────────────────────────── */
+.ip-process-steps { margin: 2.5rem 0; }
+.ip-ps-heading {
+  font-size: clamp(1.3rem, 3vw, 1.7rem); font-weight: 900; letter-spacing: -0.035em;
+  color: hsl(var(--foreground)); margin: 0; padding-bottom: 1rem; border-bottom: 1px solid hsl(var(--border));
+}
+.ip-ps-track { display: flex; flex-direction: column; border: 1px solid hsl(var(--border)); border-top: none; }
+.ip-ps-item {
+  display: grid; grid-template-columns: 56px 1fr;
+  border-top: 1px solid hsl(var(--border));
+  will-change: transform, opacity;
+}
+.ip-ps-item.ip-ps-left,
+.ip-ps-item.ip-ps-right { grid-template-columns: 56px 1fr; }
+.ip-ps-num {
+  display: flex; align-items: center; justify-content: center;
+  background: hsl(var(--muted)); border-right: 1px solid hsl(var(--border));
+  font-size: 0.62rem; font-weight: 900; letter-spacing: 0.06em;
+  color: hsl(var(--muted-foreground)); min-height: 56px; will-change: transform;
+}
+.ip-ps-line { display: none; }
+.ip-ps-content { padding: 1.1rem 1.4rem; will-change: transform, opacity; }
+.ip-ps-content h3 { font-size: 0.9rem; font-weight: 800; color: hsl(var(--foreground)); letter-spacing: -0.02em; margin: 0 0 0.3rem; }
+.ip-ps-content p  { font-size: 0.83rem; color: hsl(var(--foreground) / 0.7); line-height: 1.65; margin: 0; }
+
+/* ── 7. Spotlight CTA ─────────────────────────────────────────────────────── */
+.ip-spotlight-cta {
+  position: relative; background: hsl(var(--foreground));
+  margin: 2.5rem 0; padding: 3.5rem 2rem; text-align: center; overflow: hidden;
+}
+.ip-spc-beam, .ip-spc-particles, .ip-spc-particle { display: none; }
+.ip-spc-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.ip-spc-headline {
+  font-size: clamp(1.4rem, 4vw, 2.25rem); font-weight: 900; letter-spacing: -0.04em;
+  line-height: 1.1; color: hsl(var(--background)); margin: 0;
+}
+.ip-spc-headline span { display: inline; }
+.ip-spc-sub { font-size: 0.875rem; color: hsl(var(--background) / 0.58); max-width: 30rem; line-height: 1.65; margin: 0; }
+.ip-spc-btn {
+  display: inline-flex; align-items: center; margin-top: 0.5rem;
+  padding: 0.85rem 1.9rem; background: hsl(var(--background)); color: hsl(var(--foreground));
+  font-size: 0.7rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none; will-change: transform; transition: opacity 0.2s;
+}
+.ip-spc-btn:hover { opacity: 0.85; }
+
+/* ── 8. Quote Rotator ─────────────────────────────────────────────────────── */
+.ip-quote-rotator {
+  position: relative; margin: 2.5rem 0; padding: 2.5rem;
+  border: 1px solid hsl(var(--border)); border-left: 4px solid hsl(var(--blog-accent));
+  background: hsl(var(--muted) / 0.45); overflow: hidden;
+}
+.ip-qr-carousel { position: relative; min-height: 160px; margin-bottom: 1.5rem; }
+.ip-qr-slide { position: absolute; inset: 0; will-change: transform, opacity; }
+.ip-qr-slide.ip-qr-active { position: relative; inset: auto; }
+.ip-qr-mark {
+  display: block; font-size: 3.5rem; line-height: 0.75;
+  color: hsl(var(--foreground) / 0.1); font-family: Georgia, "Times New Roman", serif; margin-bottom: 0.75rem;
+}
+.ip-qr-text {
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem); font-weight: 500; font-style: italic;
+  line-height: 1.75; color: hsl(var(--foreground)); margin: 0 0 1.25rem; border: none; padding: 0;
+}
+.ip-qr-cite {
+  font-style: normal; font-size: 0.78rem;
+  border-top: 1px solid hsl(var(--border)); padding-top: 0.65rem;
+  display: flex; flex-direction: column; gap: 0.1rem;
+}
+.ip-qr-cite strong { font-weight: 800; color: hsl(var(--foreground)); }
+.ip-qr-cite em     { font-style: normal; color: hsl(var(--muted-foreground)); font-size: 0.75rem; }
+.ip-qr-nav { display: flex; align-items: center; gap: 0.6rem; }
+.ip-qr-prev, .ip-qr-next {
+  flex-shrink: 0; width: 1.9rem; height: 1.9rem;
+  border: 1px solid hsl(var(--border)); background: hsl(var(--background));
+  color: hsl(var(--foreground)); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 0.8rem; transition: background 0.15s, color 0.15s;
+}
+.ip-qr-prev:hover, .ip-qr-next:hover { background: hsl(var(--foreground)); color: hsl(var(--background)); }
+.ip-qr-dots { display: flex; gap: 0.35rem; align-items: center; }
+.ip-qr-dot {
+  width: 0.45rem; height: 0.45rem; border: 1px solid hsl(var(--border));
+  background: transparent; cursor: pointer; padding: 0; transition: background 0.15s, border-color 0.15s;
+}
+.ip-qr-dot-active { background: hsl(var(--foreground)); border-color: hsl(var(--foreground)); }
+
+/* ── 9. Exploding Takeaways ───────────────────────────────────────────────── */
+.ip-exploding-takeaways {
+  border-left: 3px solid hsl(var(--foreground));
+  background: hsl(var(--muted)); padding: 1.75rem 2rem; margin: 2.5rem 0;
+}
+.ip-et-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.1rem; }
+.ip-et-orb { display: none; }
+.ip-et-title { font-size: 0.68rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; color: hsl(var(--foreground)); margin: 0; }
+.ip-et-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.ip-et-item { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.88rem; color: hsl(var(--foreground) / 0.85); line-height: 1.6; will-change: transform, opacity; }
+.ip-et-icon { flex-shrink: 0; font-size: 0.85rem; margin-top: 0.1rem; }
+
+/* ── 10. Data Bars ────────────────────────────────────────────────────────── */
+.ip-data-bars { margin: 2.5rem 0; border: 1px solid hsl(var(--border)); padding: 2rem; background: hsl(var(--background)); }
+.ip-db-title {
+  font-size: clamp(1rem, 2.5vw, 1.3rem); font-weight: 900; letter-spacing: -0.03em;
+  color: hsl(var(--foreground)); margin: 0 0 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid hsl(var(--border));
+}
+.ip-db-list { display: flex; flex-direction: column; gap: 1rem; }
+.ip-db-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; gap: 1rem; }
+.ip-db-label { font-size: 0.8rem; font-weight: 600; color: hsl(var(--foreground)); will-change: transform, opacity; }
+.ip-db-value { font-size: 0.72rem; font-weight: 900; color: hsl(var(--blog-accent)); will-change: opacity; flex-shrink: 0; }
+.ip-db-track { height: 5px; background: hsl(var(--border)); position: relative; overflow: hidden; }
+.ip-db-fill { height: 100%; width: 0%; background: hsl(var(--foreground)); will-change: width; }
+.ip-db-glow { display: none; }
