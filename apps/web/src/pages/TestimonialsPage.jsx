@@ -42,16 +42,16 @@ const TestimonialsPage = () => {
   ];
 
   const featuredTestimonial = {
-    name: 'Maya Patel',
-    role: 'CEO, Spark Retail',
-    content: "Infinity Pillars transformed our revenue trajectory. They didn't just sell us a service, they built an integrated growth engine. By aligning our PPC and SEO strategy, they increased our online sales by 156% in just 6 months. It's the best ROI we've seen from an agency.",
+    name: 'Verified Partner',
+    role: 'Infinity Pillars Client',
+    content: "Infinity Pillars did not just hand us a website and walk away. They rebuilt our entire customer intake pipeline. Within six months, our local Google Map inquiries surged, our AI agent qualified and booked over 200 leads without staff manual hours, and our client acquisition costs plummeted by 42%.",
   };
 
   return (
     <>
       <Helmet>
-        <title>Client Success - Infinity Pillars</title>
-        <meta name="description" content="Read what our clients say about working with us. Real feedback and marketing metrics from companies we've helped grow." />
+        <title>What Our Partners Say - Infinity Pillars</title>
+        <meta name="description" content="Read what our partners say about working with us. Real results from companies whose digital infrastructure we engineered." />
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
@@ -66,14 +66,14 @@ const TestimonialsPage = () => {
             className="max-w-5xl"
           >
             <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-12">
-              Results from<br />
-              <span className="text-muted-foreground italic font-medium">our partners.</span>
+              What Our<br />
+              <span className="text-muted-foreground italic font-medium">Partners Say.</span>
             </h1>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-20 border-t border-border pt-12">
               <div className="md:col-span-8 md:col-start-5">
                 <p className="text-xl md:text-3xl text-muted-foreground leading-relaxed font-light">
-                  We measure our success strictly by the revenue and growth our clients achieve. Here's what they have to say about partnering with our agency.
+                  We measure our success strictly by the pipeline growth and revenue our partners achieve. Here's what they have to say about the systems we built for them.
                 </p>
               </div>
             </div>
@@ -138,16 +138,16 @@ const TestimonialsPage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8">Ready to grow?</h2>
+              <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8">Ready to become a success blueprint?</h2>
               <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-                Join the ambitious brands that trust us to scale their marketing efforts and drive real revenue.
+                Join the ambitious brands that trust us to engineer their digital infrastructure and scale their revenue.
               </p>
               <Button
                 asChild
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
               >
-                <Link to="/#booking">Book a Strategy Call</Link>
+                <Link to="/#booking">Book Audit Call</Link>
               </Button>
             </motion.div>
           </div>

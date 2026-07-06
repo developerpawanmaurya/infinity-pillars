@@ -19,11 +19,11 @@ const Header = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Services', path: '/services' },
-    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Core Offerings', path: '/services' },
+    { name: 'The Playbook', path: '/about' },
+    { name: 'Success Blueprints', path: '/portfolio' },
     { name: 'Testimonials', path: '/testimonials' },
-    { name: 'Blog', path: '/blog' },
+    { name: 'Blogs', path: '/blog' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -64,7 +64,7 @@ const Header = () => {
               asChild
               className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-6"
             >
-              <Link to="/#booking">Book a demo</Link>
+              <Link to="/#booking">Book Audit Call</Link>
             </Button>
           </div>
 
@@ -102,7 +102,7 @@ const Header = () => {
                   className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none py-6 text-lg"
                 >
                   <Link to="/#booking" onClick={() => setIsMobileMenuOpen(false)}>
-                    Book a demo
+                    Book Audit Call
                   </Link>
                 </Button>
               </div>

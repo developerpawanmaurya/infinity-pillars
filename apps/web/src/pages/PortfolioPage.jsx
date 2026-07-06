@@ -59,8 +59,8 @@ const PortfolioPage = () => {
   return (
     <>
       <Helmet>
-        <title>Case Studies - Infinity Pillars Marketing</title>
-        <meta name="description" content="Explore our marketing case studies and see how we've helped companies scale their revenue and dominate their markets." />
+        <title>Success Blueprints - Infinity Pillars</title>
+        <meta name="description" content="Real evidence of engineered systems driving measurable customer growth. Explore our Success Blueprints." />
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background">
@@ -75,14 +75,14 @@ const PortfolioPage = () => {
             className="max-w-5xl"
           >
             <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-12">
-              Selected<br />
-              <span className="text-muted-foreground italic font-medium">campaigns.</span>
+              Success<br />
+              <span className="text-muted-foreground italic font-medium">Blueprints.</span>
             </h1>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-20 border-t border-border pt-12">
               <div className="md:col-span-8 md:col-start-5">
                 <p className="text-xl md:text-3xl text-muted-foreground leading-relaxed font-light">
-                  A curated collection of case studies showcasing strategic execution and measurable marketing ROI.
+                  Real evidence of engineered systems driving measurable customer growth.
                 </p>
               </div>
             </div>
@@ -154,10 +154,10 @@ const PortfolioPage = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
               {[
-                { value: '500+', label: 'Campaigns launched' },
-                { value: '87%', label: 'Client retention' },
-                { value: '342%', label: 'Average ROI' },
-                { value: '2.8M', label: 'Impressions generated' }
+                { value: '3.4x', label: 'Average Inbound Pipeline Growth' },
+                { value: '84%', label: 'Reduction in Manual Lead Filtering' },
+                { value: '#1 Spot', label: 'Google Business Ranking in 90 Days' },
+                { value: '500+', label: 'Automated Digital Assets Deployed' }
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -186,9 +186,9 @@ const PortfolioPage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8">Ready for results?</h2>
+              <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8">Let's Build Your Success Blueprint.</h2>
               <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-                Schedule a consultation to discuss your growth goals and how we can achieve them.
+                Tell us where your client acquisition is stalling. We'll present a custom engineering roadmap to scale your brand.
               </p>
               <Button
                 asChild

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { Compass, Palette, Code, TrendingUp, BarChart3, Megaphone } from 'lucide-react';
+import { Globe, MapPin, Zap } from 'lucide-react';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import { Button } from '@/components/ui/button';
@@ -37,81 +37,42 @@ const ServicesPage = () => {
 
   const services = [
     {
-      id: 'seo-service',
-      icon: Compass,
-      title: 'SEO',
-      description: 'Increase organic visibility and drive qualified traffic. We deploy technical, on-page, and off-page strategies that outrank your competitors and capture high-intent searchers.',
+      id: 'web-architecture-service',
+      icon: Globe,
+      title: 'Conversion-First Web Architecture & UX',
+      description: "We design and build ultra-fast, responsive web platforms custom-built around your user's psychology. We turn passive visitors into immediate phone calls, form submissions, and booked calendar appointments.",
       image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
       features: [
-        'Comprehensive technical audits',
-        'Keyword & competitor research',
-        'On-page content optimization',
-        'High-authority link building'
+        'High-conversion page design & UX mapping',
+        'Speed optimization & Core Web Vitals',
+        'Phone, form & calendar conversion flows',
+        'Responsive mobile-first architecture'
       ]
     },
     {
-      id: 'ppc-advertising-service',
-      icon: Palette,
-      title: 'PPC Management',
-      description: 'Maximize ROI with targeted paid advertising. We design, launch, and ruthlessly optimize paid search and display campaigns to lower your customer acquisition cost.',
+      id: 'gmb-seo-service',
+      icon: MapPin,
+      title: 'Google Local Map Dominance & GMB SEO',
+      description: 'When target buyers search for your services, we make sure you are the undisputed, highly rated choice in the top 3 Google Map spots. We turn search intent into physical foot traffic and inbound inquiries.',
       image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
       features: [
-        'Google Ads & Bing Ads',
-        'Retargeting campaigns',
-        'A/B testing ad creatives',
-        'Conversion rate optimization'
+        'Google Business Profile optimization',
+        'Local Map Pack ranking strategy',
+        'Review generation & management',
+        'Local citation building & authority'
       ]
     },
     {
-      id: 'social-media-marketing-service',
-      icon: Megaphone,
-      title: 'Social Media Marketing',
-      description: 'Build engaged communities and drive conversions. We craft paid and organic social strategies that stop the scroll and turn followers into loyal customers.',
+      id: 'ai-agents-service',
+      icon: Zap,
+      title: 'Autonomous B2B AI Agents & Automation',
+      description: 'Form fills are too slow. We deploy custom-trained AI interfaces onto your website that act as continuous, round-the-clock sales reps—answering deep technical questions, qualifying high-value leads, and auto-booking sales calls.',
       image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
       features: [
-        'Paid social (Meta, LinkedIn, TikTok)',
-        'Audience targeting & segmentation',
-        'Creative content production',
-        'Community management'
-      ]
-    },
-    {
-      id: 'content-marketing-service',
-      icon: Code,
-      title: 'Content Marketing',
-      description: 'Create valuable content that attracts and converts. From long-form blogs to engaging video scripts, we build content engines that establish your brand authority.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      features: [
-        'Content strategy & calendars',
-        'SEO-optimized blog writing',
-        'Whitepapers & lead magnets',
-        'Video & multimedia content'
-      ]
-    },
-    {
-      id: 'email-marketing-automation-service',
-      icon: TrendingUp,
-      title: 'Email Marketing',
-      description: 'Nurture leads and drive repeat business. We design automated email sequences and broadcast campaigns that deliver personalized messaging at scale.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      features: [
-        'Lifecycle drip campaigns',
-        'List segmentation & hygiene',
-        'Newsletter copywriting',
-        'Cart abandonment flows'
-      ]
-    },
-    {
-      id: 'analytics-reporting-service',
-      icon: BarChart3,
-      title: 'Analytics & Reporting',
-      description: 'Data-driven insights for continuous improvement. We configure advanced tracking so you have crystal clear visibility into exactly what is driving your revenue.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      features: [
-        'GA4 & Tag Manager setup',
-        'Custom Looker Studio dashboards',
-        'Funnel drop-off analysis',
-        'Attribution modeling'
+        'Custom-trained AI chatbot deployment',
+        '24/7 lead qualification & filtering',
+        'Auto-booking & CRM integration',
+        'Deep technical Q&A handling'
       ]
     }
   ];
@@ -119,8 +80,8 @@ const ServicesPage = () => {
   return (
     <>
       <Helmet>
-        <title>Services - Infinity Pillars Marketing</title>
-        <meta name="description" content="From SEO and PPC to content and analytics, we offer comprehensive digital marketing services to help you scale your revenue." />
+        <title>Core Offerings - Infinity Pillars</title>
+        <meta name="description" content="We deploy integrated systems engineered to work together as a seamless sales team — web architecture, GMB SEO, and autonomous AI agents." />
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
@@ -135,14 +96,14 @@ const ServicesPage = () => {
             className="max-w-5xl"
           >
             <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-12">
-              Capabilities<br />
-              <span className="text-muted-foreground italic font-medium">and focus.</span>
+              Core<br />
+              <span className="text-muted-foreground italic font-medium">Offerings.</span>
             </h1>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-20 border-t border-border pt-12">
               <div className="md:col-span-8 md:col-start-5">
                 <p className="text-xl md:text-3xl text-muted-foreground leading-relaxed font-light">
-                  We offer end-to-end marketing solutions for building brand presence, capturing high-intent demand, and driving long-term revenue growth.
+                  Static websites and simple ad campaigns no longer work in 2026. We deploy integrated systems engineered to work together as a seamless sales team.
                 </p>
               </div>
             </div>
@@ -198,7 +159,7 @@ const ServicesPage = () => {
                       variant="outline"
                       className="w-full rounded-none border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 h-12 text-sm uppercase tracking-widest font-bold"
                     >
-                      <Link to="/#booking">Book a Demo</Link>
+                      <Link to="/#booking">Book Audit Call</Link>
                     </Button>
                   </div>
                 </motion.div>
@@ -213,16 +174,16 @@ const ServicesPage = () => {
               transition={{ duration: 0.6 }}
               className="mt-32 text-center"
             >
-              <h3 className="text-4xl md:text-5xl font-bold tracking-tighter mb-8">Ready to accelerate your growth?</h3>
+              <h3 className="text-4xl md:text-5xl font-bold tracking-tighter mb-8">Ready to build your digital engine?</h3>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-12">
-                Let's discuss how our tailored marketing strategies can help you hit your revenue targets this quarter.
+                Tell us where your client acquisition is stalling. We'll present a custom engineering roadmap to scale your brand.
               </p>
               <Button
                 asChild
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
               >
-                <Link to="/#booking">Book a Demo</Link>
+                <Link to="/#booking">Book Audit Call</Link>
               </Button>
             </motion.div>
           </div>
@@ -238,9 +199,9 @@ const ServicesPage = () => {
               transition={{ duration: 0.6 }}
               className="mb-24"
             >
-              <h2 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">How we execute</h2>
+              <h2 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">The Playbook Process</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                A disciplined methodology designed to minimize waste and maximize returns.
+                A systematic, zero-guesswork approach designed to build digital assets that scale.
               </p>
             </motion.div>
 
@@ -248,18 +209,18 @@ const ServicesPage = () => {
               {[
                 {
                   number: '01',
-                  title: 'Audit & Strategy',
-                  description: 'We dissect your historical data, map your competitive landscape, and build a channel-specific roadmap.'
+                  title: 'Discovery & Audit',
+                  description: 'We audit your local visibility, analyze competitor weaknesses, and map out a strict data-backed pipeline strategy tailored for revenue expansion.'
                 },
                 {
                   number: '02',
-                  title: 'Deploy & Test',
-                  description: 'We launch campaigns with rapid A/B testing frameworks to identify winning creatives and targeting.'
+                  title: 'Build & Configure',
+                  description: 'We construct your web infrastructure, configure GMB architectures, and train your custom AI agent on your exact business documentation.'
                 },
                 {
                   number: '03',
-                  title: 'Scale & Optimize',
-                  description: 'We double down on the highest ROI channels while ruthlessly cutting underperforming spend.'
+                  title: 'Launch & Optimize',
+                  description: 'We deploy your high-speed web engine, sync API pathways to your CRM, and continuously optimize to maximize lead-to-close conversions.'
                 }
               ].map((step, index) => (
                 <motion.div
