@@ -156,7 +156,7 @@ const PortfolioPage = () => {
               {[
                 { value: '3.4x', label: 'Average Inbound Pipeline Growth' },
                 { value: '84%', label: 'Reduction in Manual Lead Filtering' },
-                { value: '#1 Spot', label: 'Google Business Ranking in 90 Days' },
+                { value: '#1', label: 'Google Business Ranking in 90 Days' },
                 { value: '500+', label: 'Automated Digital Assets Deployed' }
               ].map((stat, index) => (
                 <motion.div

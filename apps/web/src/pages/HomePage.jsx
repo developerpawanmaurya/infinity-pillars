@@ -44,7 +44,7 @@ const HomePage = () => {
   const metrics = [
     { metric: '3.4x', label: 'Average Inbound Pipeline Growth' },
     { metric: '84%', label: 'Reduction in Manual Lead Filtering' },
-    { metric: '#1 Spot', label: 'Google Business Ranking in 90 Days' },
+    { metric: '#1', label: 'Google Business Ranking in 90 Days' },
     { metric: '500+', label: 'Automated Digital Assets Deployed' }
   ];
 
@@ -390,7 +390,7 @@ const HomePage = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8">Let's Build Your Digital Engine That Converts.</h2>
+            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8">Let's Build Your Digital Infrastructure That Converts.</h2>
             <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-12">
               Tell us where your client acquisition is stalling. We'll skip the generic sales pitch and present a custom engineering roadmap to scale your brand.
             </p>

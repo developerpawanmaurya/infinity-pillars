@@ -1,6 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Linkedin, Twitter } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
+
+const XIcon = ({ className }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
 const Footer = () => {
 
@@ -16,6 +22,12 @@ const Footer = () => {
             <p className="text-base text-muted-foreground leading-relaxed max-w-sm">
               We design, build, and automate high-performance digital environments for ambitious, forward-thinking brands.
             </p>
+            <a
+              href="mailto:hello@infinitypillars.com"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 mt-4 inline-block"
+            >
+              hello@infinitypillars.com
+            </a>
           </div>
 
           {/* Company */}
@@ -52,8 +64,8 @@ const Footer = () => {
               <a href="#" className="text-sm font-medium flex items-center gap-3 hover:text-muted-foreground transition-colors duration-200" aria-label="LinkedIn">
                 <Linkedin className="w-4 h-4" /> LinkedIn
               </a>
-              <a href="#" className="text-sm font-medium flex items-center gap-3 hover:text-muted-foreground transition-colors duration-200" aria-label="X">
-                <Twitter className="w-4 h-4" /> X
+              <a href="#" className="text-sm font-medium flex items-center gap-3 hover:text-muted-foreground transition-colors duration-200" aria-label="Twitter">
+                <XIcon className="w-4 h-4" /> Twitter
               </a>
             </div>
           </div>
