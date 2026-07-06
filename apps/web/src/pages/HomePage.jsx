@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
@@ -8,6 +8,15 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const HomePage = () => {
+  const [rotatingText, setRotatingText] = useState(0);
+  const audiences = ['E-commerce Brands.', 'Local Businesses.', 'Forward Thinking Enterprises.', 'Startups.'];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotatingText((prev) => (prev + 1) % audiences.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
   const services = [
     {
       number: '01',
@@ -117,15 +126,29 @@ const HomePage = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="max-w-6xl"
             >
-              <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-12">
-                We Build the Digital<br />
-                Infrastructure That<br />
-                <span className="text-muted-foreground italic font-medium">
-                  Captures, Qualifies,<br />and Closes Your Next Lead.
+              <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-8">
+                Digital Infrastructure<br />
+                Agency for<br />
+                <span className="inline-block relative min-w-[350px]">
+                  <motion.span
+                    key={rotatingText}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute left-0 text-muted-foreground italic font-medium"
+                  >
+                    {audiences[rotatingText]}
+                  </motion.span>
+                  <span className="invisible">{audiences[0]}</span>
                 </span>
               </h1>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-20 border-t border-border pt-12">
+              <p className="text-2xl md:text-3xl font-medium tracking-tight text-foreground/80 mt-6 mb-12 max-w-4xl">
+                We Build the Digital Infrastructure That Captures, Qualifies, and Closes Your Next Lead.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-border pt-12">
                 <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
                   We engineer high-conversion websites, establish undisputed Google Business authority, and deploy autonomous B2B AI agents that engage leads 24/7. No vanity metrics. No fluff. Just digital assets that work to scale your revenue.
                 </p>
