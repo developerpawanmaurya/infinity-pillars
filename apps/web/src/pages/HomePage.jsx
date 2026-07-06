@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const [rotatingText, setRotatingText] = useState(0);
-  const audiences = ['E-commerce Brands.', 'Local Businesses.', 'Forward Thinking Enterprises.', 'Startups.'];
+  const audiences = ['E-commerce Brands.', 'Local Businesses.', 'Startups.'];
 
   useEffect(() => {
     const interval = setInterval(() => {

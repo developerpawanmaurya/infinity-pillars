@@ -117,7 +117,7 @@ jobs:
         run: |
           for file in apps/wp-theme-ip/functions.php apps/wp-theme-ip/index.php apps/wp-theme-ip/style.css; do
             filename=$(basename "$file")
-            curl --ssl-reqd --ftp-create-dirs --silent --show-error \
+            curl --ssl-reqd --insecure --ftp-create-dirs --silent --show-error \
               -T "$file" \
               "ftp://${FTP_HOST}${THEME_DIR}/${filename}" \
               -u "${FTP_USER}:${FTP_PASS}"
