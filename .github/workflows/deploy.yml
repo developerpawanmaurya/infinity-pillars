@@ -119,6 +119,6 @@ jobs:
             filename=$(basename "$file")
             curl --ssl-reqd --ftp-create-dirs --silent --show-error \
               -T "$file" \
-              "ftps://${FTP_HOST}${THEME_DIR}/${filename}" \
+              "ftp://${FTP_HOST}${THEME_DIR}/${filename}" \
               -u "${FTP_USER}:${FTP_PASS}"
           done
