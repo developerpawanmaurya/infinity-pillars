@@ -22,8 +22,8 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 10%;
     
-    --primary: 240 10% 10%; /* Monochromatic primary */
-    --primary-foreground: 0 0% 100%;
+    --primary: 75 100% 46%; /* #AFEA00 lime accent */
+    --primary-foreground: 240 10% 8%; /* near-black for contrast on lime */
     
     --secondary: 40 20% 93%;
     --secondary-foreground: 240 10% 10%;
@@ -64,8 +64,8 @@ body {
     --popover: 240 8% 12%;
     --popover-foreground: 40 33% 98%;
     
-    --primary: 40 33% 98%;
-    --primary-foreground: 240 10% 10%;
+    --primary: 75 100% 46%; /* #AFEA00 lime accent */
+    --primary-foreground: 240 10% 8%; /* near-black for contrast on lime */
     
     --secondary: 240 8% 15%;
     --secondary-foreground: 40 33% 98%;
@@ -109,12 +109,12 @@ body {
 
   /* Sharp minimalist shadows */
   .shadow-editorial {
-    box-shadow: 4px 4px 0px 0px hsl(var(--border));
+    box-shadow: 4px 4px 0px 0px hsl(75 100% 46% / 0.35);
     transition: all 0.2s ease-in-out;
   }
-  
+
   .shadow-editorial:hover {
-    box-shadow: 8px 8px 0px 0px hsl(var(--border));
+    box-shadow: 8px 8px 0px 0px hsl(75 100% 46% / 0.55);
     transform: translate(-4px, -4px);
   }
 
@@ -141,10 +141,10 @@ body {
 /* ── Blog Article Design System ────────────────────────────────────────── */
 
 :root {
-  --blog-accent: 21 90% 52%;   /* warm amber – used for heading accents */
+  --blog-accent: 75 100% 38%;  /* #AFEA00 lime – slightly darker for light-bg readability */
 }
 .dark {
-  --blog-accent: 34 100% 62%;  /* lighter amber in dark mode */
+  --blog-accent: 75 100% 50%;  /* brighter lime on dark backgrounds */
 }
 
 /* Typography scale for rendered WordPress content */
@@ -226,7 +226,7 @@ body {
 
 /* Key Takeaways */
 .ip-key-takeaways {
-  border-left: 3px solid hsl(var(--foreground));
+  border-left: 3px solid hsl(var(--blog-accent));
   background: hsl(var(--muted));
   padding: 1.5rem 2rem;
   margin: 2.5rem 0;
@@ -242,7 +242,7 @@ body {
   color: hsl(var(--foreground));
   margin-bottom: 1.1rem;
 }
-.ip-kt-icon { color: hsl(var(--foreground)); flex-shrink: 0; }
+.ip-kt-icon { color: hsl(var(--blog-accent)); flex-shrink: 0; }
 .ip-kt-list {
   margin: 0;
   padding: 0;
@@ -262,7 +262,7 @@ body {
   content: '→';
   position: absolute;
   left: 0;
-  color: hsl(var(--foreground));
+  color: hsl(var(--blog-accent));
   font-weight: 700;
 }
 
@@ -486,8 +486,8 @@ body {
   align-items: center;
   white-space: nowrap;
   padding: 0.85rem 1.75rem;
-  background: hsl(var(--foreground));
-  color: hsl(var(--background));
+  background: hsl(var(--blog-accent));
+  color: hsl(240 10% 8%);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -601,7 +601,7 @@ body {
 .ip-sp-cite { display:block; margin-top:0.5rem; font-style:normal; font-size:0.75rem; font-weight:700; color:hsl(var(--muted-foreground)); }
 
 /* 19. Fun Fact / Did You Know */
-.ip-fun-fact { margin:2.5rem 0; padding:1.75rem 2rem 1.75rem 2.5rem; border-left:4px solid hsl(var(--foreground)); background:hsl(var(--muted)/0.5); position:relative; overflow:hidden; }
+.ip-fun-fact { margin:2.5rem 0; padding:1.75rem 2rem 1.75rem 2.5rem; border-left:4px solid hsl(var(--blog-accent)); background:hsl(var(--muted)/0.5); position:relative; overflow:hidden; }
 .ip-fun-fact::before { content:'?'; position:absolute; right:1.5rem; top:50%; transform:translateY(-50%); font-size:5rem; font-weight:900; color:hsl(var(--foreground)/0.06); line-height:1; pointer-events:none; }
 .ip-fun-label { font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:hsl(var(--muted-foreground)); margin-bottom:0.5rem; }
 .ip-fun-text { font-size:1rem; font-weight:600; color:hsl(var(--foreground)); line-height:1.65; margin:0; }
