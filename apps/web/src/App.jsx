@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage.jsx';
@@ -13,27 +13,37 @@ import BlogPage from './pages/BlogPage.jsx';
 import BlogPostPage from './pages/BlogPostPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import BookingModal from './components/BookingModal.jsx';
+import CustomCursor from './components/CustomCursor.jsx';
+import Preloader from './components/Preloader.jsx';
+import HomeExperiment from './pages/HomeExperiment.jsx';
 
 function App() {
+    const [preloaderDone, setPreloaderDone] = useState(false);
+
     return (
-        <Router>
-            <ScrollToTop />
-            <BookingModal />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/services" element={<ServicesPage />} />
-                <Route path="/testimonials" element={<TestimonialsPage />} />
-                <Route path="/portfolio" element={<PortfolioPage />} />
-                <Route path="/portfolio/:slug" element={<CaseStudyPage />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-                <Route path="/terms-of-service" element={<TermsOfServicePage />} />
-                <Route path="/blog" element={<BlogPage />} />
-                {/* /:category/:slug handles headless WP post URLs */}
-                <Route path="/:category/:slug" element={<BlogPostPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-        </Router>
+        <>
+            {!preloaderDone && <Preloader onComplete={() => setPreloaderDone(true)} />}
+            <Router>
+                <CustomCursor />
+                <ScrollToTop />
+                <BookingModal />
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/services" element={<ServicesPage />} />
+                    <Route path="/testimonials" element={<TestimonialsPage />} />
+                    <Route path="/portfolio" element={<PortfolioPage />} />
+                    <Route path="/portfolio/:slug" element={<CaseStudyPage />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+                    <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+                    <Route path="/blog" element={<BlogPage />} />
+                    {/* /:category/:slug handles headless WP post URLs */}
+                    <Route path="/:category/:slug" element={<BlogPostPage />} />
+                    <Route path="/experiment" element={<HomeExperiment />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+            </Router>
+        </>
     );
 }
 

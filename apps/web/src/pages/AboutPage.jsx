@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
+import LimeRevealSection from '@/components/LimeRevealSection.jsx';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -11,26 +12,32 @@ const AboutPage = () => {
     {
       step: '01',
       title: 'The Discovery & Audit Phase',
-      description: 'We audit your local visibility, analyze competitor weaknesses, and map out a strict data-backed pipeline strategy tailored for revenue expansion.',
-      detail: 'Before a single line of code is written or a single campaign is launched, we study your market position with precision. We review your current digital footprint, identify where competitors are winning, and define the exact revenue levers we will pull.'
+      description: 'We audit your current digital footprint, analyze competitor gaps, and map a strict data-backed strategy tailored to your revenue goals.',
+      detail: 'Before a single line of code is written, we study your market position with precision. We identify where competitors are winning, where your brand is leaking revenue, and define the exact levers we will pull to reverse that.'
     },
     {
       step: '02',
-      title: 'The UI/UX & Integration Sprint',
-      description: "We build interactive Figma prototypes of your user's journey, configure GMB architectures, and train your custom AI agent on your exact business documentation.",
-      detail: "Every customer touchpoint is designed with conversion psychology at its core. Your AI agent is trained on your product, your pricing, and your objection-handling logic — so it speaks like your best sales rep, available 24/7."
+      title: 'UX/UI Interactive Design',
+      description: "We prototype your complete user journey in high-fidelity Figma — designed around conversion psychology, not aesthetic preference.",
+      detail: "Every screen, every interaction, every micro-copy decision is engineered to reduce friction and move users toward a single action: converting. We present interactive prototypes so you can validate the experience before a line of code is written."
     },
     {
       step: '03',
-      title: 'Launch & Pipeline Calibration',
-      description: 'We deploy your high-speed web engine, sync API pathways to your WhatsApp Business app/CRM, and set up tracking to measure real pipeline value.',
-      detail: 'We do not launch and disappear. We monitor live performance data, confirm that lead routing is working correctly, and make real-time adjustments to ensure your pipeline is generating qualified inquiries from day one.'
+      title: 'Full-Stack System Engineering',
+      description: 'We build and deploy your high-speed web engine, API integrations, automation flows, and data infrastructure — tested before any go-live.',
+      detail: 'We do not launch and disappear. We monitor live performance data, confirm that all integrations are firing correctly, and run QA across every device and browser before handing you the keys.'
     },
     {
       step: '04',
       title: 'Growth Optimization Retainer',
-      description: 'We continuously audit search algorithms, optimize your local Google Map rankings, and tune AI prompts to maximize lead-to-close conversions.',
-      detail: 'Markets shift. Algorithms update. Competitor behavior changes. Our retainer keeps your digital infrastructure adaptive — always ranking, always qualifying, always converting at the highest possible rate.'
+      description: 'Post-launch, we continuously audit performance, refine AI prompts, and optimize every layer to compound your returns over time.',
+      detail: 'Markets shift. Algorithms update. Competitor behaviour changes. Our retainer keeps your digital infrastructure adaptive — always performing, always qualifying, always converting at the highest possible rate.'
+    },
+    {
+      step: '05',
+      title: 'Growth Operations & Talent Consulting',
+      description: 'We help you build the internal team, processes, and operational systems required to sustain growth beyond our engagement.',
+      detail: 'Sustainable growth requires the right people in the right seats. We consult on hiring, onboarding, and building internal capability — so that when our active engagement ends, your team can carry the momentum forward independently.'
     }
   ];
 
@@ -94,7 +101,7 @@ const AboutPage = () => {
               transition={{ duration: 0.6 }}
               className="mb-24"
             >
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">The Four Phases</h2>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">The Five Phases</h2>
               <p className="text-xl text-muted-foreground max-w-2xl">
                 Every engagement follows the same disciplined sequence. No shortcuts. No guesswork. Just a repeatable system that produces results.
               </p>
@@ -111,7 +118,7 @@ const AboutPage = () => {
                   className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 border-t border-border py-16"
                 >
                   <div className="lg:col-span-1">
-                    <div className="text-sm font-bold tracking-widest text-muted-foreground">{item.step}</div>
+                    <div className="text-sm font-bold tracking-widest text-[#AFEA00]">{item.step}</div>
                   </div>
                   <div className="lg:col-span-4">
                     <h3 className="text-2xl md:text-3xl font-bold tracking-tight">{item.title}</h3>
@@ -126,30 +133,25 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* Philosophy Statement */}
-        <section className="py-32">
+        {/* Lime Reveal — Philosophy Statement */}
+        <LimeRevealSection className="py-40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="lg:col-span-5"
-              >
-                <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-8">
-                  Why This Approach Works
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+              <div className="lg:col-span-5">
+                <p className="text-xs font-bold tracking-widest uppercase mb-8" style={{ color: '#111' }}>
+                  Why It Works
+                </p>
+                <h2
+                  className="text-4xl md:text-6xl font-bold tracking-tighter leading-[0.9]"
+                  style={{ color: '#111' }}
+                >
+                  Disconnected tools compete.<br />
+                  <span style={{ color: '#111', opacity: 0.5 }}>Systems compound.</span>
                 </h2>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="lg:col-span-6 lg:col-start-7"
-              >
-                <div className="space-y-8 text-lg text-muted-foreground leading-relaxed">
+              <div className="lg:col-span-6 lg:col-start-7">
+                <div className="space-y-8 text-lg leading-relaxed" style={{ color: '#222' }}>
                   <p>
                     Most agencies deploy tactics in isolation. A website here. A Google Ads campaign there. A chatbot bolted on as an afterthought. The result is a collection of disconnected tools that compete for your budget and deliver fragmented results.
                   </p>
@@ -160,10 +162,10 @@ const AboutPage = () => {
                     When all three pillars work together, the result is compounding growth — not a short-term spike that fades when the ad spend stops.
                   </p>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
-        </section>
+        </LimeRevealSection>
 
         {/* CTA */}
         <section className="py-40 bg-foreground text-background text-center">
