@@ -66,14 +66,14 @@ const TestimonialsPage = () => {
             className="max-w-5xl"
           >
             <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-12">
-              What Our<br />
-              <span className="text-muted-foreground italic font-medium">Partners Say.</span>
+              Trusted by<br />
+              <span className="text-muted-foreground italic font-medium">Forward-Thinking Leadership.</span>
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-20 border-t border-border pt-12">
               <div className="md:col-span-8 md:col-start-5">
                 <p className="text-xl md:text-3xl text-muted-foreground leading-relaxed font-light">
-                  We measure our success strictly by the pipeline growth and revenue our partners achieve. Here's what they have to say about the systems we built for them.
+                  Here is what happens when founders stop buying generic web pages and start deploying actual digital products.
                 </p>
               </div>
             </div>

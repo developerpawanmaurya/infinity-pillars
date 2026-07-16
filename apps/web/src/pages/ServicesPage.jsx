@@ -1,87 +1,93 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { Globe, MapPin, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
+import LimeRevealSection from '@/components/LimeRevealSection.jsx';
 import { Button } from '@/components/ui/button';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ServicesPage = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    // Handle cross-page navigation with scroll target
-    if (location.state?.scrollTo) {
-      const timer = setTimeout(() => {
-        const element = document.getElementById(location.state.scrollTo);
-        if (element) {
-          const yOffset = -100;
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-          
-          const headline = element.querySelector('h2');
-          if (headline) {
-            headline.style.transition = 'color 0.5s ease-in-out';
-            headline.classList.add('text-primary');
-            setTimeout(() => {
-              headline.classList.remove('text-primary');
-              headline.style.transition = '';
-            }, 2000);
-          }
-        }
-      }, 300); // Allow initial animations/layout to settle
-      return () => clearTimeout(timer);
-    }
-  }, [location.state]);
-
-  const services = [
+  const packages = [
     {
-      id: 'web-architecture-service',
-      icon: Globe,
-      title: 'Conversion-First Web Architecture & UX',
-      description: "We design and build ultra-fast, responsive web platforms custom-built around your user's psychology. We turn passive visitors into immediate phone calls, form submissions, and booked calendar appointments.",
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      features: [
-        'High-conversion page design & UX mapping',
-        'Speed optimization & Core Web Vitals',
-        'Phone, form & calendar conversion flows',
-        'Responsive mobile-first architecture'
-      ]
+      number: '01',
+      name: 'The Product Foundation Blueprint',
+      description: 'A comprehensive transformation that transitions an idea from a rough business concept into a fully functional digital product — with the infrastructure to convert visitors into paying clients.',
+      image: '/images/services/package-1',
+      imageAlt: 'Connected product foundation — laptop, mobile app, sitemap, code and analytics modules linked together',
+      deliverables: [
+        'Product Strategy & User Journey Mapping',
+        'Interactive UX Design Sprint (HiFi Figma Prototypes)',
+        'Core Engineering & Infrastructure',
+        'Go-To-Market Automation (WhatsApp API / CRM)',
+      ],
     },
     {
-      id: 'gmb-seo-service',
-      icon: MapPin,
-      title: 'Google Local Map Dominance & GMB SEO',
-      description: 'When target buyers search for your services, we make sure you are the undisputed, highly rated choice in the top 3 Google Map spots. We turn search intent into physical foot traffic and inbound inquiries.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      features: [
-        'Google Business Profile optimization',
-        'Local Map Pack ranking strategy',
-        'Review generation & management',
-        'Local citation building & authority'
-      ]
+      number: '02',
+      name: 'The Scale & Scale-Up Ecosystem',
+      description: 'Engineering multi-layered web systems integrated with product intelligence, data security, and team-building consulting — for organisations ready to move beyond early-stage.',
+      image: '/images/services/package-2',
+      imageAlt: 'Scaled ecosystem — dashboard, secured servers, AI automation, user management and growth analytics',
+      deliverables: [
+        'Full-Scale Product Architecture & Advanced UX',
+        'Advanced Full-Stack Engineering & Data Security',
+        'Product Talent Pipeline Strategy',
+        'Automated Product Ops (AI Agents & Webhooks)',
+      ],
+    },
+  ];
+
+  const alaCarte = [
+    {
+      category: 'Product Strategy & UX Design',
+      image: '/images/services/a-la-carte-1',
+      imageAlt: 'Design tooling — browser wireframe, mobile mockup, Figma, analytics and user research',
+      items: [
+        { name: 'Brand Strategy & Identity System' },
+        { name: 'Full UX Audit & Redesign' },
+      ],
     },
     {
-      id: 'ai-agents-service',
-      icon: Zap,
-      title: 'Autonomous B2B AI Agents & Automation',
-      description: 'Form fills are too slow. We deploy custom-trained AI interfaces onto your website that act as continuous, round-the-clock sales reps—answering deep technical questions, qualifying high-value leads, and auto-booking sales calls.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      features: [
-        'Custom-trained AI chatbot deployment',
-        '24/7 lead qualification & filtering',
-        'Auto-booking & CRM integration',
-        'Deep technical Q&A handling'
-      ]
-    }
+      category: 'Technical Engineering & Code',
+      image: '/images/services/a-la-carte-2',
+      imageAlt: 'Engineering stack — code editor, configuration, performance metering and databases',
+      items: [
+        { name: 'Custom Web App / Portal Development' },
+        { name: 'WhatsApp API & CRM Integration' },
+      ],
+    },
+    {
+      category: 'Organisational Scaling',
+      image: '/images/services/a-la-carte-3',
+      imageAlt: 'Organisational scaling — team org chart, task checklist, workflow automation and integrations',
+      items: [
+        { name: 'Talent Acquisition Strategy' },
+        { name: 'SOPs & Workflow Documentation' },
+      ],
+    },
+  ];
+
+  const intelligenceLayer = [
+    {
+      name: 'Custom-Trained AI Knowledge Agents',
+      description: 'Deploy a trained AI interface on your site that qualifies leads, answers deep product questions, and routes high-intent visitors to a calendar — 24/7, without a salary.',
+    },
+    {
+      name: 'Autonomous Calendar Routing',
+      description: 'Automated scheduling flows that sync with your availability, send reminders, and reduce no-shows — integrated directly with your existing CRM or calendar stack.',
+    },
+    {
+      name: 'Hyper-Automated Operations',
+      description: 'Custom automation pipelines built on n8n, Zapier, or Make — connecting your product, CRM, comms, and reporting into a single operational backbone.',
+    },
   ];
 
   return (
     <>
       <Helmet>
         <title>Core Offerings - Infinity Pillars</title>
-        <meta name="description" content="We deploy integrated systems engineered to work together as a seamless sales team — web architecture, GMB SEO, and autonomous AI agents." />
+        <meta name="description" content="Two focused engagement packages and a modular A-La-Carte menu — engineered for where your business is right now and where it needs to go next." />
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
@@ -92,7 +98,7 @@ const ServicesPage = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
             className="max-w-5xl"
           >
             <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-12">
@@ -103,61 +109,73 @@ const ServicesPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-20 border-t border-border pt-12">
               <div className="md:col-span-8 md:col-start-5">
                 <p className="text-xl md:text-3xl text-muted-foreground leading-relaxed font-light">
-                  Static websites and simple ad campaigns no longer work in 2026. We deploy integrated systems engineered to work together as a seamless sales team.
+                  Two focused packages. A modular A-La-Carte menu. And an Intelligence Layer that makes everything compound.
                 </p>
               </div>
             </div>
           </motion.div>
         </section>
 
-        {/* Services Grid (Aligned minimal cards) */}
-        <section className="py-24 bg-muted/20 border-y border-border">
+        {/* Packages */}
+        <section className="py-24 border-t border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-              {services.map((service, index) => (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-16"
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-4">Engagement Packages</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">Choose Your Starting Point</h2>
+            </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {packages.map((pkg, index) => (
                 <motion.div
-                  key={service.title}
-                  id={service.id}
+                  key={pkg.name}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-card p-8 md:p-12 border border-border flex flex-col h-full shadow-sm hover:shadow-editorial transition-all duration-300 scroll-mt-24"
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  className="group border border-border flex flex-col overflow-hidden hover:border-[#AFEA00] transition-colors duration-300"
                 >
-                  <div className="editorial-frame mb-10 overflow-hidden">
-                    <img 
-                      src={service.image} 
-                      alt={service.title} 
-                      className="w-full h-48 object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-500" 
-                    />
-                  </div>
-                  
-                  <div className="flex items-center gap-4 mb-6">
-                    <service.icon className="w-8 h-8 text-foreground" strokeWidth={1.5} />
-                    <h2 className="text-3xl font-bold tracking-tight">{service.title}</h2>
-                  </div>
-                  
-                  <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-                    {service.description}
-                  </p>
-
-                  <div className="border-t border-border pt-8 mb-8">
-                    <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">Deliverables</div>
-                    <ul className="space-y-4">
-                      {service.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-4">
-                          <span className="w-1 h-1 bg-foreground rounded-full mt-2.5 flex-shrink-0"></span>
-                          <span className="text-foreground font-medium">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  {/* Visual header — full-bleed 3D render */}
+                  <div className="aspect-[16/10] overflow-hidden bg-muted/30 border-b border-border">
+                    <picture>
+                      <source srcSet={`${pkg.image}.webp`} type="image/webp" />
+                      <img
+                        src={`${pkg.image}.png`}
+                        alt={pkg.imageAlt}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      />
+                    </picture>
                   </div>
 
-                  <div className="mt-auto pt-4">
-                    <Button 
-                      asChild 
+                  <div className="p-10 md:p-12 flex flex-col gap-8 flex-1">
+                    <div className="flex items-start justify-between gap-4">
+                      <span className="text-sm font-bold tracking-widest text-[#AFEA00]">{pkg.number}</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">{pkg.name}</h3>
+                      <p className="text-muted-foreground leading-relaxed">{pkg.description}</p>
+                    </div>
+                    <div className="border-t border-border pt-8">
+                      <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">Deliverables</p>
+                      <ul className="space-y-4">
+                        {pkg.deliverables.map((item) => (
+                          <li key={item} className="flex items-start gap-3 text-sm">
+                            <span className="text-[#AFEA00] mt-0.5 shrink-0">—</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <Button
+                      asChild
                       variant="outline"
-                      className="w-full rounded-none border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 h-12 text-sm uppercase tracking-widest font-bold"
+                      className="mt-auto rounded-none border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 h-12 text-sm uppercase tracking-widest font-bold"
                     >
                       <Link to="/#booking">Book Audit Call</Link>
                     </Button>
@@ -166,79 +184,149 @@ const ServicesPage = () => {
               ))}
             </div>
 
-            {/* Prominent Section CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mt-32 text-center"
-            >
-              <h3 className="text-4xl md:text-5xl font-bold tracking-tighter mb-8">Ready to build your digital engine?</h3>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-12">
-                Tell us where your client acquisition is stalling. We'll present a custom engineering roadmap to scale your brand.
-              </p>
-              <Button
-                asChild
-                size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
-              >
-                <Link to="/#booking">Book Audit Call</Link>
-              </Button>
-            </motion.div>
           </div>
         </section>
 
-        {/* Process Overview */}
-        <section className="py-40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* A-La-Carte */}
+        <section className="py-32 bg-muted/20 border-y border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="mb-24"
+              className="mb-20"
             >
-              <h2 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">The Playbook Process</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                A systematic, zero-guesswork approach designed to build digital assets that scale.
+              <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-4">Modular Add-Ons</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-6">A-La-Carte Services</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl">
+                Already have a package? Layer on exactly what you need — nothing more, nothing less.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-24 text-left">
-              {[
-                {
-                  number: '01',
-                  title: 'Discovery & Audit',
-                  description: 'We audit your local visibility, analyze competitor weaknesses, and map out a strict data-backed pipeline strategy tailored for revenue expansion.'
-                },
-                {
-                  number: '02',
-                  title: 'Build & Configure',
-                  description: 'We construct your web infrastructure, configure GMB architectures, and train your custom AI agent on your exact business documentation.'
-                },
-                {
-                  number: '03',
-                  title: 'Launch & Optimize',
-                  description: 'We deploy your high-speed web engine, sync API pathways to your CRM, and continuously optimize to maximize lead-to-close conversions.'
-                }
-              ].map((step, index) => (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-border">
+              {alaCarte.map((category, catIndex) => (
                 <motion.div
-                  key={step.number}
+                  key={category.category}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.15 }}
-                  className="border-t border-border pt-8"
+                  transition={{ duration: 0.5, delay: catIndex * 0.1 }}
+                  className={`group bg-background p-8 md:p-10 ${catIndex < alaCarte.length - 1 ? 'border-b lg:border-b-0 lg:border-r border-border' : ''}`}
                 >
-                  <div className="text-sm font-bold tracking-widest text-muted-foreground mb-6">{step.number}</div>
-                  <h3 className="text-2xl font-bold tracking-tight mb-4">{step.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                  {/* Category visual */}
+                  <div className="aspect-[16/10] overflow-hidden bg-muted/40 border border-border mb-8">
+                    <picture>
+                      <source srcSet={`${category.image}.webp`} type="image/webp" />
+                      <img
+                        src={`${category.image}.png`}
+                        alt={category.imageAlt}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      />
+                    </picture>
+                  </div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-[#AFEA00] mb-8">{category.category}</p>
+                  <div className="space-y-6">
+                    {category.items.map((item) => (
+                      <div key={item.name} className="border-t border-border pt-6">
+                        <span className="text-sm font-medium leading-snug">{item.name}</span>
+                      </div>
+                    ))}
+                  </div>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
+
+        {/* Intelligence Layer */}
+        <section className="py-32">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-20"
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-4">AI-Powered</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-6">The Intelligence Layer</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl">
+                Autonomous systems that work while you sleep — qualifying leads, routing calendars, and running operations without manual input.
+              </p>
+            </motion.div>
+
+            <div className="space-y-0">
+              {intelligenceLayer.map((item, index) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 border-t border-border py-12"
+                >
+                  <div className="lg:col-span-1">
+                    <span className="text-sm font-bold tracking-widest text-[#AFEA00]">0{index + 1}</span>
+                  </div>
+                  <div className="lg:col-span-4">
+                    <h3 className="text-xl md:text-2xl font-bold tracking-tight">{item.name}</h3>
+                  </div>
+                  <div className="lg:col-span-7">
+                    <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="mt-20 pt-12 border-t border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
+            >
+              <div>
+                <h3 className="text-2xl font-bold tracking-tight mb-2">Not sure where to start?</h3>
+                <p className="text-muted-foreground">Book a 30-minute audit call. We'll map the right entry point for your business.</p>
+              </div>
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-10 py-8 text-base shadow-editorial shrink-0"
+              >
+                <Link to="/#booking">Book Audit Call <ArrowRight className="w-4 h-4 ml-2" /></Link>
+              </Button>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Lime Reveal */}
+        <LimeRevealSection className="py-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-xs font-bold tracking-widest uppercase mb-10" style={{ color: '#111' }}>
+              Our Execution Standard
+            </p>
+            <h2
+              className="text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-tighter leading-[0.9] mb-14 mx-auto max-w-4xl"
+              style={{ color: '#111' }}
+            >
+              Every deliverable.<br />
+              <span style={{ color: '#111', opacity: 0.5 }}>Tied to a metric.</span>
+            </h2>
+            <p className="text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto mb-16" style={{ color: '#222' }}>
+              If it cannot be measured, we do not build it. Every engagement starts with a clear success benchmark and ends with verified results.
+            </p>
+            <Link
+              to="/#booking"
+              className="inline-flex items-center gap-3 font-bold uppercase tracking-widest text-sm border-b-2 pb-1 transition-opacity hover:opacity-70"
+              style={{ borderColor: '#111', color: '#111' }}
+            >
+              Start your engagement
+            </Link>
+          </div>
+        </LimeRevealSection>
 
         <Footer />
       </div>

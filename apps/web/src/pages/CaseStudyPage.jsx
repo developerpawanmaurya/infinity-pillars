@@ -119,7 +119,7 @@ const CaseStudyPage = () => {
                 className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16"
               >
                 <div className="md:col-span-4">
-                  <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground sticky top-32">
+                  <h2 className="text-sm font-bold uppercase tracking-widest text-[#AFEA00] sticky top-32">
                     Brand Overview
                   </h2>
                 </div>
@@ -139,7 +139,7 @@ const CaseStudyPage = () => {
                 className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16"
               >
                 <div className="md:col-span-4">
-                  <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground sticky top-32">
+                  <h2 className="text-sm font-bold uppercase tracking-widest text-[#AFEA00] sticky top-32">
                     The Challenge
                   </h2>
                 </div>
@@ -159,7 +159,7 @@ const CaseStudyPage = () => {
                 className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16"
               >
                 <div className="md:col-span-4">
-                  <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground sticky top-32">
+                  <h2 className="text-sm font-bold uppercase tracking-widest text-[#AFEA00] sticky top-32">
                     Strategy & Execution
                   </h2>
                 </div>
@@ -179,7 +179,7 @@ const CaseStudyPage = () => {
                 className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 pb-24 border-b border-border"
               >
                 <div className="md:col-span-4">
-                  <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground sticky top-32">
+                  <h2 className="text-sm font-bold uppercase tracking-widest text-[#AFEA00] sticky top-32">
                     The Results
                   </h2>
                 </div>
