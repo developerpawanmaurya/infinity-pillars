@@ -16,6 +16,7 @@ import BookingModal from './components/BookingModal.jsx';
 import CustomCursor from './components/CustomCursor.jsx';
 import Preloader from './components/Preloader.jsx';
 import HomeExperiment from './pages/HomeExperiment.jsx';
+import HomeExperiment2 from './pages/HomeExperiment2.jsx';
 
 function App() {
     const [preloaderDone, setPreloaderDone] = useState(false);
@@ -40,6 +41,7 @@ function App() {
                     {/* /:category/:slug handles headless WP post URLs */}
                     <Route path="/:category/:slug" element={<BlogPostPage />} />
                     <Route path="/experiment" element={<HomeExperiment />} />
+                    <Route path="/experiment-2" element={<HomeExperiment2 />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Router>

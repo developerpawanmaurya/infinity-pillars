@@ -24,9 +24,21 @@ const LimeRevealSection = ({ children, className = '' }) => {
           ease: 'none',
           scrollTrigger: {
             trigger: section,
-            start: 'top bottom', // fire the instant section enters viewport from below
-            end: 'top 8%',       // fully grown when section top hits the header
-            scrub: 1.6,
+            // 'top+=300 30%' was an INVERTED range: it moved the start to
+            // "section top at -30px" (already scrolled past the viewport
+            // top), which is a LATER scroll position than the end ('top 8%'
+            // = section top at 8% viewport). GSAP resolved that inversion
+            // into a broken window that ran while the NEXT section (the
+            // testimonial) was on screen — and since the growing square
+            // lives in a full-viewport position:fixed overlay at z-40, it
+            // was covering the testimonial's word-reveal entirely
+            // (verified in-browser). 'top 40%' → 'top -5%' is a valid,
+            // late-ish window: the grow starts only once the section's top
+            // has climbed to 40% of the viewport and completes just past
+            // the top, well before the following section scrolls in.
+            start: 'top 40%',
+            end: 'top -5%',
+            scrub: 1.7,          // was 1.6 — slightly slower/laggier catch-up to scroll
 
             // Section entering — show growing square over the page
             onEnter: () => {

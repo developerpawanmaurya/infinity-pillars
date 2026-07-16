@@ -14,6 +14,8 @@ const ServicesPage = () => {
       number: '01',
       name: 'The Product Foundation Blueprint',
       description: 'A comprehensive transformation that transitions an idea from a rough business concept into a fully functional digital product — with the infrastructure to convert visitors into paying clients.',
+      image: '/images/services/package-1',
+      imageAlt: 'Connected product foundation — laptop, mobile app, sitemap, code and analytics modules linked together',
       deliverables: [
         'Product Strategy & User Journey Mapping',
         'Interactive UX Design Sprint (HiFi Figma Prototypes)',
@@ -25,6 +27,8 @@ const ServicesPage = () => {
       number: '02',
       name: 'The Scale & Scale-Up Ecosystem',
       description: 'Engineering multi-layered web systems integrated with product intelligence, data security, and team-building consulting — for organisations ready to move beyond early-stage.',
+      image: '/images/services/package-2',
+      imageAlt: 'Scaled ecosystem — dashboard, secured servers, AI automation, user management and growth analytics',
       deliverables: [
         'Full-Scale Product Architecture & Advanced UX',
         'Advanced Full-Stack Engineering & Data Security',
@@ -37,6 +41,8 @@ const ServicesPage = () => {
   const alaCarte = [
     {
       category: 'Product Strategy & UX Design',
+      image: '/images/services/a-la-carte-1',
+      imageAlt: 'Design tooling — browser wireframe, mobile mockup, Figma, analytics and user research',
       items: [
         { name: 'Brand Strategy & Identity System' },
         { name: 'Full UX Audit & Redesign' },
@@ -44,6 +50,8 @@ const ServicesPage = () => {
     },
     {
       category: 'Technical Engineering & Code',
+      image: '/images/services/a-la-carte-2',
+      imageAlt: 'Engineering stack — code editor, configuration, performance metering and databases',
       items: [
         { name: 'Custom Web App / Portal Development' },
         { name: 'WhatsApp API & CRM Integration' },
@@ -51,6 +59,8 @@ const ServicesPage = () => {
     },
     {
       category: 'Organisational Scaling',
+      image: '/images/services/a-la-carte-3',
+      imageAlt: 'Organisational scaling — team org chart, task checklist, workflow automation and integrations',
       items: [
         { name: 'Talent Acquisition Strategy' },
         { name: 'SOPs & Workflow Documentation' },
@@ -128,33 +138,48 @@ const ServicesPage = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.15 }}
-                  className="border border-border p-10 md:p-12 flex flex-col gap-8 hover:border-[#AFEA00] transition-colors duration-300"
+                  className="group border border-border flex flex-col overflow-hidden hover:border-[#AFEA00] transition-colors duration-300"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="text-sm font-bold tracking-widest text-[#AFEA00]">{pkg.number}</span>
+                  {/* Visual header — full-bleed 3D render */}
+                  <div className="aspect-[16/10] overflow-hidden bg-muted/30 border-b border-border">
+                    <picture>
+                      <source srcSet={`${pkg.image}.webp`} type="image/webp" />
+                      <img
+                        src={`${pkg.image}.png`}
+                        alt={pkg.imageAlt}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      />
+                    </picture>
                   </div>
-                  <div>
-                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">{pkg.name}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{pkg.description}</p>
+
+                  <div className="p-10 md:p-12 flex flex-col gap-8 flex-1">
+                    <div className="flex items-start justify-between gap-4">
+                      <span className="text-sm font-bold tracking-widest text-[#AFEA00]">{pkg.number}</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">{pkg.name}</h3>
+                      <p className="text-muted-foreground leading-relaxed">{pkg.description}</p>
+                    </div>
+                    <div className="border-t border-border pt-8">
+                      <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">Deliverables</p>
+                      <ul className="space-y-4">
+                        {pkg.deliverables.map((item) => (
+                          <li key={item} className="flex items-start gap-3 text-sm">
+                            <span className="text-[#AFEA00] mt-0.5 shrink-0">—</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="mt-auto rounded-none border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 h-12 text-sm uppercase tracking-widest font-bold"
+                    >
+                      <Link to="/#booking">Book Audit Call</Link>
+                    </Button>
                   </div>
-                  <div className="border-t border-border pt-8">
-                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">Deliverables</p>
-                    <ul className="space-y-4">
-                      {pkg.deliverables.map((item) => (
-                        <li key={item} className="flex items-start gap-3 text-sm">
-                          <span className="text-[#AFEA00] mt-0.5 shrink-0">—</span>
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="mt-auto rounded-none border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 h-12 text-sm uppercase tracking-widest font-bold"
-                  >
-                    <Link to="/#booking">Book Audit Call</Link>
-                  </Button>
                 </motion.div>
               ))}
             </div>
@@ -187,8 +212,20 @@ const ServicesPage = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-                  className={`p-8 md:p-10 ${catIndex < alaCarte.length - 1 ? 'border-b lg:border-b-0 lg:border-r border-border' : ''}`}
+                  className={`group bg-background p-8 md:p-10 ${catIndex < alaCarte.length - 1 ? 'border-b lg:border-b-0 lg:border-r border-border' : ''}`}
                 >
+                  {/* Category visual */}
+                  <div className="aspect-[16/10] overflow-hidden bg-muted/40 border border-border mb-8">
+                    <picture>
+                      <source srcSet={`${category.image}.webp`} type="image/webp" />
+                      <img
+                        src={`${category.image}.png`}
+                        alt={category.imageAlt}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      />
+                    </picture>
+                  </div>
                   <p className="text-xs font-bold uppercase tracking-widest text-[#AFEA00] mb-8">{category.category}</p>
                   <div className="space-y-6">
                     {category.items.map((item) => (

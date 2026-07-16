@@ -22,6 +22,13 @@ export default function Preloader({ onComplete }) {
     const tl = gsap.timeline({
       onComplete() {
         document.body.style.overflow = '';
+        // Global signal for anything that mounted underneath the opaque
+        // preloader and needs to wait for it to actually lift before playing
+        // its own on-load animation (e.g. the /experiment hero's heading
+        // intro) — otherwise that animation finishes silently behind the
+        // curtain and the user never sees it play.
+        window.__preloaderDone = true;
+        window.dispatchEvent(new Event('preloader:done'));
         onComplete?.();
       },
     });
