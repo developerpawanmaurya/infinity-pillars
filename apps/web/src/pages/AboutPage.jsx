@@ -51,7 +51,7 @@ const AboutPage = () => {
       <div className="min-h-screen bg-background text-foreground">
         <Header />
 
-        {/* Hero */}
+        {/* Hero Section*/}
         <section className="pt-40 pb-24 md:pt-56 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
