@@ -134,7 +134,7 @@ const AboutPage = () => {
         </section>
 
         {/* Lime Reveal — Philosophy Statement */}
-        <LimeRevealSection className="py-40">
+        <LimeRevealSection className="pt-[120px] sm:pt-[160px] md:pt-[200px] pb-40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
               <div className="lg:col-span-5">
@@ -185,7 +185,7 @@ const AboutPage = () => {
                 size="lg"
                 className="bg-background text-foreground hover:bg-background/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
               >
-                <Link to="/#booking">Book Audit Call</Link>
+                <Link to="#booking">Book Audit Call</Link>
               </Button>
             </motion.div>
           </div>

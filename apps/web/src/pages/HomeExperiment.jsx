@@ -674,7 +674,7 @@ const HomeExperiment = () => {
                   size="lg"
                   className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] text-lg rounded-none px-10 py-8 shadow-editorial"
                 >
-                  <Link to="/#booking">Book Audit Call</Link>
+                  <Link to="#booking">Book Audit Call</Link>
                 </Button>
               </div>
             </div>
@@ -849,7 +849,7 @@ const HomeExperiment = () => {
         </section>
 
         {/* ── Lime Reveal ──────────────────────────────────────────────────── */}
-        <LimeRevealSection className="py-40">
+        <LimeRevealSection className="pt-[120px] sm:pt-[160px] md:pt-[200px] pb-40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
               <div className="lg:col-span-7">
@@ -931,7 +931,7 @@ const HomeExperiment = () => {
               Tell us where your client acquisition is stalling. We'll skip the generic sales pitch and present a custom engineering roadmap to scale your brand.
             </p>
             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial inline-flex">
-              <Link to="/#booking">Book Audit Call</Link>
+              <Link to="#booking">Book Audit Call</Link>
             </Button>
           </motion.div>
         </section>

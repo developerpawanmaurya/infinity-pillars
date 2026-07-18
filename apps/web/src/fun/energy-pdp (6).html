@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maysar Energy. Strawberry. Morning Ritual.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F1E4;
+  --ink:#1D241D;
+  --soft:#5C6156;
+  --green:#243325;
+  --green-deep:#16201A;
+  --terracotta:#D27936;
+  --berry:#C0364B;        /* strawberry red from canister */
+  --berry-deep:#A02940;
+  --berry-soft:#F6DEDD;   /* pale strawberry tint */
+  --berry-mist:#FBEFEA;
+  --cream:#FBF8EE;
+  --line:rgba(29,36,29,.12);
+  --line-berry:rgba(192,54,75,.22);
+  --white:#FFFFFF;
+  --shadow:0 10px 30px rgba(22,32,26,.10);
+  --radius:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{
+  font-family:'Hanken Grotesk',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+img{display:block;max-width:100%}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3,.display{font-family:'Bricolage Grotesque',sans-serif;line-height:1.08;letter-spacing:-0.01em}
+
+/* ───────── eyebrow / kicker system ───────── */
+.kicker{
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--terracotta);display:flex;align-items:center;gap:10px;
+}
+.kicker::before{content:"";width:22px;height:2px;background:currentColor;border-radius:2px}
+.kicker.berry{color:var(--berry)}
+.kicker.pale{color:#E9C9A0}
+
+/* ───────── nav ───────── */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(245,241,228,.88);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:56px}
+.wordmark{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.02em;color:var(--green);text-decoration:none}
+.wordmark span{color:var(--terracotta)}
+.nav-links{display:none;gap:28px}
+.nav-links a{font-size:14px;font-weight:600;color:var(--ink);text-decoration:none}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.bag-btn{
+  font-size:13px;font-weight:700;color:var(--green);
+  border:1.5px solid var(--green);border-radius:100px;padding:8px 16px;background:transparent;
+}
+.burger{width:22px;display:flex;flex-direction:column;gap:5px;background:none;border:none}
+.burger i{height:2px;background:var(--green);border-radius:2px}
+
+/* ───────── hero ───────── */
+.hero{
+  background:linear-gradient(178deg,var(--cream) 0%,var(--berry-mist) 42%,#F4CFC8 100%);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.hero-in{display:grid;grid-template-columns:1fr;gap:0;padding-top:18px}
+.hero-visual{position:relative;padding:6px 0 0}
+.hero-frame{
+  position:relative;z-index:1;width:min(100%,480px);margin:0 auto;
+  aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;
+  background:#FDFBF4;box-shadow:var(--shadow);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-frame img{width:100%;height:100%;object-fit:contain}
+.ghost-word{
+  position:absolute;left:-8px;top:10px;z-index:0;pointer-events:none;
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  font-size:clamp(90px,24vw,200px);line-height:.8;color:rgba(192,54,75,.08);
+  letter-spacing:-.04em;user-select:none;
+}
+.thumb-row{display:flex;gap:8px;justify-content:flex-start;margin-top:12px;position:relative;z-index:1;overflow-x:auto;padding:4px 2px;-webkit-overflow-scrolling:touch}
+@media(min-width:900px){
+  .hero-in{align-items:stretch}
+  .hero-visual{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:stretch;padding-top:0;height:100%}
+  .ghost-word{display:none}
+  .thumb-row{grid-column:1;grid-row:1;flex-direction:column;justify-content:flex-start;overflow:visible;margin-top:0;padding:0}
+  .hero-frame{grid-column:2;grid-row:1;width:100%;max-width:none;margin:0;aspect-ratio:auto;height:100%}
+  .hero-frame img{object-fit:cover}
+  .hero-frame img.fit-contain{object-fit:contain;background:#FDFBF4}
+}
+.thumb{
+  width:56px;height:56px;border-radius:12px;border:1.5px solid var(--line);
+  background:#FDFBF4;overflow:hidden;flex:none;cursor:pointer;padding:3px;
+}
+.thumb img{width:100%;height:100%;object-fit:contain;border-radius:8px}
+.thumb.active{border-color:var(--berry)}
+.thumb.ph{display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--soft);text-align:center;line-height:1.2}
+
+.hero-copy{padding:26px 0 30px}
+.ritual-tag{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--berry);background:var(--white);border:1px solid var(--line-berry);
+  border-radius:100px;padding:6px 12px;
+}
+.hero-copy h1{font-size:clamp(44px,11vw,72px);font-weight:800;color:var(--green);margin:14px 0 6px}
+.hero-sub{font-size:17px;color:var(--ink);max-width:46ch}
+.hero-sub strong{font-weight:700}
+.flavor-chip{
+  display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+  background:var(--berry);color:#fff;border-radius:100px;padding:7px 16px;
+  font-size:13px;font-weight:700;letter-spacing:.02em;
+}
+.flavor-chip small{font-weight:500;opacity:.85}
+
+/* proof strip under h1 */
+.proof-strip{
+  display:flex;gap:0;margin:22px 0 0;border:1px solid var(--line);
+  border-radius:16px;background:var(--white);overflow:hidden;
+}
+.proof-strip div{flex:1;padding:12px 8px;text-align:center}
+.proof-strip div + div{border-left:1px solid var(--line)}
+.proof-strip b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:800;color:var(--green)}
+.proof-strip span{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+
+/* size selector */
+.size-label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin:24px 0 10px}
+.sizes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.size{
+  position:relative;border:1.5px solid var(--line);border-radius:16px;
+  background:var(--white);padding:14px;cursor:pointer;
+}
+.size.selected{border-color:var(--berry);box-shadow:0 0 0 3px rgba(192,54,75,.12)}
+.size .tag{
+  position:absolute;top:-9px;right:12px;background:var(--green);color:#fff;
+  font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  border-radius:100px;padding:3px 9px;
+}
+.size b{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:800;color:var(--green);display:block}
+.size .price{font-size:20px;font-weight:800;color:var(--ink);margin-top:2px}
+.size .per{font-size:12px;color:var(--soft);margin-top:1px}
+.size .per em{font-style:normal;color:var(--berry);font-weight:700}
+
+.duo-offer{
+  display:flex;align-items:center;gap:12px;margin-top:12px;
+  background:var(--white);border:1.5px dashed var(--line-berry);border-radius:14px;padding:11px 14px;
+}
+.duo-offer .duo-badge{
+  flex:none;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--terracotta);color:#fff;border-radius:100px;padding:4px 10px;
+}
+.duo-offer p{font-size:13px;color:var(--soft);line-height:1.4}
+.duo-offer p b{color:var(--ink)}
+.cta-row{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:100px;padding:16px 24px;font-size:16px;font-weight:800;
+  font-family:'Hanken Grotesk';text-decoration:none;border:none;cursor:pointer;
+}
+.btn-primary{background:var(--berry);color:#fff;box-shadow:0 8px 24px rgba(192,54,75,.28)}
+.btn-ghost{background:transparent;border:1.5px solid var(--green);color:var(--green);padding:13px 24px;font-size:14px}
+.assure{display:flex;justify-content:center;gap:16px;margin-top:14px;flex-wrap:wrap}
+.assure span{font-size:11.5px;font-weight:600;color:var(--soft);display:flex;align-items:center;gap:5px}
+.assure b{color:var(--green)}
+
+/* ───────── idea band ───────── */
+.idea{background:var(--paper);padding:52px 0;border-bottom:1px solid var(--line)}
+.idea-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.idea p.big{
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(24px,5.8vw,52px);
+  line-height:1.16;color:var(--green);margin-top:14px;
+}
+.idea p.big em{font-style:normal;color:var(--berry)}
+.idea .sub{font-size:16px;color:var(--soft);max-width:36ch}
+@media(min-width:900px){
+  .idea{padding:84px 0}
+  .idea-grid{grid-template-columns:1.6fr 1fr;gap:64px;align-items:end}
+  .idea p.big{margin-top:18px}
+  .idea .sub{padding-bottom:8px;border-left:3px solid var(--berry);padding-left:18px}
+}
+
+/* ───────── the two proofs: shared header ───────── */
+.proof-head{display:flex;flex-direction:column;gap:12px;margin-bottom:26px}
+.proof-num{
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:13px;letter-spacing:.14em;
+}
+.proof-head h2{font-size:clamp(30px,7.4vw,46px);font-weight:800}
+
+/* ───────── taste (proof 1 of 2) ───────── */
+.taste{background:linear-gradient(180deg,var(--paper) 0%,var(--berry-mist) 100%);padding:60px 0 64px}
+.taste .proof-num{color:var(--berry)}
+.taste h2{color:var(--green)}
+.taste h2 em{font-style:normal;color:var(--berry)}
+.taste-grid{display:grid;grid-template-columns:1fr;gap:22px}
+.taste-photo{
+  border-radius:var(--radius);overflow:hidden;background:var(--berry-soft);
+  aspect-ratio:4/3;position:relative;box-shadow:var(--shadow);
+}
+.taste-photo img{width:100%;height:100%;object-fit:cover}
+@media(min-width:900px){.taste-photo{aspect-ratio:4/3}}
+.taste-photo .ph-label{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  color:var(--berry-deep);text-align:center;padding:20px;
+}
+.ph-label b{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:1.5px dashed var(--berry);border-radius:10px;padding:10px 14px}
+.ph-label span{font-size:12px;font-weight:600;opacity:.75}
+.taste-copy p.lede{font-size:17px;font-weight:600;color:var(--ink);max-width:50ch}
+.taste-copy p.body{font-size:15px;color:var(--soft);margin-top:12px;max-width:52ch}
+.note-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.note-chips span{
+  font-size:13px;font-weight:700;border-radius:100px;padding:8px 15px;
+  background:var(--white);border:1px solid var(--line-berry);color:var(--berry-deep);
+}
+.note-chips span.solid{background:var(--berry);border-color:var(--berry);color:#fff}
+.taste-rule{
+  margin-top:22px;border-left:3px solid var(--berry);padding:4px 0 4px 14px;
+  font-size:14px;color:var(--ink);max-width:52ch;
+}
+.taste-rule b{font-weight:800}
+
+/* ───────── science (proof 2 of 2, the only dark section) ───────── */
+.science{background:var(--green);color:var(--cream);padding:60px 0 64px}
+.science .proof-num{color:#E9C9A0}
+.science h2{color:var(--cream)}
+.science h2 em{font-style:normal;color:#F0B7A4}
+.science .lede{font-size:16px;color:rgba(251,248,238,.85);max-width:52ch}
+.ing-scroll{
+  display:flex;gap:14px;margin-top:28px;overflow-x:auto;padding-bottom:10px;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+}
+.ing-card{
+  flex:0 0 78%;max-width:300px;scroll-snap-align:start;border-radius:18px;overflow:hidden;
+  background:rgba(255,255,255,.05);border:1px solid rgba(251,248,238,.16);
+  display:flex;flex-direction:column;
+}
+.ing-photo{
+  aspect-ratio:4/3;position:relative;
+  background:linear-gradient(160deg,rgba(240,183,164,.28),rgba(192,54,75,.32));
+  display:flex;align-items:center;justify-content:center;
+}
+.ing-tag{
+  position:absolute;top:12px;left:12px;font-size:10px;font-weight:800;letter-spacing:.14em;
+  color:var(--cream);background:rgba(22,32,26,.45);border-radius:6px;padding:4px 8px;
+}
+.ing-ph{font-size:11px;font-weight:600;color:rgba(251,248,238,.75);text-align:center;border:1px dashed rgba(251,248,238,.4);border-radius:10px;padding:8px 12px;line-height:1.4}
+.ing-body{padding:16px 16px 18px;display:flex;flex-direction:column;gap:4px}
+.ing-dose{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;color:#F0B7A4;line-height:1}
+.ing-body b{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:700;color:var(--cream);margin-top:4px}
+.ing-body p{font-size:13px;color:rgba(251,248,238,.7)}
+.ing-body a{font-size:13px;font-weight:700;color:var(--cream);margin-top:8px;text-decoration:underline;text-underline-offset:3px}
+.ing-more{background:rgba(240,183,164,.12);justify-content:center}
+@media(min-width:900px){
+  .ing-scroll{overflow:visible;flex-wrap:nowrap}
+  .ing-card{flex:1 1 0;max-width:none}
+}
+.sci-foot{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.sci-foot p{font-size:13.5px;color:rgba(251,248,238,.7);max-width:56ch}
+.sci-foot p b{color:var(--cream)}
+.facts-link{
+  align-self:flex-start;margin-top:6px;font-size:13.5px;font-weight:700;color:var(--cream);
+  text-decoration:none;border:1.5px solid rgba(251,248,238,.4);border-radius:100px;padding:10px 18px;
+}
+.cert-card{margin-top:26px;border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.cert-card img{width:100%;display:block}
+.cert-card img.cert-d{display:none}
+@media(min-width:900px){.cert-card{max-width:none}.cert-card img.cert-m{display:none}.cert-card img.cert-d{display:block}}
+.dev-note{
+  margin-top:22px;border:1px dashed rgba(251,248,238,.35);border-radius:12px;padding:12px 14px;
+  font-size:12px;color:rgba(251,248,238,.6);
+}
+
+/* ───────── ritual ───────── */
+.ritual{padding:60px 0;background:var(--paper)}
+.ritual h2{color:var(--green);font-size:clamp(28px,7vw,42px);margin-top:12px}
+.ritual .sub{font-size:15px;color:var(--soft);margin-top:10px;max-width:52ch}
+.steps{display:grid;grid-template-columns:1fr;gap:14px;margin-top:26px}
+.step{
+  background:var(--white);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.step-photo{aspect-ratio:5/4;overflow:hidden}
+.step-photo img{width:100%;height:100%;object-fit:cover}
+.step-body{display:flex;gap:14px;align-items:flex-start;padding:16px}
+.step .ic{
+  flex:none;width:46px;height:46px;border-radius:14px;background:var(--berry-soft);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:15px;color:var(--berry-deep);
+}
+.step b{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:800;color:var(--green);display:block}
+.step p{font-size:14px;color:var(--soft);margin-top:3px}
+.step .t{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--berry);margin-top:6px;display:block}
+
+/* ───────── habit thesis ───────── */
+.habit{padding:60px 0;background:var(--cream);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.habit h2{font-size:clamp(28px,7vw,44px);color:var(--green);margin-top:12px;max-width:20ch}
+.habit-lede{font-size:16px;color:var(--soft);margin-top:14px;max-width:56ch}
+.habit-cols{display:grid;grid-template-columns:1fr;gap:12px;margin-top:26px}
+.h-card{border-radius:18px;padding:20px;border:1px solid var(--line);background:var(--white)}
+.h-card.dark{background:var(--green-deep);border-color:var(--green-deep);color:var(--cream)}
+.h-card .lbl{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--terracotta)}
+.h-card.dark .lbl{color:#E9C9A0}
+.h-card p{font-size:15px;margin-top:8px;color:var(--soft)}
+.h-card.dark p{color:rgba(251,248,238,.8)}
+.h-card p b{color:var(--ink);font-weight:800}
+.h-card.dark p b{color:var(--cream)}
+
+/* ───────── reviews ───────── */
+.reviews{padding:60px 0;background:var(--paper)}
+.reviews h2{font-size:clamp(26px,6.6vw,40px);color:var(--green);margin-top:12px}
+.reel-marquee{margin-top:26px;overflow:hidden;position:relative}
+.reel-track{padding:0 20px}
+.reel-track{display:flex;gap:16px;width:max-content;animation:reelscroll 40s linear infinite}
+.reel-marquee:hover .reel-track,.reel-marquee:active .reel-track{animation-play-state:paused}
+@keyframes reelscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.reel-track{animation:none;overflow-x:auto}}
+.reel{flex:0 0 auto;width:220px;display:flex;flex-direction:column}
+.reel-video{
+  aspect-ratio:9/16;border-radius:16px;position:relative;overflow:hidden;
+  background:var(--berry-soft);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+}
+.reel-video img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.reel-video .play{
+  position:absolute;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.85);
+  display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--berry-deep);padding-left:3px;
+}
+.reel-note{
+  position:absolute;bottom:10px;left:10px;font-size:9.5px;font-weight:700;letter-spacing:.04em;
+  color:#fff;background:rgba(22,32,26,.55);border-radius:6px;padding:3px 8px;
+}
+.reel-cap{font-size:13.5px;color:var(--ink);margin-top:12px;line-height:1.45}
+.reel-who{font-size:11.5px;font-weight:700;color:var(--soft);margin-top:6px}
+
+/* ───────── cross-sell ───────── */
+.stack{padding:60px 0 70px;background:var(--berry-mist);border-top:1px solid var(--line)}
+.stack h2{font-size:clamp(26px,6.6vw,40px);color:var(--green);margin-top:12px;max-width:18ch}
+.slider-wrap{margin-top:26px}
+.slider{overflow:hidden;border-radius:var(--radius)}
+.slide-track{display:flex;transition:transform .6s cubic-bezier(.22,.8,.24,1)}
+.slide{
+  flex:0 0 100%;display:grid;grid-template-columns:1fr;
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.slide-img{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:8px}
+.slide-img img{width:100%;height:100%;object-fit:contain}
+.slide-copy{padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px}
+.slide-ritual{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.slide-copy b{font-family:'Bricolage Grotesque',sans-serif;font-size:34px;font-weight:800;color:var(--green);line-height:1}
+.slide-copy p{font-size:15px;color:var(--soft)}
+.slide-cta{display:flex;align-items:center;gap:16px;margin-top:10px}
+.slide-price{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;color:var(--green)}
+.slide-btn{padding:12px 22px;font-size:14px;flex:none}
+.slide-dots{display:flex;gap:8px;justify-content:center;margin-top:16px}
+.dot{width:9px;height:9px;border-radius:50%;border:none;background:rgba(29,36,29,.2);cursor:pointer;padding:0}
+.dot.active{background:var(--berry);width:24px;border-radius:100px}
+@media(min-width:900px){
+  .slide{grid-template-columns:1fr 1fr;align-items:center}
+  .slide-img{aspect-ratio:auto;height:420px}
+  .slide-copy{padding:32px 40px}
+}
+/* ───────── footer ───────── */
+footer{background:var(--green-deep);color:rgba(251,248,238,.75);padding:44px 0 90px}
+footer .wordmark{color:var(--cream);font-size:24px}
+footer p{font-size:13px;margin-top:10px;max-width:40ch}
+.foot-links{display:flex;gap:22px;margin-top:22px;flex-wrap:wrap}
+.foot-links a{color:rgba(251,248,238,.75);font-size:13px;text-decoration:none;font-weight:600}
+.legal{font-size:11px;margin-top:26px;color:rgba(251,248,238,.45);max-width:60ch}
+
+/* ───────── sticky mobile buy bar ───────── */
+.buybar{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:rgba(251,248,238,.94);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  display:flex;align-items:center;gap:12px;
+}
+.buybar .p b{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;font-weight:800;color:var(--green);display:block;line-height:1.1}
+.buybar .p span{font-size:11px;color:var(--soft)}
+.buybar .btn-primary{flex:1;padding:13px 18px;font-size:15px}
+
+/* ───────── desktop ───────── */
+@media(min-width:900px){
+  .nav-links{display:flex}
+  .burger{display:none}
+  .hero-in{grid-template-columns:1.05fr 1fr;gap:56px;align-items:start;padding:40px 0 56px}
+  .hero-copy{padding:0}
+  .cta-row{flex-direction:row}
+  .btn-primary{flex:1}
+  .buybar{display:none}
+  footer{padding-bottom:44px}
+  .taste-grid{grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .taste-copy p.lede{font-size:21px;max-width:none}
+  .taste-copy p.body{font-size:16px;max-width:none}
+  .taste-rule{max-width:none}
+  .steps{grid-template-columns:1fr 1fr 1fr;gap:18px}
+  .habit-cols{grid-template-columns:1fr 1fr 1fr}
+  .stack-grid{grid-template-columns:1fr 1fr}
+  .rev-scroll{overflow:visible;flex-wrap:wrap}
+  .rev{flex:1 1 30%}
+  .sizes{max-width:440px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="wordmark" href="#">maysar<span>.</span></a>
+    <nav class="nav-links">
+      <a href="#">Shop</a><a href="#taste">Taste</a><a href="#science">Science</a><a href="#">Our Story</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="bag-btn">Bag · 0</button>
+      <button class="burger" aria-label="Menu"><i></i><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="hero-visual">
+      <div class="ghost-word">energy</div>
+      <div class="hero-frame">
+      <img src="" alt="Maysar Energy canister with strawberry sachet" id="heroImg">
+      </div>
+      <div class="thumb-row">
+      </div>
+    </div>
+
+    <div class="hero-copy">
+      <span class="ritual-tag">☀ Morning ritual</span>
+      <h1>Energy</h1>
+      <p class="hero-sub"><strong>Energy that lasts.</strong> Dosed like medicine, made like a treat. Daily drive and focus with no 3pm crash, no pill drawer.</p>
+      <div class="flavor-chip">Strawberry <small>· the only flavour, for now</small></div>
+
+      <div class="proof-strip">
+        <div><b>0g</b><span>Added sugar</span></div>
+        <div><b>30 min</b><span>To feel it</span></div>
+        <div><b>100%</b><span>Dose on label</span></div>
+      </div>
+
+      <p class="size-label">Choose your pack</p>
+      <div class="sizes">
+        <div class="size">
+          <b>15 sachets</b>
+          <div class="price">₹599</div>
+          <div class="per">₹40 / serving</div>
+        </div>
+        <div class="size selected">
+          <span class="tag">Best value</span>
+          <b>30 sachets</b>
+          <div class="price">₹999</div>
+          <div class="per"><em>₹33 / serving</em> · save ₹199</div>
+        </div>
+      </div>
+
+      <div class="duo-offer">
+        <span class="duo-badge">Offer</span>
+        <p><b>Stock two rituals, save 10%.</b> Add any 2 tubs, discount applies at checkout.</p>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#">Add to Bag · ₹999</a>
+        <a class="btn btn-ghost" href="#">View nutrition label</a>
+      </div>
+      <div class="assure">
+        <span><b>✓</b> 3rd party tested</span>
+        <span><b>✓</b> Plant based</span>
+        <span><b>✓</b> FSSAI nutraceutical</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IDEA -->
+<section class="idea">
+  <div class="wrap idea-grid">
+    <div>
+      <span class="kicker">Why Maysar exists</span>
+      <p class="big">Most supplements are effective. Most people still stop taking them. <em>Good habits only work when they happen.</em></p>
+    </div>
+    <p class="sub">So we built one you look forward to. The proof is in two parts, taste and science, and both matter equally.</p>
+  </div>
+</section>
+
+<!-- PROOF 1: TASTE -->
+<section class="taste" id="taste">
+  <div class="wrap">
+    <div class="proof-head">
+      <span class="proof-num">PROOF 1 / 2 · TASTE</span>
+      <h2>Delicious enough <em>to repeat.</em></h2>
+    </div>
+    <div class="taste-grid">
+      <div class="taste-photo">
+      </div>
+      <div class="taste-copy">
+        <p class="lede">The flavour isn't there to hide the medicine. It's the reason the medicine works, because the dose you look forward to is the dose you actually take.</p>
+        <p class="body">Bright, ripe strawberry. Lightly tart, clean finish. No chalk, no earthy supplement aftertaste, no sugar bomb to make it drinkable. It tastes like something you'd order, not something you'd endure.</p>
+        <div class="note-chips">
+          <span class="solid">Ripe strawberry</span>
+          <span>Lightly tart</span>
+          <span>Clean finish</span>
+          <span>No chalk</span>
+          <span>0g added sugar</span>
+        </div>
+        <p class="taste-rule"><b>Built taste-first, then dosed to the studied threshold.</b> Never a formula sweetened into tolerability after the fact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF 2: SCIENCE -->
+<section class="science" id="science">
+  <div class="wrap">
+    <div class="proof-head">
+      <span class="proof-num" style="color:#E9C9A0">PROOF 2 / 2 · SCIENCE</span>
+      <h2>Dosed like medicine. <em>Nothing to hide behind.</em></h2>
+    </div>
+    <p class="lede">No proprietary blends. Every active and its exact dose, printed on the label and listed here. What each one does, explained like you're a person, not a patient.</p>
+
+    <div class="ing-scroll">
+      <div class="ing-card">
+        <div class="ing-photo"><span class="ing-tag">L-CARNITINE</span><span class="ing-ph">Ingredient photo<br>placeholder · 4:3</span></div>
+        <div class="ing-body"><span class="ing-dose">1500 mg</span><b>Fat to fuel</b><p>Helps convert fat into usable energy.</p></div>
+      </div>
+      <div class="ing-card">
+        <div class="ing-photo"><span class="ing-tag">COFFEE POWER</span><span class="ing-ph">Ingredient photo<br>placeholder · 4:3</span></div>
+        <div class="ing-body"><span class="ing-dose">1000 mg</span><b>Steady caffeine</b><p>Lift without the spike-and-crash.</p></div>
+      </div>
+      <div class="ing-card">
+        <div class="ing-photo"><span class="ing-tag">MCT OIL POWDER</span><span class="ing-ph">Ingredient photo<br>placeholder · 4:3</span></div>
+        <div class="ing-body"><span class="ing-dose">500 mg</span><b>Brain fuel</b><p>Fast, clean energy for the mind.</p></div>
+      </div>
+      <div class="ing-card">
+        <div class="ing-photo"><span class="ing-tag">GARCINIA CAMBOGIA</span><span class="ing-ph">Ingredient photo<br>placeholder · 4:3</span></div>
+        <div class="ing-body"><span class="ing-dose">500 mg</span><b>Morning metabolism</b><p>Support through the first half of the day.</p></div>
+      </div>
+      <div class="ing-card ing-more">
+        <div class="ing-body"><b>+ green coffee bean, CLA, B-vitamins</b><p>Every active and its exact dose, printed on the label. No proprietary blends.</p><a href="#">View full facts panel</a></div>
+      </div>
+    </div>
+
+    <div class="sci-foot">
+      <p>Every dose at the threshold it showed results in research. No dramatic before-and-afters.</p>
+      <a class="facts-link" href="#">View full supplement facts panel</a>
+    </div>
+
+    <div class="cert-card">
+    </div>
+
+    <div class="dev-note">Developer note: actives, doses and descriptions above are placeholders pending final formulation. Structure and layout are final.</div>
+  </div>
+</section>
+
+<!-- RITUAL -->
+<section class="ritual">
+  <div class="wrap">
+    <span class="kicker">The ritual, not the routine</span>
+    <h2>Three steps. Zero willpower required.</h2>
+    <p class="sub">No pills to remember, no chalky scoop to choke down. Just a sachet, cold water, and thirty seconds that actually feel good, every single morning.</p>
+    <div class="steps">
+    </div>
+  </div>
+</section>
+
+<!-- HABIT THESIS -->
+<section class="habit">
+  <div class="wrap">
+    <span class="kicker">The honest difference</span>
+    <h2>You didn't quit your supplements. Their design quit on you.</h2>
+    <p class="habit-lede">Every supplement you abandoned was built to be effective, not to be taken. Maysar moves the work from your willpower to our flavour.</p>
+    <div class="habit-cols">
+      <div class="h-card"><span class="lbl">The old way</span><p>A chalky pill you force down and forget by week three. <b>Then you blame your discipline.</b></p></div>
+      <div class="h-card"><span class="lbl">The Maysar way</span><p>A drink you actually look forward to. <b>Craving does what reminders never could.</b></p></div>
+      <div class="h-card dark"><span class="lbl">Why it matters</span><p>Effectiveness is a chemistry problem. Consistency is a design problem. <b>We solve both, in that order of difficulty.</b></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="wrap">
+    <span class="kicker">People who kept going</span>
+    <h2>Not reviews of a taste test. Reviews of a habit.</h2>
+  </div>
+  <div class="reel-marquee">
+    <div class="reel-track">
+      </div>
+  </div>
+</section>
+
+<!-- CROSS-SELL -->
+<section class="stack">
+  <div class="wrap">
+    <span class="kicker berry">Complete your day</span>
+    <h2>Morning's covered. Now the afternoon and the night.</h2>
+  </div>
+  <div class="wrap slider-wrap">
+    <div class="slider" id="skuSlider">
+      <div class="slide-track" id="skuTrack">
+        <div class="slide">
+        <div class="slide-copy">
+            <span class="slide-ritual" style="color:#C96A1F">☼ Afternoon ritual</span>
+            <b>Focus</b>
+            <p>Focus that holds. Clear, calm afternoons. Passionfruit.</p>
+            <div class="slide-cta"><span class="slide-price">from ₹599</span><a class="btn btn-primary slide-btn" href="#" style="background:#D97A22;box-shadow:0 8px 24px rgba(217,122,34,.28)">View Focus</a></div>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-copy">
+            <span class="slide-ritual" style="color:#3D4C8C">☾ Night ritual</span>
+            <b>Sleep</b>
+            <p>Sleep that resets. Wind down, wake clear. Blueberry.</p>
+            <div class="slide-cta"><span class="slide-price">from ₹599</span><a class="btn btn-primary slide-btn" href="#" style="background:#3D4C8C;box-shadow:0 8px 24px rgba(61,76,140,.28)">View Sleep</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-dots"><button class="dot active" data-i="0" aria-label="Focus"></button><button class="dot" data-i="1" aria-label="Sleep"></button></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <a class="wordmark" href="#">maysar<span>.</span></a>
+    <p>The supplement you crave, not the one you dread.</p>
+    <div class="foot-links">
+      <a href="#">Shop</a><a href="#">Science</a><a href="#">Our Story</a><a href="#">FAQ</a><a href="#">Contact</a>
+    </div>
+    <p class="legal">FSSAI nutraceutical. This product is not intended to diagnose, treat, cure or prevent any disease. Statements are structure-function only.</p>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE BUY BAR -->
+<div class="buybar">
+  <div class="p"><b>₹999</b><span>30 sachets · ₹33/serving</span></div>
+  <a class="btn btn-primary" href="#">Add to Bag</a>
+</div>
+
+<script>
+var PHOTO_THUMBS = 2; /* first N thumbs are photography (cover); rest are infographics (contain) */
+document.querySelectorAll('.thumb[data-src]').forEach(function(t, idx){
+  t.addEventListener('click',function(){
+    var img = document.getElementById('heroImg');
+    img.src = t.dataset.src;
+    img.classList.toggle('fit-contain', idx >= PHOTO_THUMBS);
+    document.querySelectorAll('.thumb').forEach(function(x){x.classList.remove('active')});
+    t.classList.add('active');
+  });
+});
+
+(function(){
+  var track = document.getElementById('skuTrack');
+  var dots = document.querySelectorAll('.slide-dots .dot');
+  var n = 2, i = 0, timer;
+  function go(k){
+    i = (k+n)%n;
+    track.style.transform = 'translateX(-'+(i*100)+'%)';
+    dots.forEach(function(d,j){d.classList.toggle('active', j===i)});
+  }
+  function auto(){ timer = setInterval(function(){go(i+1)}, 4500); }
+  dots.forEach(function(d){d.addEventListener('click',function(){clearInterval(timer);go(+d.dataset.i);auto();})});
+  var slider = document.getElementById('skuSlider');
+  slider.addEventListener('mouseenter',function(){clearInterval(timer)});
+  slider.addEventListener('mouseleave',auto);
+  var sx=null;
+  slider.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;clearInterval(timer)},{passive:true});
+  slider.addEventListener('touchend',function(e){
+    if(sx===null) return;
+    var dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>40) go(i+(dx<0?1:-1));
+    sx=null; auto();
+  },{passive:true});
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) auto();
+})();
+</script>
+</body>
+</html>

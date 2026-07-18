@@ -147,7 +147,7 @@ const TestimonialsPage = () => {
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
               >
-                <Link to="/#booking">Book Audit Call</Link>
+                <Link to="#booking">Book Audit Call</Link>
               </Button>
             </motion.div>
           </div>

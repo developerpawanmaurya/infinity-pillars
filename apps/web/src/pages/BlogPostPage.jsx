@@ -471,7 +471,7 @@ const BlogPostPage = () => {
             Get our weekly roundup of the strategies and insights that are actually moving the needle for digital brands.
           </p>
           <Link
-            to="/#booking"
+            to="#booking"
             className="inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background text-xs font-black uppercase tracking-widest hover:opacity-85 transition-opacity duration-200"
           >
             Work with us <span>→</span>

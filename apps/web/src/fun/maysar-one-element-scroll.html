@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maysar Energy — One Element Scroll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F1E4;
+  --ink:#1D241D;
+  --soft:#5C6156;
+  --green:#243325;
+  --green-deep:#16201A;
+  --terracotta:#D27936;
+  --berry:#C0364B;
+  --berry-deep:#A02940;
+  --berry-soft:#F6DEDD;
+  --berry-mist:#FBEFEA;
+  --cream:#FBF8EE;
+  --line:rgba(29,36,29,.12);
+  --line-berry:rgba(192,54,75,.22);
+  --white:#FFFFFF;
+  --shadow:0 20px 50px rgba(22,32,26,.16);
+  --radius:22px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{overflow-x:clip}
+body{
+  font-family:'Hanken Grotesk',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+img{display:block;max-width:100%}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+h1,h2,h3,.display{font-family:'Bricolage Grotesque',sans-serif;line-height:1.06;letter-spacing:-.01em}
+a{color:inherit}
+
+.kicker{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:22px;height:2px;background:currentColor;border-radius:2px}
+.kicker.berry{color:var(--berry)}
+.kicker.light{color:#E9C9A0}
+
+/* ───────── nav ───────── */
+.nav{position:sticky;top:0;z-index:80;background:rgba(245,241,228,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:56px}
+.wordmark{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.02em;color:var(--green);text-decoration:none;background:none;border:none;cursor:pointer}
+.wordmark span{color:var(--terracotta)}
+.nav-links{display:none;gap:26px}
+.nav-links button{font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;background:none;border:none;cursor:pointer;font-family:inherit}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.bag-btn{font-size:13px;font-weight:700;color:var(--green);border:1.5px solid var(--green);border-radius:100px;padding:8px 16px;background:transparent;cursor:pointer;font-family:inherit}
+.burger{width:22px;display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer}
+.burger i{height:2px;background:var(--green);border-radius:2px}
+@media(min-width:900px){.nav-links{display:flex}.burger{display:none}}
+
+/* ───────── PIN STAGE (the one-element-scroll piece) ───────── */
+.pin-stage{position:relative;height:452vh}
+.pin-inner{
+  position:sticky;top:0;height:100vh;overflow:hidden;
+  background:#F7EFE4;transition:background-color .05s linear;
+}
+.progress-dots{
+  position:absolute;right:22px;top:50%;transform:translateY(-50%);z-index:20;
+  display:none;flex-direction:column;gap:10px;
+}
+.progress-dots button{width:8px;height:8px;border-radius:50%;background:rgba(29,36,29,.22);border:none;cursor:pointer;padding:0;transition:all .25s}
+.progress-dots button.active{background:var(--berry);height:22px}
+@media(min-width:900px){.progress-dots{display:flex}}
+
+.panel{
+  position:absolute;inset:0;display:flex;align-items:center;
+  opacity:0;pointer-events:none;will-change:opacity,transform;
+}
+.panel-in{
+  width:100%;max-width:1180px;margin:0 auto;padding:0 20px 64px;
+  display:grid;grid-template-columns:1fr;gap:6vh;align-items:center;
+}
+.panel .slot{visibility:hidden;order:1;width:100%;aspect-ratio:1/1;max-width:340px;justify-self:center}
+.panel .copy{order:2}
+@media(min-width:640px){.panel .slot{max-width:78vw}}
+
+.eyebrow{display:inline-flex}
+.p-h1{font-size:clamp(42px,10vw,68px);font-weight:800;color:var(--green);margin:14px 0 8px}
+.panel h2{font-size:clamp(28px,6.6vw,44px);font-weight:800;color:var(--green);margin:12px 0 10px}
+.panel h2 em{font-style:normal;color:var(--berry)}
+.p-sub{font-size:16px;color:var(--ink);max-width:48ch}
+.p-body{font-size:15px;color:var(--soft);margin-top:10px;max-width:50ch}
+
+.flavor-chip{display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:var(--berry);color:#fff;border-radius:100px;padding:7px 16px;font-size:13px;font-weight:700}
+.flavor-chip small{font-weight:500;opacity:.85}
+
+.proof-strip{display:flex;margin:20px 0 0;border:1px solid var(--line);border-radius:16px;background:var(--white);overflow:hidden;max-width:420px}
+.proof-strip div{flex:1;padding:11px 6px;text-align:center}
+.proof-strip div+div{border-left:1px solid var(--line)}
+.proof-strip b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:800;color:var(--green)}
+.proof-strip span{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--soft)}
+
+.scroll-cue{display:flex;align-items:center;gap:8px;margin-top:26px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.scroll-cue i{width:16px;height:16px;border-right:2px solid var(--berry);border-bottom:2px solid var(--berry);transform:rotate(45deg);animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(45deg)}50%{transform:translateY(5px) rotate(45deg)}}
+
+.note-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.note-chips span{font-size:12.5px;font-weight:700;border-radius:100px;padding:7px 14px;background:var(--white);border:1px solid var(--line-berry);color:var(--berry-deep)}
+.note-chips span.solid{background:var(--berry);border-color:var(--berry);color:#fff}
+.taste-rule{margin-top:18px;border-left:3px solid var(--berry);padding:2px 0 2px 14px;font-size:13.5px;color:var(--ink);max-width:48ch}
+.taste-rule b{font-weight:800}
+
+.ing-mini{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;max-width:480px}
+.ing-mini div{background:rgba(255,255,255,.06);border:1px solid rgba(251,248,238,.16);border-radius:14px;padding:12px 14px}
+.ing-mini b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:800;color:#F0B7A4;line-height:1}
+.ing-mini strong{display:block;font-size:13px;font-weight:700;color:var(--cream);margin-top:4px}
+.ing-mini p{font-size:11.5px;color:rgba(251,248,238,.65);margin-top:2px}
+.sci-foot{font-size:12.5px;color:rgba(251,248,238,.6);margin-top:14px;max-width:48ch}
+
+.rit-list{display:flex;flex-direction:column;gap:12px;margin-top:22px;max-width:440px}
+.rit-item{display:flex;gap:14px;align-items:flex-start;background:var(--white);border:1px solid var(--line);border-radius:16px;padding:14px}
+.rit-item .n{flex:none;width:34px;height:34px;border-radius:10px;background:var(--berry-soft);display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:14px;color:var(--berry-deep)}
+.rit-item b{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:800;color:var(--green);display:block}
+.rit-item p{font-size:13px;color:var(--soft);margin-top:2px}
+
+.size-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin:20px 0 8px}
+.sizes{display:grid;grid-template-columns:1fr 1fr;gap:9px;max-width:420px}
+.size{position:relative;border:1.5px solid var(--line);border-radius:14px;background:var(--white);padding:12px;cursor:pointer}
+.size.selected{border-color:var(--berry);box-shadow:0 0 0 3px rgba(192,54,75,.12)}
+.size .tag{position:absolute;top:-9px;right:10px;background:var(--green);color:#fff;font-size:9px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;border-radius:100px;padding:3px 8px}
+.size b{font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:800;color:var(--green);display:block}
+.size .price{font-size:18px;font-weight:800;color:var(--ink);margin-top:1px}
+.size .per{font-size:11px;color:var(--soft);margin-top:1px}
+.size .per em{font-style:normal;color:var(--berry);font-weight:700}
+
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:100px;padding:15px 24px;font-size:15px;font-weight:800;font-family:'Hanken Grotesk';text-decoration:none;border:none;cursor:pointer}
+.btn-primary{background:var(--berry);color:#fff;box-shadow:0 8px 24px rgba(192,54,75,.28)}
+.btn-ghost{background:transparent;border:1.5px solid var(--green);color:var(--green);padding:12px 22px;font-size:13.5px}
+.assure{display:flex;gap:14px;margin-top:14px;flex-wrap:wrap}
+.assure span{font-size:11px;font-weight:600;color:var(--soft);display:flex;align-items:center;gap:5px}
+.assure b{color:var(--green)}
+
+.panel[data-step="2"] .p-sub{color:rgba(251,248,238,.88)}
+.panel[data-step="2"] h2{color:var(--cream)}
+.panel[data-step="2"] h2 em{color:#F0B7A4}
+.panel[data-step="2"] .kicker{color:#E9C9A0}
+
+.float-img{
+  position:absolute;top:0;left:0;object-fit:contain;background:#FDFBF4;
+  border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.05);
+  will-change:transform;padding:10px;z-index:10;
+}
+
+@media(min-width:900px){
+  .pin-inner{padding:0}
+  .panel-in{grid-template-columns:1fr 1fr;gap:64px;padding-bottom:0}
+  .panel .slot{order:2;max-width:none;aspect-ratio:1/1;width:100%}
+  .panel .copy{order:1}
+  .panel[data-step="1"] .slot,.panel[data-step="3"] .slot{order:1}
+  .panel[data-step="1"] .copy,.panel[data-step="3"] .copy{order:2}
+}
+
+/* ───────── idea strip ───────── */
+.idea{background:var(--paper);padding:52px 0;border-bottom:1px solid var(--line);border-top:1px solid var(--line)}
+.idea-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.idea p.big{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(24px,5.8vw,48px);line-height:1.16;color:var(--green);margin-top:14px}
+.idea p.big em{font-style:normal;color:var(--berry)}
+.idea .sub{font-size:16px;color:var(--soft);max-width:36ch}
+@media(min-width:900px){.idea{padding:80px 0}.idea-grid{grid-template-columns:1.6fr 1fr;gap:64px;align-items:end}.idea .sub{padding-bottom:8px;border-left:3px solid var(--berry);padding-left:18px}}
+
+/* ───────── habit thesis ───────── */
+.habit{padding:60px 0;background:var(--cream);border-bottom:1px solid var(--line)}
+.habit h2{font-size:clamp(28px,7vw,44px);color:var(--green);margin-top:12px;max-width:20ch}
+.habit-lede{font-size:16px;color:var(--soft);margin-top:14px;max-width:56ch}
+.habit-cols{display:grid;grid-template-columns:1fr;gap:12px;margin-top:26px}
+.h-card{border-radius:18px;padding:20px;border:1px solid var(--line);background:var(--white)}
+.h-card.dark{background:var(--green-deep);border-color:var(--green-deep);color:var(--cream)}
+.h-card .lbl{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--terracotta)}
+.h-card.dark .lbl{color:#E9C9A0}
+.h-card p{font-size:15px;margin-top:8px;color:var(--soft)}
+.h-card.dark p{color:rgba(251,248,238,.8)}
+.h-card p b{color:var(--ink);font-weight:800}
+.h-card.dark p b{color:var(--cream)}
+@media(min-width:900px){.habit-cols{grid-template-columns:1fr 1fr 1fr}}
+
+/* ───────── reviews ───────── */
+.reviews{padding:60px 0;background:var(--paper);overflow:hidden}
+.reviews h2{font-size:clamp(26px,6.6vw,40px);color:var(--green);margin-top:12px}
+.reel-marquee{margin-top:28px;overflow:hidden;position:relative}
+.reel-track{display:flex;gap:16px;width:max-content;animation:reelscroll 46s linear infinite}
+.reel-marquee:hover .reel-track,.reel-marquee:active .reel-track{animation-play-state:paused}
+@keyframes reelscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.reel-track{animation:none;overflow-x:auto}}
+.rev-card{flex:0 0 auto;width:280px;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.rev-stars{color:var(--terracotta);font-size:13px;letter-spacing:2px}
+.rev-quote{font-size:14.5px;color:var(--ink);margin-top:10px;line-height:1.5}
+.rev-who{font-size:12px;font-weight:700;color:var(--soft);margin-top:14px}
+.rev-who span{display:block;font-weight:500;color:var(--soft);opacity:.75;margin-top:2px}
+
+/* ───────── cross-sell ───────── */
+.stack{padding:60px 0 70px;background:var(--berry-mist);border-top:1px solid var(--line)}
+.stack h2{font-size:clamp(26px,6.6vw,40px);color:var(--green);margin-top:12px;max-width:18ch}
+.slider-wrap{margin-top:26px}
+.slider{overflow:hidden;border-radius:var(--radius)}
+.slide-track{display:flex;transition:transform .6s cubic-bezier(.22,.8,.24,1)}
+.slide{flex:0 0 100%;display:grid;grid-template-columns:1fr;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.slide-icon{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:64px}
+.slide-copy{padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px}
+.slide-ritual{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.slide-copy b{font-family:'Bricolage Grotesque',sans-serif;font-size:32px;font-weight:800;color:var(--green);line-height:1}
+.slide-copy p{font-size:15px;color:var(--soft)}
+.slide-cta{display:flex;align-items:center;gap:16px;margin-top:10px}
+.slide-price{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;color:var(--green)}
+.slide-btn{padding:12px 22px;font-size:14px;flex:none}
+.slide-dots{display:flex;gap:8px;justify-content:center;margin-top:16px}
+.dot{width:9px;height:9px;border-radius:50%;border:none;background:rgba(29,36,29,.2);cursor:pointer;padding:0}
+.dot.active{background:var(--berry);width:24px;border-radius:100px}
+@media(min-width:900px){.slide{grid-template-columns:1fr 1fr;align-items:center}.slide-icon{aspect-ratio:auto;height:340px}.slide-copy{padding:32px 40px}}
+
+/* ───────── footer ───────── */
+footer{background:var(--green-deep);color:rgba(251,248,238,.75);padding:44px 0 90px}
+footer .wordmark{color:var(--cream);font-size:24px}
+footer p{font-size:13px;margin-top:10px;max-width:40ch}
+.foot-links{display:flex;gap:22px;margin-top:22px;flex-wrap:wrap}
+.foot-links a{color:rgba(251,248,238,.75);font-size:13px;text-decoration:none;font-weight:600}
+.legal{font-size:11px;margin-top:26px;color:rgba(251,248,238,.45);max-width:60ch}
+@media(min-width:900px){footer{padding-bottom:44px}}
+
+/* ───────── sticky mobile buy bar ───────── */
+.buybar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(251,248,238,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px}
+.buybar .p b{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;font-weight:800;color:var(--green);display:block;line-height:1.1}
+.buybar .p span{font-size:11px;color:var(--soft)}
+.buybar .btn-primary{flex:1;padding:13px 18px;font-size:15px}
+@media(min-width:900px){.buybar{display:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <button class="wordmark" data-goto="0">maysar<span>.</span></button>
+    <nav class="nav-links">
+      <button data-goto="1">Taste</button>
+      <button data-goto="2">Science</button>
+      <button data-goto="3">Ritual</button>
+      <button data-goto="scroll" data-target="#reviews">Reviews</button>
+    </nav>
+    <div class="nav-cta">
+      <button class="bag-btn" data-goto="4">Bag · 0</button>
+      <button class="burger" aria-label="Menu" id="burgerBtn"><i></i><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- ONE ELEMENT SCROLL STAGE -->
+<section class="pin-stage" id="stage">
+  <div class="pin-inner" id="pinInner">
+
+    <img id="floatImg" class="float-img" src="maysar.jpg" alt="Maysar Energy canister and strawberry sachet">
+
+    <div class="progress-dots" id="progressDots">
+      <button data-goto="0" aria-label="Hero"></button>
+      <button data-goto="1" aria-label="Taste"></button>
+      <button data-goto="2" aria-label="Science"></button>
+      <button data-goto="3" aria-label="Ritual"></button>
+      <button data-goto="4" aria-label="Buy"></button>
+    </div>
+
+    <!-- STEP 0 — HERO -->
+    <div class="panel" data-step="0">
+      <div class="panel-in">
+        <div class="copy">
+          <span class="kicker berry eyebrow">☀ Morning ritual</span>
+          <h1 class="p-h1">Energy</h1>
+          <p class="p-sub"><strong>Energy that lasts.</strong> Dosed like medicine, made like a treat. Daily drive and focus with no 3pm crash, no pill drawer.</p>
+          <div class="flavor-chip">Strawberry <small>· the only flavour, for now</small></div>
+          <div class="proof-strip">
+            <div><b>0g</b><span>Added sugar</span></div>
+            <div><b>30 min</b><span>To feel it</span></div>
+            <div><b>100%</b><span>Dose on label</span></div>
+          </div>
+          <div class="scroll-cue">Scroll to see why <i></i></div>
+        </div>
+        <div class="slot"></div>
+      </div>
+    </div>
+
+    <!-- STEP 1 — TASTE -->
+    <div class="panel" data-step="1">
+      <div class="panel-in">
+        <div class="slot"></div>
+        <div class="copy">
+          <span class="kicker berry eyebrow">Proof 1/2 · Taste</span>
+          <h2>Delicious enough <em>to repeat.</em></h2>
+          <p class="p-sub">The flavour isn't there to hide the medicine. It's the reason the medicine works — the dose you look forward to is the dose you actually take.</p>
+          <p class="p-body">Bright, ripe strawberry. Lightly tart, clean finish. No chalk, no earthy supplement aftertaste, no sugar bomb to make it drinkable.</p>
+          <div class="note-chips">
+            <span class="solid">Ripe strawberry</span>
+            <span>Lightly tart</span>
+            <span>Clean finish</span>
+            <span>No chalk</span>
+            <span>0g added sugar</span>
+          </div>
+          <p class="taste-rule"><b>Built taste-first, then dosed to the studied threshold.</b> Never sweetened into tolerability after the fact.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 — SCIENCE -->
+    <div class="panel" data-step="2">
+      <div class="panel-in">
+        <div class="copy">
+          <span class="kicker eyebrow">Proof 2/2 · Science</span>
+          <h2>Dosed like medicine. <em>Nothing to hide behind.</em></h2>
+          <p class="p-sub">No proprietary blends. Every active and its exact dose, printed on the label — what each one does, explained like you're a person, not a patient.</p>
+          <div class="ing-mini">
+            <div><b>1500mg</b><strong>L-Carnitine</strong><p>Fat to fuel.</p></div>
+            <div><b>1000mg</b><strong>Coffee Power</strong><p>Lift, no crash.</p></div>
+            <div><b>500mg</b><strong>MCT Oil Powder</strong><p>Clean brain fuel.</p></div>
+            <div><b>500mg</b><strong>Garcinia Cambogia</strong><p>Morning metabolism.</p></div>
+          </div>
+          <p class="sci-foot">+ green coffee bean, CLA &amp; B-vitamins. Every dose sits at the threshold that showed results in research — no dramatic before-and-afters.</p>
+        </div>
+        <div class="slot"></div>
+      </div>
+    </div>
+
+    <!-- STEP 3 — RITUAL -->
+    <div class="panel" data-step="3">
+      <div class="panel-in">
+        <div class="slot"></div>
+        <div class="copy">
+          <span class="kicker berry eyebrow">The ritual, not the routine</span>
+          <h2>Three steps. <em>Zero willpower.</em></h2>
+          <p class="p-sub">No pills to remember, no chalky scoop to choke down. Just a sachet, cold water, and thirty seconds that actually feel good.</p>
+          <div class="rit-list">
+            <div class="rit-item"><span class="n">1</span><div><b>Tear &amp; pour</b><p>One sachet into 300ml cold water.</p></div></div>
+            <div class="rit-item"><span class="n">2</span><div><b>Shake it up</b><p>20 seconds, shaker or spoon, either works.</p></div></div>
+            <div class="rit-item"><span class="n">3</span><div><b>Feel it in 30</b><p>Drive and focus kick in within half an hour.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 — BUY -->
+    <div class="panel" data-step="4">
+      <div class="panel-in">
+        <div class="copy">
+          <span class="kicker berry eyebrow">Ready when you are</span>
+          <h2>Bring the ritual <em>home.</em></h2>
+          <p class="size-label">Choose your pack</p>
+          <div class="sizes" id="sizeGroup">
+            <div class="size" data-price="₹599" data-per="₹40 / serving" data-label="15 sachets · ₹40/serving">
+              <b>15 sachets</b>
+              <div class="price">₹599</div>
+              <div class="per">₹40 / serving</div>
+            </div>
+            <div class="size selected" data-price="₹999" data-per="save ₹199" data-label="30 sachets · ₹33/serving">
+              <span class="tag">Best value</span>
+              <b>30 sachets</b>
+              <div class="price">₹999</div>
+              <div class="per"><em>₹33 / serving</em> · save ₹199</div>
+            </div>
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#" id="ctaBtn">Add to Bag · ₹999</a>
+            <a class="btn btn-ghost" href="#">View nutrition label</a>
+          </div>
+          <div class="assure">
+            <span><b>✓</b> 3rd party tested</span>
+            <span><b>✓</b> Plant based</span>
+            <span><b>✓</b> FSSAI nutraceutical</span>
+          </div>
+        </div>
+        <div class="slot"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- IDEA -->
+<section class="idea">
+  <div class="wrap idea-grid">
+    <div>
+      <span class="kicker">Why Maysar exists</span>
+      <p class="big">Most supplements are effective. Most people still stop taking them. <em>Good habits only work when they happen.</em></p>
+    </div>
+    <p class="sub">So we built one you look forward to. The proof is in two parts, taste and science, and both matter equally.</p>
+  </div>
+</section>
+
+<!-- HABIT THESIS -->
+<section class="habit">
+  <div class="wrap">
+    <span class="kicker">The honest difference</span>
+    <h2>You didn't quit your supplements. Their design quit on you.</h2>
+    <p class="habit-lede">Every supplement you abandoned was built to be effective, not to be taken. Maysar moves the work from your willpower to our flavour.</p>
+    <div class="habit-cols">
+      <div class="h-card"><span class="lbl">The old way</span><p>A chalky pill you force down and forget by week three. <b>Then you blame your discipline.</b></p></div>
+      <div class="h-card"><span class="lbl">The Maysar way</span><p>A drink you actually look forward to. <b>Craving does what reminders never could.</b></p></div>
+      <div class="h-card dark"><span class="lbl">Why it matters</span><p>Effectiveness is a chemistry problem. Consistency is a design problem. <b>We solve both, in that order of difficulty.</b></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <span class="kicker">People who kept going</span>
+    <h2>Not reviews of a taste test. Reviews of a habit.</h2>
+  </div>
+  <div class="reel-marquee">
+    <div class="reel-track" id="reelTrack"></div>
+  </div>
+</section>
+
+<!-- CROSS-SELL -->
+<section class="stack">
+  <div class="wrap">
+    <span class="kicker berry">Complete your day</span>
+    <h2>Morning's covered. Now the afternoon and the night.</h2>
+  </div>
+  <div class="wrap slider-wrap">
+    <div class="slider" id="skuSlider">
+      <div class="slide-track" id="skuTrack">
+        <div class="slide">
+          <div class="slide-icon" style="background:linear-gradient(160deg,#FCE3C4,#D97A22)">☼</div>
+          <div class="slide-copy">
+            <span class="slide-ritual" style="color:#C96A1F">☼ Afternoon ritual</span>
+            <b>Focus</b>
+            <p>Focus that holds. Clear, calm afternoons. Passionfruit.</p>
+            <div class="slide-cta"><span class="slide-price">from ₹599</span><a class="btn btn-primary slide-btn" href="#" style="background:#D97A22;box-shadow:0 8px 24px rgba(217,122,34,.28)">View Focus</a></div>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-icon" style="background:linear-gradient(160deg,#C9D2F0,#3D4C8C)">☾</div>
+          <div class="slide-copy">
+            <span class="slide-ritual" style="color:#3D4C8C">☾ Night ritual</span>
+            <b>Sleep</b>
+            <p>Sleep that resets. Wind down, wake clear. Blueberry.</p>
+            <div class="slide-cta"><span class="slide-price">from ₹599</span><a class="btn btn-primary slide-btn" href="#" style="background:#3D4C8C;box-shadow:0 8px 24px rgba(61,76,140,.28)">View Sleep</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-dots"><button class="dot active" data-i="0" aria-label="Focus"></button><button class="dot" data-i="1" aria-label="Sleep"></button></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <a class="wordmark" href="#">maysar<span>.</span></a>
+    <p>The supplement you crave, not the one you dread.</p>
+    <div class="foot-links">
+      <a href="#">Shop</a><a href="#">Science</a><a href="#">Our Story</a><a href="#">FAQ</a><a href="#">Contact</a>
+    </div>
+    <p class="legal">FSSAI nutraceutical. This product is not intended to diagnose, treat, cure or prevent any disease. Statements are structure-function only.</p>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE BUY BAR -->
+<div class="buybar">
+  <div class="p"><b id="barPrice">₹999</b><span id="barPer">30 sachets · ₹33/serving</span></div>
+  <a class="btn btn-primary" href="#">Add to Bag</a>
+</div>
+
+<script>
+/* ============ ONE ELEMENT SCROLL ENGINE ============ */
+(function(){
+  var stage = document.getElementById('stage');
+  var pinInner = document.getElementById('pinInner');
+  var img = document.getElementById('floatImg');
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  var slots = Array.prototype.slice.call(document.querySelectorAll('.slot'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.progress-dots button'));
+  var STEPS = panels.length;
+
+  var rotations = [0, -6, 4, -3, 0];
+  var bg = ['#F7EFE4', '#FBEFEA', '#16201A', '#F5F1E4', '#FBEFEA'];
+
+  var positions = [];
+  var base = null;
+
+  function hexToRgb(h){
+    var v = parseInt(h.replace('#',''),16);
+    return [(v>>16)&255,(v>>8)&255,v&255];
+  }
+  function lerp(a,b,t){ return a+(b-a)*t; }
+  function lerpColor(c1,c2,t){
+    var a=hexToRgb(c1), b=hexToRgb(c2);
+    return 'rgb('+Math.round(lerp(a[0],b[0],t))+','+Math.round(lerp(a[1],b[1],t))+','+Math.round(lerp(a[2],b[2],t))+')';
+  }
+  function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
+
+  function measure(){
+    var innerRect = pinInner.getBoundingClientRect();
+    var rects = slots.map(function(slot){
+      var r = slot.getBoundingClientRect();
+      return { w:r.width, h:r.height, left:r.left-innerRect.left, top:r.top-innerRect.top };
+    });
+    base = rects[0];
+    img.style.width = base.w+'px';
+    img.style.height = base.h+'px';
+    img.style.left = base.left+'px';
+    img.style.top = base.top+'px';
+    positions = rects.map(function(r){
+      return { x:r.left-base.left, y:r.top-base.top, scale: base.w ? r.w/base.w : 1 };
+    });
+  }
+
+  function getRawProgress(){
+    var rect = stage.getBoundingClientRect();
+    var total = stage.offsetHeight - window.innerHeight;
+    if (total <= 0) return 0;
+    var scrolled = clamp(-rect.top, 0, total);
+    return scrolled/total;
+  }
+
+  var smooth = 0, ticking = false;
+
+  function render(p){
+    var i0 = Math.floor(p), i1 = Math.min(i0+1, STEPS-1), t = p-i0;
+    if (positions.length === STEPS){
+      var pos0 = positions[i0], pos1 = positions[i1];
+      var x = lerp(pos0.x,pos1.x,t), y = lerp(pos0.y,pos1.y,t), s = lerp(pos0.scale,pos1.scale,t);
+      var rot = lerp(rotations[i0],rotations[i1],t);
+      img.style.transform = 'translate('+x+'px,'+y+'px) scale('+s+') rotate('+rot+'deg)';
+    }
+    pinInner.style.backgroundColor = lerpColor(bg[i0],bg[i1],t);
+
+    panels.forEach(function(panel, idx){
+      var d = Math.abs(p-idx);
+      var op = clamp(1 - d*1.5, 0, 1);
+      panel.style.opacity = op;
+      panel.style.transform = 'translateY('+((1-op)*18)+'px)';
+      panel.style.pointerEvents = op > 0.55 ? 'auto' : 'none';
+    });
+    dots.forEach(function(d, idx){ d.classList.toggle('active', Math.round(p)===idx); });
+  }
+
+  function tick(){
+    var target = getRawProgress() * (STEPS-1);
+    smooth += (target-smooth) * 0.16;
+    if (Math.abs(target-smooth) < 0.001) smooth = target;
+    render(smooth);
+    ticking = false;
+  }
+  function onScroll(){
+    if (!ticking){ ticking = true; requestAnimationFrame(tick); }
+  }
+
+  function loop(){
+    tick();
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('load', function(){ measure(); render(getRawProgress()*(STEPS-1)); requestAnimationFrame(loop); });
+  window.addEventListener('resize', function(){ measure(); });
+  window.addEventListener('scroll', onScroll, {passive:true});
+  measure();
+  render(0);
+
+  /* nav / dot navigation */
+  function gotoStep(idx){
+    var total = stage.offsetHeight - window.innerHeight;
+    var top = stage.offsetTop + (idx/(STEPS-1)) * total;
+    window.scrollTo({top: top, behavior:'smooth'});
+  }
+  document.querySelectorAll('[data-goto]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var g = btn.dataset.goto;
+      if (g === 'scroll'){
+        var el = document.querySelector(btn.dataset.target);
+        if (el) el.scrollIntoView({behavior:'smooth'});
+      } else {
+        gotoStep(parseInt(g,10));
+      }
+    });
+  });
+})();
+
+/* ============ nav burger (mobile) ============ */
+(function(){
+  var burger = document.getElementById('burgerBtn');
+  var links = document.querySelector('.nav-links');
+  burger.addEventListener('click', function(){
+    var open = links.style.display === 'flex';
+    links.style.display = open ? '' : 'flex';
+    links.style.cssText += 'position:absolute;top:56px;left:0;right:0;background:var(--paper);flex-direction:column;padding:14px 20px;border-bottom:1px solid var(--line);gap:14px;';
+  });
+})();
+
+/* ============ size selector wired to CTA + buy bar ============ */
+(function(){
+  var sizes = document.querySelectorAll('#sizeGroup .size');
+  var ctaBtn = document.getElementById('ctaBtn');
+  var barPrice = document.getElementById('barPrice');
+  var barPer = document.getElementById('barPer');
+  sizes.forEach(function(s){
+    s.addEventListener('click', function(){
+      sizes.forEach(function(x){ x.classList.remove('selected'); });
+      s.classList.add('selected');
+      var price = s.dataset.price;
+      ctaBtn.textContent = 'Add to Bag · '+price;
+      barPrice.textContent = price;
+      barPer.textContent = s.dataset.label;
+    });
+  });
+})();
+
+/* ============ reviews marquee (build + duplicate for seamless loop) ============ */
+(function(){
+  var reviews = [
+    {q:"I've bought a dozen supplements that died in my cabinet. This is the first one I finish the tub of.", n:"Ananya R.", t:"4 months in"},
+    {q:"Tastes like a strawberry shake, not a chore. I actually crave my morning sachet now.", n:"Rohit S.", t:"Verified buyer"},
+    {q:"No jitters, no crash. Just steady focus through my morning standups.", n:"Meera K.", t:"2 months in"},
+    {q:"Checked the label against the studies myself. Doses actually match what's printed. Rare.", n:"Devansh P.", t:"Verified buyer"},
+    {q:"The 30-second ritual is the whole trick. I stopped needing a reminder after week one.", n:"Priya M.", t:"6 months in"},
+    {q:"Finally a supplement that doesn't taste like it's punishing me for taking it.", n:"Arjun T.", t:"Verified buyer"}
+  ];
+  var track = document.getElementById('reelTrack');
+  function card(r){
+    var el = document.createElement('div');
+    el.className = 'rev-card';
+    el.innerHTML = '<div class="rev-stars">★★★★★</div><p class="rev-quote">"'+r.q+'"</p><div class="rev-who">'+r.n+'<span>'+r.t+'</span></div>';
+    return el;
+  }
+  reviews.concat(reviews).forEach(function(r){ track.appendChild(card(r)); });
+})();
+
+/* ============ cross-sell slider ============ */
+(function(){
+  var track = document.getElementById('skuTrack');
+  var dots = document.querySelectorAll('.slide-dots .dot');
+  var n = 2, i = 0, timer;
+  function go(k){
+    i = (k+n)%n;
+    track.style.transform = 'translateX(-'+(i*100)+'%)';
+    dots.forEach(function(d,j){ d.classList.toggle('active', j===i); });
+  }
+  function auto(){ timer = setInterval(function(){ go(i+1); }, 4500); }
+  dots.forEach(function(d){ d.addEventListener('click', function(){ clearInterval(timer); go(+d.dataset.i); auto(); }); });
+  var slider = document.getElementById('skuSlider');
+  slider.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  slider.addEventListener('mouseleave', auto);
+  var sx=null;
+  slider.addEventListener('touchstart', function(e){ sx=e.touches[0].clientX; clearInterval(timer); }, {passive:true});
+  slider.addEventListener('touchend', function(e){
+    if (sx===null) return;
+    var dx = e.changedTouches[0].clientX-sx;
+    if (Math.abs(dx)>40) go(i+(dx<0?1:-1));
+    sx=null; auto();
+  }, {passive:true});
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) auto();
+})();
+</script>
+</body>
+</html>

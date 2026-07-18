@@ -44,7 +44,7 @@ const CaseStudyPage = () => {
         <meta name="description" content={caseStudy.overview.substring(0, 150) + '...'} />
       </Helmet>
 
-      <div className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background flex flex-col">
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
         <Header />
 
         <main className="flex-1 pt-32 pb-24 md:pt-48">
@@ -205,7 +205,7 @@ const CaseStudyPage = () => {
                 Let's apply these exact strategies to your business model.
               </p>
               <Link 
-                to="/#booking" 
+                to="#booking" 
                 className="inline-flex items-center justify-center px-10 py-6 bg-foreground text-background font-bold uppercase tracking-widest text-sm hover:bg-foreground/90 transition-all active:scale-[0.98]"
               >
                 Book a consultation

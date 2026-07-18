@@ -63,7 +63,7 @@ const PortfolioPage = () => {
         <meta name="description" content="Real evidence of engineered systems driving measurable customer growth. Explore our Success Blueprints." />
       </Helmet>
 
-      <div className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background">
+      <div className="min-h-screen bg-background text-foreground">
         <Header />
 
         {/* Hero */}
@@ -195,7 +195,7 @@ const PortfolioPage = () => {
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
               >
-                <Link to="/#booking">Get in touch</Link>
+                <Link to="#booking">Get in touch</Link>
               </Button>
             </motion.div>
           </div>

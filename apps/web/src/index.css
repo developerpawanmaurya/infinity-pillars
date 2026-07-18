@@ -10,6 +10,17 @@ body {
   scroll-behavior: smooth;
 }
 
+/* Global text-selection color — lime, everywhere. Overrides the browser's
+   default blue on every page, including ones that never opted into the
+   per-page `selection:bg-primary` Tailwind classes (or opted into a
+   different one, like the black/white pages used). A single global rule
+   here means every page stays in sync automatically, no per-page class
+   needed. */
+::selection {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
 @media (hover: hover) and (pointer: fine) {
   *, *::before, *::after {
     cursor: none !important;

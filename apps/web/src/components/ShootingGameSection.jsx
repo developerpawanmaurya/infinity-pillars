@@ -293,7 +293,7 @@ const CouponPopup = ({ onClose }) => {
             {copied ? '✓ Copied!' : 'Copy Code'}
           </button>
           <a
-            href="/#booking"
+            href="#booking"
             onClick={onClose}
             style={{
               flex: 1, minWidth: 130,

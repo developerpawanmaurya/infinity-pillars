@@ -103,9 +103,9 @@ const CustomCursor = () => {
       rX = lerp(rX, mX, 0.1);
       rY = lerp(rY, mY, 0.1);
       if (dotWrapRef.current)
-        dotWrapRef.current.style.transform = `translate(${mX}px,${mY}px)`;
+        dotWrapRef.current.style.transform = `translate(${mX}px,${mY}px) translate(-50%,-50%)`;
       if (ringWrapRef.current)
-        ringWrapRef.current.style.transform = `translate(${rX}px,${rY}px)`;
+        ringWrapRef.current.style.transform = `translate(${rX}px,${rY}px) translate(-50%,-50%)`;
       if (crossRef.current)
         crossRef.current.style.transform = `translate(${mX}px,${mY}px)`;
       rafId = requestAnimationFrame(tick);
@@ -140,28 +140,33 @@ const CustomCursor = () => {
         <SplashEffect key={s.id} x={s.x} y={s.y} onDone={() => removeSplash(s.id)} />
       ))}
 
-      {/* ── Default cursor: dot + lagging ring ── */}
+      {/* ── Default cursor: dot + lagging ring ──
+          Back to a plain solid color, no mix-blend-mode — the color-
+          inversion experiment caused an unfixable blue-shift whenever it
+          crossed the site's lime accent (difference blending is a per-
+          channel |a-b|, not a real invert, so saturated colors always come
+          out wrong), so it's removed entirely rather than patched further.
+          Visibility on any background comes from the white halo boxShadow
+          instead. Ring's border still drops away on hover so it reads as
+          "converting into" the bigger solid dot, same mechanic as before —
+          just solid black again instead of blended white. */}
       {!gameMode && <>
-        <div ref={ringWrapRef} style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999998 }}>
-          <div style={{
-            width: hovering ? '50px' : '34px', height: hovering ? '50px' : '34px',
-            border: '1.5px solid #111', borderRadius: '50%',
-            transform: 'translate(-50%,-50%)',
-            boxShadow: halo,
-            opacity: visible ? 1 : 0,
-            transition: 'opacity .25s, width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94)',
-          }} />
-        </div>
-        <div ref={dotWrapRef} style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999999 }}>
-          <div style={{
-            width: '7px', height: '7px',
-            backgroundColor: '#111', borderRadius: '50%',
-            transform: 'translate(-50%,-50%)',
-            boxShadow: halo,
-            opacity: visible ? 1 : 0,
-            transition: 'opacity .25s',
-          }} />
-        </div>
+        <div ref={ringWrapRef} style={{
+          position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999998,
+          width: hovering ? '90px' : '34px', height: hovering ? '90px' : '34px',
+          border: hovering ? '0px solid transparent' : '1.5px solid #111', borderRadius: '50%',
+          boxShadow: hovering ? 'none' : halo,
+          opacity: visible ? 1 : 0,
+          transition: 'opacity .25s, width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94), border-color .25s, box-shadow .25s',
+        }} />
+        <div ref={dotWrapRef} style={{
+          position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999999,
+          width: hovering ? '90px' : '7px', height: hovering ? '90px' : '7px',
+          backgroundColor: '#121212', borderRadius: '50%',
+          boxShadow: halo,
+          opacity: visible ? 1 : 0,
+          transition: 'opacity .25s, width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94)',
+        }} />
       </>}
 
       {/* ── Game cursor: crosshair ── */}

@@ -32,13 +32,37 @@ const LimeRevealSection = ({ children, className = '' }) => {
             // testimonial) was on screen — and since the growing square
             // lives in a full-viewport position:fixed overlay at z-40, it
             // was covering the testimonial's word-reveal entirely
-            // (verified in-browser). 'top 40%' → 'top -5%' is a valid,
-            // late-ish window: the grow starts only once the section's top
-            // has climbed to 40% of the viewport and completes just past
-            // the top, well before the following section scrolls in.
-            start: 'top 40%',
-            end: 'top -5%',
-            scrub: 1.7,          // was 1.6 — slightly slower/laggier catch-up to scroll
+            // (verified in-browser).
+            //
+            // 'top 40%' → 'top -5%' (45% of a viewport height) read as too
+            // fast. 'top 100%' → 'top -60%' (160%) fixed that, but the
+            // handoff to full green then landed well past the top of the
+            // viewport — later than intended.
+            //
+            // end's "68%" token means the section's top edge sits 68% down
+            // the viewport (32% up from the BOTTOM) when the screen finishes
+            // going fully green — the requested 30–35%-from-bottom handoff.
+            //
+            // Two more rounds of feedback since: (1) the start still felt
+            // too soon → delayed by another fixed 400px via the "+=400" on
+            // the ELEMENT-side token (not the viewport-side one — offsetting
+            // that side shifts the trigger EARLIER, the opposite of what's
+            // needed here). (2) still too fast overall → rather than only
+            // shifting start later (which alone would have SHRUNK the gap
+            // to a fixed `end`), end also moved later by 1000px, 600px more
+            // than start's delay — net effect: start delayed 400px, AND the
+            // total scroll span grows from 576px to 1176px (+600px) at a
+            // 900px-tall viewport. "+=N" on the element-side token is a
+            // fixed pixel offset independent of viewport height, so the
+            // start-delay holds exactly regardless of device; only the
+            // percentage portion of the span scales with viewport size.
+            //
+            // Pulled 200px earlier again (+=400 → +=200) — everything else
+            // (end, overall pacing) was confirmed good, just the onset was
+            // slightly late.
+            start: 'top+=200 132%',
+            end: 'top+=600 68%',
+            scrub: 0.8,          // was 1.6 — slightly slower/laggier catch-up to scroll
 
             // Section entering — show growing square over the page
             onEnter: () => {

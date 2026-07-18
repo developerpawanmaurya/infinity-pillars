@@ -64,7 +64,7 @@ const Header = () => {
               asChild
               className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-6"
             >
-              <Link to="/#booking">Book Audit Call</Link>
+              <Link to="#booking">Book Audit Call</Link>
             </Button>
           </div>
 
@@ -101,7 +101,7 @@ const Header = () => {
                   asChild
                   className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none py-6 text-lg"
                 >
-                  <Link to="/#booking" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link to="#booking" onClick={() => setIsMobileMenuOpen(false)}>
                     Book Audit Call
                   </Link>
                 </Button>

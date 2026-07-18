@@ -1,0 +1,141 @@
+/* Ported 1:1 from the GSAP pinned image mask-reveal-on-scroll CodePen
+   (gridmorphic/WbQPRwv), prefixed `ssr-` to avoid colliding with site
+   classes. Structural/animation CSS only — typography comes from Tailwind
+   classes on the JSX so it matches the rest of the site. */
+
+.ssr-arch {
+  /* position:relative (not just for its own absolutely-positioned children)
+     matters here for stacking: .ssr-wash-pin is position:absolute, and any
+     positioned element paints above plain in-flow content in the same
+     stacking context REGARDLESS of DOM order. Without this, .ssr-arch was
+     unpositioned and the color bands painted over the text no matter what
+     order they were declared in. */
+  position: relative;
+  display: flex;
+  gap: 60px;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+/* Full-bleed color-band layer, pinned in lockstep with .ssr-arch__right.
+   A SIBLING of .ssr-arch (not nested inside it) — GSAP's pin-spacer wrapper
+   is a plain block div, not position:absolute, so nesting it inside the
+   flex row turned it into a third flex item and squeezed the text column
+   down to nothing. Living outside the flex container avoids that entirely.
+   Breaks out of the shared wrapper's own width via the viewport-width trick
+   so the wipe covers the whole screen, not just the 1100px content column.
+   Declared first in the JSX so it paints behind the text/image columns
+   without needing an explicit z-index fight. */
+.ssr-wash-pin {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translateX(-50%);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ssr-wash-band {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ssr-arch__left {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.ssr-arch__info {
+  max-width: 420px;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.ssr-arch__right {
+  flex-shrink: 1;
+  height: 100vh;
+  width: 100%;
+  max-width: 560px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.ssr-img-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 420px;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.ssr-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .ssr-arch {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ssr-arch {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ssr-arch__left,
+  .ssr-arch__right {
+    display: contents;
+  }
+
+  .ssr-arch__right {
+    height: auto;
+    max-width: 100%;
+  }
+
+  .ssr-arch__right .ssr-img-wrapper {
+    position: static;
+    transform: none;
+    height: 320px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .ssr-arch__left .ssr-arch__info {
+    height: auto;
+    padding: 32px 0;
+  }
+
+  /* Nothing to pin on mobile (arch__right isn't pinned there either) —
+     the plain wash wrapper in JSX handles the hard color snap instead. */
+  .ssr-wash-pin {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .ssr-arch {
+    gap: 12px;
+  }
+
+  .ssr-arch__right .ssr-img-wrapper {
+    border-radius: 10px;
+    height: 260px;
+  }
+}

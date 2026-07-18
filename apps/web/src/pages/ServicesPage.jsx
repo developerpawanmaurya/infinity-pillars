@@ -155,7 +155,15 @@ const ServicesPage = () => {
 
                   <div className="p-10 md:p-12 flex flex-col gap-8 flex-1">
                     <div className="flex items-start justify-between gap-4">
-                      <span className="text-sm font-bold tracking-widest text-[#AFEA00]">{pkg.number}</span>
+                      {/* Lime text directly on this card's white background was
+                          nearly invisible (light-on-light) — a solid black
+                          badge guarantees contrast regardless of background. */}
+                      <span
+                        className="inline-flex items-center justify-center w-9 h-9 rounded-full text-xs font-bold tracking-widest"
+                        style={{ backgroundColor: '#121212', color: '#AFEA00' }}
+                      >
+                        {pkg.number}
+                      </span>
                     </div>
                     <div>
                       <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">{pkg.name}</h3>
@@ -166,7 +174,7 @@ const ServicesPage = () => {
                       <ul className="space-y-4">
                         {pkg.deliverables.map((item) => (
                           <li key={item} className="flex items-start gap-3 text-sm">
-                            <span className="text-[#AFEA00] mt-0.5 shrink-0">—</span>
+                            <span className="text-foreground/50 mt-0.5 shrink-0">—</span>
                             <span>{item}</span>
                           </li>
                         ))}
@@ -177,7 +185,7 @@ const ServicesPage = () => {
                       variant="outline"
                       className="mt-auto rounded-none border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 h-12 text-sm uppercase tracking-widest font-bold"
                     >
-                      <Link to="/#booking">Book Audit Call</Link>
+                      <Link to="#booking">Book Audit Call</Link>
                     </Button>
                   </div>
                 </motion.div>
@@ -204,7 +212,12 @@ const ServicesPage = () => {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-border">
+            {/* Same card shell as the packages above (individual border,
+                hover:border-lime, image header + padded content) instead of
+                one shared bordered grid. Heading now matches the package
+                name's typography exactly (same size/weight/color), and
+                imagery stays full color like the packages — no grayscale. */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {alaCarte.map((category, catIndex) => (
                 <motion.div
                   key={category.category}
@@ -212,10 +225,9 @@ const ServicesPage = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-                  className={`group bg-background p-8 md:p-10 ${catIndex < alaCarte.length - 1 ? 'border-b lg:border-b-0 lg:border-r border-border' : ''}`}
+                  className="group border border-border flex flex-col overflow-hidden hover:border-[#AFEA00] transition-colors duration-300"
                 >
-                  {/* Category visual */}
-                  <div className="aspect-[16/10] overflow-hidden bg-muted/40 border border-border mb-8">
+                  <div className="aspect-[16/10] overflow-hidden bg-muted/30 border-b border-border">
                     <picture>
                       <source srcSet={`${category.image}.webp`} type="image/webp" />
                       <img
@@ -226,13 +238,17 @@ const ServicesPage = () => {
                       />
                     </picture>
                   </div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-[#AFEA00] mb-8">{category.category}</p>
-                  <div className="space-y-6">
-                    {category.items.map((item) => (
-                      <div key={item.name} className="border-t border-border pt-6">
-                        <span className="text-sm font-medium leading-snug">{item.name}</span>
-                      </div>
-                    ))}
+
+                  <div className="p-10 md:p-12 flex flex-col gap-8 flex-1">
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight">{category.category}</h3>
+                    <ul className="space-y-4">
+                      {category.items.map((item) => (
+                        <li key={item.name} className="flex items-start gap-3 text-sm">
+                          <span className="text-foreground/50 mt-0.5 shrink-0">—</span>
+                          <span>{item.name}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </motion.div>
               ))}
@@ -268,7 +284,12 @@ const ServicesPage = () => {
                   className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 border-t border-border py-12"
                 >
                   <div className="lg:col-span-1">
-                    <span className="text-sm font-bold tracking-widest text-[#AFEA00]">0{index + 1}</span>
+                    <span
+                      className="inline-flex items-center justify-center w-9 h-9 rounded-full text-xs font-bold tracking-widest"
+                      style={{ backgroundColor: '#121212', color: '#AFEA00' }}
+                    >
+                      0{index + 1}
+                    </span>
                   </div>
                   <div className="lg:col-span-4">
                     <h3 className="text-xl md:text-2xl font-bold tracking-tight">{item.name}</h3>
@@ -296,14 +317,14 @@ const ServicesPage = () => {
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-10 py-8 text-base shadow-editorial shrink-0"
               >
-                <Link to="/#booking">Book Audit Call <ArrowRight className="w-4 h-4 ml-2" /></Link>
+                <Link to="#booking">Book Audit Call <ArrowRight className="w-4 h-4 ml-2" /></Link>
               </Button>
             </motion.div>
           </div>
         </section>
 
         {/* Lime Reveal */}
-        <LimeRevealSection className="py-40">
+        <LimeRevealSection className="pt-[120px] sm:pt-[160px] md:pt-[200px] pb-40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-xs font-bold tracking-widest uppercase mb-10" style={{ color: '#111' }}>
               Our Execution Standard
@@ -319,7 +340,7 @@ const ServicesPage = () => {
               If it cannot be measured, we do not build it. Every engagement starts with a clear success benchmark and ends with verified results.
             </p>
             <Link
-              to="/#booking"
+              to="#booking"
               className="inline-flex items-center gap-3 font-bold uppercase tracking-widest text-sm border-b-2 pb-1 transition-opacity hover:opacity-70"
               style={{ borderColor: '#111', color: '#111' }}
             >
