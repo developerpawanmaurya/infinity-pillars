@@ -141,31 +141,27 @@ const CustomCursor = () => {
       ))}
 
       {/* ── Default cursor: dot + lagging ring ──
-          Back to a plain solid color, no mix-blend-mode — the color-
-          inversion experiment caused an unfixable blue-shift whenever it
-          crossed the site's lime accent (difference blending is a per-
-          channel |a-b|, not a real invert, so saturated colors always come
-          out wrong), so it's removed entirely rather than patched further.
-          Visibility on any background comes from the white halo boxShadow
-          instead. Ring's border still drops away on hover so it reads as
-          "converting into" the bigger solid dot, same mechanic as before —
-          just solid black again instead of blended white. */}
+          Back to the original, pre-experiment behavior: ring just grows
+          slightly on hover (34px → 50px), border and halo always present,
+          dot stays a fixed 7px throughout. No morph into a big solid
+          circle, no blend-mode — all of that was this session's detour and
+          is fully reverted now. */}
       {!gameMode && <>
         <div ref={ringWrapRef} style={{
           position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999998,
-          width: hovering ? '90px' : '34px', height: hovering ? '90px' : '34px',
-          border: hovering ? '0px solid transparent' : '1.5px solid #111', borderRadius: '50%',
-          boxShadow: hovering ? 'none' : halo,
-          opacity: visible ? 1 : 0,
-          transition: 'opacity .25s, width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94), border-color .25s, box-shadow .25s',
-        }} />
-        <div ref={dotWrapRef} style={{
-          position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999999,
-          width: hovering ? '90px' : '7px', height: hovering ? '90px' : '7px',
-          backgroundColor: '#121212', borderRadius: '50%',
+          width: hovering ? '50px' : '34px', height: hovering ? '50px' : '34px',
+          border: '1.5px solid #111', borderRadius: '50%',
           boxShadow: halo,
           opacity: visible ? 1 : 0,
           transition: 'opacity .25s, width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94)',
+        }} />
+        <div ref={dotWrapRef} style={{
+          position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999999,
+          width: '7px', height: '7px',
+          backgroundColor: '#111', borderRadius: '50%',
+          boxShadow: halo,
+          opacity: visible ? 1 : 0,
+          transition: 'opacity .25s',
         }} />
       </>}
 

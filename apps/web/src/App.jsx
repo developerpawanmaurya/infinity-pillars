@@ -21,6 +21,7 @@ import Preloader from './components/Preloader.jsx';
 // import HomeExperiment from './pages/HomeExperiment.jsx';
 // import HomeExperiment2 from './pages/HomeExperiment2.jsx';
 // import HomeExperiment3 from './pages/HomeExperiment3.jsx';
+import PlaybookExperiment4 from './pages/PlaybookExperiment4.jsx';
 
 function App() {
     const [preloaderDone, setPreloaderDone] = useState(false);
@@ -48,6 +49,7 @@ function App() {
                     {/* <Route path="/experiment" element={<HomeExperiment />} /> */}
                     {/* <Route path="/experiment-2" element={<HomeExperiment2 />} /> */}
                     {/* <Route path="/experiment-3" element={<HomeExperiment3 />} /> */}
+                    <Route path="/experiment-4" element={<PlaybookExperiment4 />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Router>
