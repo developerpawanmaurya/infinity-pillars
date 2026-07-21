@@ -1,60 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
+import AnimatedCounter from '@/components/AnimatedCounter.jsx';
+import PortfolioCaseCard from '@/components/PortfolioCaseCard.jsx';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const PortfolioPage = () => {
   const projects = [
     {
-      title: 'E-commerce SEO Overhaul',
-      slug: 'ecommerce-seo-overhaul',
-      category: 'Organic Growth',
-      description: 'Challenge: Low organic visibility and declining traffic. Strategy: Comprehensive technical SEO cleanup paired with a high-intent content marketing strategy.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      metrics: ['287% traffic increase', '156% revenue lift', 'Top 3 rankings'],
-      rotation: 'rotate-2'
+      title: 'deQollab',
+      slug: 'deqollab',
+      category: 'Strategic Communications · Brand Authority',
+      description: 'A premium PR & comms agency needed a digital presence to match their real-world prestige. We organized a 17-sector portfolio into a seamless, minimalist experience built to command premium retainer fees.',
+      image: '/images/DeQollab.png',
+      metrics: ['17 sectors unified', '345+ verified media placements', '9–12% CVR lift potential'],
+      rotation: 'rotate-2',
+      dark: true
     },
     {
-      title: 'SaaS PPC Campaign',
-      slug: 'saas-ppc-campaign',
-      category: 'Paid Acquisition',
-      description: 'Challenge: Unsustainably high customer acquisition cost. Strategy: Refined audience targeting, negative keyword expansion, and strict landing page CRO.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      metrics: ['312% ROI', '42% CAC reduction', '2x trial volume'],
-      rotation: '-rotate-2'
+      title: 'KISS Professional Solutions',
+      slug: 'kiss-professional-solutions',
+      category: 'Enterprise Lead Generation · Office Technology',
+      description: 'An Australian office tech & managed services provider needed to unify diverse enterprise verticals under one brand. We deployed an 8-step interactive quote engine and a self-service support bot.',
+      image: '/images/KISS.png',
+      metrics: ['3,000+ organizations served', '8-step quote engine', '5 regional offices unified'],
+      rotation: '-rotate-2',
+      dark: false
     },
     {
-      title: 'Social Media Growth',
-      slug: 'social-media-growth',
-      category: 'Brand Awareness',
-      description: 'Challenge: Stagnant community and low engagement rates. Strategy: Video-first content strategy mixed with active community management and influencer partnerships.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      metrics: ['450% follower growth', '8.2% engagement rate', '1.2M video views'],
-      rotation: 'rotate-1'
-    },
-    {
-      title: 'Content Marketing Strategy',
-      slug: 'content-marketing-success',
-      category: 'Inbound Leads',
-      description: 'Challenge: Poor brand awareness in a crowded B2B market. Strategy: Educational blog series combined with high-value video assets and lead magnets.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      metrics: ['2.1M impressions', '340 qualified leads', '45% bounce drop'],
-      rotation: '-rotate-3'
-    },
-    {
-      title: 'Email Marketing Automation',
-      slug: 'email-marketing-automation',
-      category: 'Lifecycle Marketing',
-      description: 'Challenge: Low customer retention and repeat purchase rates. Strategy: Dynamic list segmentation, automated cart recovery, and personalized post-purchase flows.',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
-      metrics: ['34% open rate', '8.7% click rate', '22% repeat buyers'],
-      rotation: 'rotate-2'
+      title: 'XpertPatient.com',
+      slug: 'xpertpatient',
+      category: 'Healthcare · Empathetic UX',
+      description: 'An award-winning oncology education platform translating dense clinical guidelines into calm, intuitive digital experiences for newly diagnosed patients and caregivers.',
+      image: '/images/XpertPatient.png',
+      metrics: ['Stevie Award winner', '90% of diagnosed community supported', 'WCAG 2.1 AA / ADA compliant'],
+      rotation: 'rotate-1',
+      dark: false
     }
   ];
+
+  // Fonts swapping in after ScrollTrigger positions were first measured
+  // shifts everything below the fold slightly — recalculate once they
+  // settle so trigger points (especially for the card closest to the top)
+  // don't fire against a stale layout.
+  useEffect(() => {
+    if (document.fonts?.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
+  }, []);
 
   return (
     <>
@@ -89,61 +87,31 @@ const PortfolioPage = () => {
           </motion.div>
         </section>
 
+        {/* Marquee ticker — the industries behind the three flagship builds below */}
+        <section className="border-y border-border py-6 overflow-hidden">
+          <div
+            className="flex whitespace-nowrap"
+            style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
+          >
+            {[0, 1].map((dupe) => (
+              <div key={dupe} className="flex items-center animate-scroll" aria-hidden={dupe === 1}>
+                {['Strategic Communications', 'Office Technology & Managed Services', 'Oncology Patient Education', 'Brand Authority', 'Enterprise Lead Generation', 'Empathetic Healthcare UX'].map((tag) => (
+                  <span key={tag} className="mx-6 text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-6">
+                    {tag}
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Portfolio Grid (Editorial / Scattered Layout) */}
         <section className="py-24 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-32 md:space-y-48">
+            <div className="space-y-40 md:space-y-56">
               {projects.map((project, index) => (
-                <motion.div
-                  key={project.title}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8 }}
-                  className={`flex flex-col gap-12 lg:gap-24 items-center ${
-                    index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'
-                  }`}
-                >
-                  {/* Image Presentation */}
-                  <div className="w-full md:w-1/2">
-                    <div className={`transform ${project.rotation} hover:rotate-0 hover:-translate-y-2 transition-all duration-700`}>
-                      <div className="editorial-frame">
-                        <img
-                          src={project.image}
-                          alt={`${project.title} case study showcase`}
-                          className="w-full h-[400px] md:h-[600px] object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-500"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Content Presentation */}
-                  <div className="w-full md:w-1/2">
-                    <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">
-                      {project.category}
-                    </div>
-                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-8">{project.title}</h2>
-                    <p className="text-xl text-muted-foreground leading-relaxed mb-12">
-                      {project.description}
-                    </p>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-12 border-t border-border pt-8">
-                      {project.metrics.map((metric) => (
-                        <div key={metric} className="text-sm font-medium">
-                          {metric}
-                        </div>
-                      ))}
-                    </div>
-
-                    <Link 
-                      to={`/portfolio/${project.slug}`}
-                      className="inline-flex items-center gap-3 font-bold uppercase tracking-widest text-sm border-b border-foreground pb-1 hover:text-muted-foreground hover:border-muted-foreground transition-all duration-300"
-                    >
-                      Read full case study
-                      <ArrowUpRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </motion.div>
+                <PortfolioCaseCard key={project.title} project={project} index={index} />
               ))}
             </div>
           </div>
@@ -154,10 +122,10 @@ const PortfolioPage = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
               {[
-                { value: '3.4x', label: 'Average Inbound Pipeline Growth' },
-                { value: '84%', label: 'Reduction in Manual Lead Filtering' },
-                { value: '#1', label: 'Google Business Ranking in 90 Days' },
-                { value: '500+', label: 'Automated Digital Assets Deployed' }
+                { value: 3, suffix: '', label: 'Custom Digital Ecosystems Engineered' },
+                { value: 17, suffix: '', label: 'Sectors Unified Into One Platform (deQollab)' },
+                { value: 345, suffix: '+', label: 'Verified Media Placements Surfaced (deQollab)' },
+                { value: 90, suffix: '%', label: 'Of a Diagnosed Community Reached (XpertPatient)' }
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -167,9 +135,12 @@ const PortfolioPage = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="flex flex-col"
                 >
-                  <div className="text-5xl md:text-7xl font-bold tracking-tighter mb-4" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                    {stat.value}
-                  </div>
+                  <AnimatedCounter
+                    value={stat.value}
+                    suffix={stat.suffix}
+                    className="text-5xl md:text-7xl font-bold tracking-tighter mb-4 block"
+                    duration={1.6}
+                  />
                   <div className="text-xs font-bold uppercase tracking-widest text-background/60">{stat.label}</div>
                 </motion.div>
               ))}

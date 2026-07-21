@@ -1,0 +1,102 @@
+/* XpertPatient.com — calm, empathetic clinical case study page */
+
+.xp-page { --xp-accent: 217 91% 55%; --xp-mint: 160 84% 34%; --xp-amber: 38 92% 48%; }
+
+@keyframes xp-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.xp-badge {
+  animation: xp-breathe 3.6s ease-in-out infinite;
+}
+
+@keyframes xp-shine {
+  0% { transform: translateX(-120%) rotate(20deg); }
+  100% { transform: translateX(220%) rotate(20deg); }
+}
+.xp-shine {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  animation: xp-shine 3.2s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.xp-type-btn {
+  border: 1.5px solid hsl(var(--border));
+  border-radius: 1rem;
+  transition: all 0.2s ease;
+}
+.xp-type-btn:hover { border-color: hsl(var(--xp-accent) / 0.5); }
+.xp-type-btn.is-selected {
+  border-color: hsl(var(--xp-accent));
+  background: hsl(var(--xp-accent) / 0.08);
+}
+
+.xp-stage-btn {
+  width: 3rem; height: 3rem;
+  border-radius: 50%;
+  border: 1.5px solid hsl(var(--border));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.xp-stage-btn.is-selected {
+  background: hsl(var(--xp-accent));
+  border-color: hsl(var(--xp-accent));
+  color: white;
+}
+
+.xp-toggle-pill {
+  border-radius: 999px;
+  border: 1.5px solid hsl(var(--border));
+  padding: 0.4rem;
+  display: inline-flex;
+  gap: 0.25rem;
+}
+.xp-toggle-pill button {
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.xp-toggle-pill button.is-active {
+  background: hsl(var(--xp-accent));
+  color: white;
+}
+
+.xp-compare-card {
+  border-radius: 1.25rem;
+  border: 1.5px solid hsl(var(--border));
+  background: hsl(var(--background));
+}
+.xp-compare-card.is-winning-row { background: hsl(var(--xp-mint) / 0.06); }
+
+.xp-checkbox {
+  width: 1.25rem; height: 1.25rem;
+  border-radius: 0.4rem;
+  border: 1.5px solid hsl(var(--border));
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.xp-checkbox.is-checked {
+  background: hsl(var(--xp-accent));
+  border-color: hsl(var(--xp-accent));
+}
+
+.xp-pulse-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid hsl(var(--xp-accent) / 0.4);
+  animation: kc-ping-xp 2.4s cubic-bezier(0,0,0.2,1) infinite;
+}
+@keyframes kc-ping-xp {
+  0% { transform: scale(0.7); opacity: 1; }
+  100% { transform: scale(1.9); opacity: 0; }
+}

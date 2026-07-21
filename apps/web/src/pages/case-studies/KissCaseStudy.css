@@ -1,0 +1,86 @@
+/* KISS Professional Solutions — corporate, teal-accented case study page */
+
+.kc-page { --kc-accent: 173 80% 32%; --kc-accent-2: 32 95% 52%; }
+
+.kc-progress-track {
+  height: 4px;
+  background: hsl(var(--border));
+  position: relative;
+  overflow: hidden;
+}
+.kc-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: hsl(var(--kc-accent));
+  transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.kc-option {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.2s ease;
+}
+.kc-option:hover { border-color: hsl(var(--kc-accent) / 0.6); }
+.kc-option.is-selected {
+  border-color: hsl(var(--kc-accent));
+  background: hsl(var(--kc-accent) / 0.08);
+}
+
+.kc-chat-bubble {
+  max-width: 78%;
+  padding: 0.75rem 1.1rem;
+  border-radius: 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.kc-chat-bubble.bot {
+  background: hsl(var(--muted));
+  border-bottom-left-radius: 0.25rem;
+  align-self: flex-start;
+}
+.kc-chat-bubble.user {
+  background: hsl(var(--kc-accent));
+  color: white;
+  border-bottom-right-radius: 0.25rem;
+  align-self: flex-end;
+}
+
+.kc-typing-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: hsl(var(--muted-foreground));
+  display: inline-block;
+  animation: kc-bounce 1.1s infinite ease-in-out;
+}
+.kc-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.kc-typing-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes kc-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.kc-pin {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: hsl(var(--kc-accent));
+  position: relative;
+}
+.kc-pin::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1.5px solid hsl(var(--kc-accent) / 0.5);
+  animation: kc-ping 2.2s cubic-bezier(0,0,0.2,1) infinite;
+}
+@keyframes kc-ping {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.kc-directory-card {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.kc-directory-card:hover {
+  border-color: hsl(var(--kc-accent) / 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -16px hsl(var(--kc-accent) / 0.35);
+}

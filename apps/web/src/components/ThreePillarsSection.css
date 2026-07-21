@@ -1,0 +1,133 @@
+/* Three Pillars — scroll-scrubbed brand-story centerpiece for /about.
+   Echoes the preloader's own three-bar mark: each pillar rises and STAYS
+   risen as its act plays, so by the finale the logo has been rebuilt live
+   out of the story that explains it. */
+
+.tp-wrap {
+  position: relative;
+  background: hsl(var(--background));
+}
+
+.tp-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tp-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/rect%3E%3C/svg%3E");
+}
+
+/* Pillar cluster */
+.tp-pillars {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(10px, 2vw, 20px);
+  height: clamp(140px, 22vh, 240px);
+}
+.tp-pillar {
+  position: relative;
+  background: hsl(var(--foreground) / 0.08);
+  transform-origin: center bottom;
+  transform: scaleY(0.1);
+  border-radius: 2px;
+}
+.tp-pillar.is-lit {
+  background: #AFEA00;
+  box-shadow: 0 0 40px rgba(175, 234, 0, 0.35);
+}
+
+.tp-pillar-label {
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+/* Progress ticks */
+.tp-tick {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: hsl(var(--foreground) / 0.15);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.tp-tick.is-active {
+  background: #AFEA00;
+  transform: scale(1.4);
+}
+
+/* Stage content blocks — stacked, crossfaded by GSAP */
+.tp-act {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Mockup cards */
+.tp-mock {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.25);
+}
+
+.tp-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: hsl(var(--foreground));
+  vertical-align: text-bottom;
+  animation: tp-blink 1s step-end infinite;
+}
+@keyframes tp-blink {
+  50% { opacity: 0; }
+}
+
+.tp-gmb-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1a9e4c;
+  display: inline-block;
+  animation: tp-pulse-dot 1.8s ease-in-out infinite;
+}
+@keyframes tp-pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26, 158, 76, 0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(26, 158, 76, 0); }
+}
+
+.tp-star {
+  color: #f5a623;
+}
+
+.tp-typing-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: hsl(var(--muted-foreground));
+  display: inline-block;
+  animation: tp-bounce 1.1s infinite ease-in-out;
+}
+.tp-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.tp-typing-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes tp-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-3px); opacity: 1; }
+}
+
+.tp-symbol-watermark {
+  font-size: clamp(10rem, 26vw, 22rem);
+  line-height: 1;
+  color: hsl(var(--foreground) / 0.04);
+  position: absolute;
+  right: -2vw;
+  bottom: -6vw;
+  pointer-events: none;
+  user-select: none;
+}

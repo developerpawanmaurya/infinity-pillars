@@ -1,0 +1,140 @@
+/* Sample 10 — "The Never Ending Story: A Seamless Infinite Scroll with
+   Lenis + GSAP". Ported from Joe Ben Taylor's Codrops tutorial demo of the
+   same name (code MIT licensed): Lenis is configured with `infinite: true`
+   and wraps a `.wrapper`, ScrollTrigger is proxied onto it, the first hero
+   is duplicated at the end so the loop has nowhere visible to seam, snap
+   locks each scroll gesture onto the nearest hero, and every hero's image
+   parallaxes (yPercent -50 to 50) as it passes through the viewport.
+   Independent implementation, written from scratch — no CSS/JS source
+   copied, only the technique itself (the scrollerProxy wiring, snap
+   config, parallax values), which is functional, not creative.
+   IMPORTANT: the source repo's own README is explicit that its three
+   photos are real client images "licensed only for use in this tutorial
+   repository and its live GitHub demo" — reproduction elsewhere is
+   expressly prohibited, unlike the Midjourney-generated stock in other
+   Codrops demos this project has ported. These are swapped for three
+   verified free-to-use Unsplash photos instead. Font is the site's
+   existing Space Grotesk (Google Fonts) rather than the demo's Google/
+   cdnfonts combination. */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+.sample10-page * { box-sizing: border-box; }
+
+.sample10-page {
+  background: #000;
+  color: #fff;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+.sample10-wrapper {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.sample10-content { position: relative; }
+
+.sample10-hero {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100svh;
+  overflow: clip;
+}
+.sample10-hero-image {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #000;
+}
+.sample10-hero-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sample10-hero__marquee {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  color: #fff;
+  pointer-events: none;
+}
+.sample10-hero__label {
+  font-size: clamp(2.5rem, 9vw, 7rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  line-height: 1;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+.sample10-hero__sub {
+  font-size: clamp(0.9rem, 1.6vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  opacity: 0.85;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+
+.sample10-page__back {
+  position: fixed;
+  z-index: 12;
+  top: 1.2rem;
+  left: 1.2rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 2rem;
+}
+.sample10-page__back:hover { background: rgba(0, 0, 0, 0.75); }
+
+.sample10-hint {
+  position: fixed;
+  z-index: 12;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  opacity: 0.6;
+  text-align: center;
+}
+
+
+.sample10-badge {
+  position: fixed;
+  z-index: 12;
+  bottom: 1.2rem;
+  right: 1.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  pointer-events: none;
+}
+.sample10-badge svg {
+  width: 100%;
+  height: 100%;
+}
+.sample10-badge text {
+  font-size: 8.5px;
+  letter-spacing: 0.05em;
+  fill: #fff;
+  text-transform: uppercase;
+}
+.sample10-badge__arrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.4rem;
+  opacity: 0.85;
+}

@@ -1,0 +1,109 @@
+/* Sample 8 — "ScrollTrigger Image Zoom". Recreates the effect from
+   GreenSock's official CodePen demo of the same name
+   (codepen.io/GreenSock/pen/YzbPYMx): a pinned section whose image scales
+   up as you scroll through it, so the page holds still while the photo
+   zooms in. The pen itself couldn't be fetched directly (CodePen blocks
+   automated requests), so this is built from the well-documented, publicly
+   taught "pin + scale on scroll" ScrollTrigger pattern the pen's own title
+   names, not a copy of its actual markup/JS — independent code, written
+   from scratch. Image is the project's own existing service illustration,
+   already used elsewhere on the site. */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+.sample8-page {
+  position: relative;
+  background: #0d0d0d;
+  color: #fff;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+.sample8-page__back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1001;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+.sample8-page__back:hover { opacity: 1; }
+
+.sample8-intro {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+.sample8-intro h1 {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 1rem;
+}
+.sample8-intro span {
+  opacity: 0.6;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sample8-zoom {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #0d0d0d;
+}
+.sample8-zoom__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.sample8-zoom__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center center;
+  will-change: transform;
+}
+.sample8-zoom__caption {
+  position: absolute;
+  left: 50%;
+  bottom: 3rem;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+}
+.sample8-zoom__caption h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+}
+.sample8-zoom__caption p {
+  opacity: 0.75;
+  font-size: 0.9rem;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.sample8-outro {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+.sample8-outro h2 {
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  max-width: 40rem;
+  margin: 0;
+}

@@ -1,0 +1,127 @@
+/* Sample 4 — "Cinematic Scene Showcase". Same general technique as the
+   second demo in JosephASG's "codrops-cinematic-scroll-animations" (MIT
+   licensed): a 3D scene with a camera that flies between fixed vantage
+   points as the page scrolls, with DOM-overlay typography animating in sync
+   with each vantage point. That source project uses React Three Fiber, a
+   licensed glTF model, and Adobe Fonts; this is an independent Three.js
+   implementation written from scratch (no shader/component source copied),
+   with a CC0 building model swapped in for the source's non-redistributable
+   one, and Space Grotesk (Google Fonts) instead of the source's own
+   Typekit account. */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+.sample4-page {
+  position: relative;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+.sample4-page__back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1001;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+.sample4-page__back:hover { opacity: 1; }
+
+.sample4-intro {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+  background: radial-gradient(circle at 50% 40%, #14061f 0%, #0a0a0a 70%);
+}
+.sample4-intro h1 {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 1rem;
+  background: linear-gradient(120deg, #7ef9ff, #ff5ede);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.sample4-intro span {
+  opacity: 0.6;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sample4-stage {
+  position: relative;
+  height: 800vh;
+}
+.sample4-stage__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+.sample4-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sample4-texts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.sample4-txt {
+  position: absolute;
+  top: 50%;
+  max-width: 26rem;
+  padding: 0 2rem;
+  transform: translateY(-50%);
+}
+.sample4-txt.pos-left   { left: 0; text-align: left; }
+.sample4-txt.pos-right  { right: 0; text-align: right; }
+.sample4-txt.pos-center { left: 50%; transform: translate(-50%, -50%); text-align: center; }
+
+.sample4-txt h2 {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+  overflow: hidden;
+}
+.sample4-txt h2 .char { display: inline-block; }
+.sample4-txt p {
+  font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+  opacity: 0.65;
+  margin: 0;
+}
+
+.sample4-progress {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+  z-index: 5;
+}
+.sample4-progress .segment {
+  width: 2.5rem;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+.sample4-progress .fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #7ef9ff, #ff5ede);
+}

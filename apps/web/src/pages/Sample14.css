@@ -1,0 +1,885 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&display=swap');
+
+.sample14-page {
+  --color-text: #fff;
+  --color-title: #dbb59b;
+  --color-bg: #161a19;
+  --color-link: #7f9993;
+  --color-menu: #7f9993;
+  --img-ratio: 1.5;
+
+  position: relative;
+  font-weight: 300;
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sample14-page.is-intro-locked {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sample14-page::after {
+  z-index: 1000;
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: url('/images/intro-trail/shadow.png') no-repeat 100% 0%;
+  background-size: cover;
+}
+
+.sample14-page__back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.sample14-page__back:hover {
+  color: #fff;
+}
+
+.sample14-main {
+  position: relative;
+  padding: 1rem;
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 250px;
+  grid-template-rows: 25% 25% 1fr;
+  grid-template-areas: 'logo menu' '... ...' 'button-enter button-enter' 'frame frame';
+}
+
+.sample14-frame {
+  grid-area: frame;
+  padding-bottom: 0.5rem;
+  position: relative;
+  z-index: 200;
+  align-self: end;
+  font-size: 0.85rem;
+}
+
+.sample14-logo {
+  margin: 0;
+  font-size: 2.45rem;
+  grid-area: logo;
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 300;
+  display: grid;
+  justify-self: start;
+  line-height: 1;
+  color: var(--color-title);
+}
+
+.sample14-intro-progress {
+  grid-area: logo;
+  justify-self: start;
+  align-self: start;
+  font-size: 10vw;
+  width: 4ch;
+  line-height: 0.5;
+  font-weight: 400;
+  color: var(--color-title);
+}
+
+.sample14-intro-image {
+  position: relative;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  grid-area: 1 / 1 / -1 / -1;
+  justify-self: end;
+  --img-height: 260px;
+  height: var(--img-height);
+  width: calc(1 / var(--img-ratio) * var(--img-height));
+}
+
+.sample14-trail {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: var(--img-height, 100%);
+  width: calc(1 / var(--img-ratio) * var(--img-height, 100%));
+  perspective: 1000px;
+}
+
+.sample14-trail__layer {
+  position: relative;
+  grid-area: 1 / 1 / 2 / 2;
+  will-change: transform;
+  width: 100%;
+  height: 100%;
+}
+
+.sample14-trail__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sample14-intro-content {
+  height: 100%;
+  overflow: hidden;
+  grid-area: 1 / 1 / -1 / -1;
+  display: grid;
+  grid-template-columns: 100%;
+  justify-items: center;
+  grid-template-rows: 4rem min-content min-content 1rem auto 1fr;
+  grid-template-areas: '...' 'title-up' 'title-down' '...' 'image' '...';
+}
+
+.sample14-intro-content__title {
+  font-size: clamp(1.5rem, 22vh, 14vw);
+  line-height: 0.9;
+  position: relative;
+  color: var(--color-title);
+  font-weight: 400;
+  white-space: nowrap;
+  align-self: end;
+  will-change: transform;
+}
+
+.sample14-intro-content__title em {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.sample14-intro-content__title--up {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 300;
+  grid-area: title-up;
+  opacity: 0;
+}
+
+.sample14-intro-content__title--down {
+  text-transform: uppercase;
+  grid-area: title-down;
+  opacity: 0;
+}
+
+.sample14-intro-content__image {
+  grid-area: image;
+  align-self: end;
+  --img-height: 360px;
+}
+
+.sample14-button-enter {
+  position: relative;
+  z-index: 200;
+  grid-area: button-enter;
+  align-self: start;
+  justify-self: center;
+  color: inherit;
+  background: transparent;
+  width: 100px;
+  height: 100px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid currentColor;
+  opacity: 0;
+}
+
+.sample14-button-enter span {
+  pointer-events: none;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-weight: 400;
+  transform: translateY(1rem);
+  transition: color 0.3s, transform 0.3s;
+}
+
+.sample14-button-enter::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  margin: -50px 0 0 -50px;
+  background: #fff;
+  transform: translateY(100%);
+  transition: transform 0.3s;
+}
+
+.sample14-button-enter:hover::before {
+  transform: translateY(0%);
+}
+
+.sample14-button-enter:hover span {
+  color: #000;
+  transform: translateY(0);
+}
+
+.sample14-content {
+  pointer-events: none;
+  height: 100%;
+  grid-area: 1 / 1 / -1 / -1;
+  display: grid;
+  padding: 0 1rem;
+  grid-template-columns: 31% 31% 31%;
+  grid-column-gap: 3.5%;
+  grid-template-rows: 4rem min-content min-content 2rem auto auto;
+  grid-template-areas:
+    '... ... ...'
+    'content-title-up content-title-up content-title-up'
+    'content-title-down content-title-down content-title-down'
+    '... ... ...'
+    'content-about content-about content-about'
+    'content-img-1 content-img-2 content-img-3';
+}
+
+.sample14-content.is-open {
+  pointer-events: auto;
+}
+
+.sample14-content__title-up { grid-area: content-title-up; }
+.sample14-content__title-down { grid-area: content-title-down; }
+
+.sample14-content__title-up .sample14-intro-content__title,
+.sample14-content__title-down .sample14-intro-content__title {
+  font-size: clamp(1.75rem, 9vh, 4.5vw);
+  width: min-content;
+  align-self: auto;
+}
+
+.sample14-content__about {
+  position: relative;
+  z-index: 100;
+  grid-area: content-about;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  opacity: 0;
+}
+
+.sample14-content__about-title {
+  font-style: italic;
+  color: var(--color-link);
+  margin: 0 7vw 0.5rem 0;
+  font-weight: 400;
+}
+
+.sample14-content__about p {
+  margin: 0 0 1rem;
+}
+
+.sample14-content__image {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+}
+
+.sample14-content__image--1 { grid-area: content-img-1; }
+.sample14-content__image--2 { grid-area: content-img-2; }
+.sample14-content__image--3 { grid-area: content-img-3; }
+
+.sample14-content__image-inner,
+.sample14-content__image .sample14-trail {
+  background-position: 50% 0%;
+  background-size: cover;
+  width: 100%;
+  height: 220px;
+  opacity: 0;
+  border-radius: 8vw 8vw 0 0;
+}
+
+.sample14-credit {
+  position: relative;
+  z-index: 10;
+  display: block;
+  font-size: 11px;
+  color: var(--color-link);
+}
+
+@media screen and (min-width: 53em) {
+  .sample14-main {
+    padding: 2.5rem 1rem 0;
+    grid-column-gap: 5vw;
+    grid-template-columns: 30vw 1fr 30vw;
+    grid-template-rows: auto 50% 1fr auto;
+    grid-template-areas: 'logo ... menu' '... ... ...' '... button-enter ...' 'frame frame frame';
+  }
+  .sample14-intro-content {
+    grid-template-rows: 32% 15% 35% 18%;
+    grid-template-areas: 'title-up' 'title-down' 'image' '...';
+  }
+  .sample14-intro-image {
+    --img-height: 40vh;
+  }
+  .sample14-intro-content__image {
+    --img-height: 48vh;
+  }
+  .sample14-content {
+    grid-template-rows: 20% 10vh 10vh auto auto;
+    grid-template-areas:
+      '... ... ...'
+      'content-title-up content-about content-about'
+      'content-title-down content-about content-about'
+      'content-img-1 content-img-2 content-img-3';
+  }
+  .sample14-content__about {
+    flex-direction: row;
+    gap: 2rem;
+    grid-row: 2 / span 2;
+    justify-self: end;
+    max-width: 440px;
+  }
+  .sample14-content__image-inner,
+  .sample14-content__image .sample14-trail {
+    height: 42vh;
+    border-radius: 8vw 8vw 0 0;
+  }
+  .sample14-button-enter {
+    align-self: center;
+  }
+  .sample14-frame {
+    align-self: end;
+  }
+}
+
+/* ==========================================================================
+   Cinema section — Sample 5's Three.js cylinder-carousel technique
+   (cinematic camera flythrough, pinned scroll), reskinned to this page's
+   own dark teal / tan / sage palette and Bodoni Moda / Inter type.
+   ========================================================================== */
+
+.sample14-cinema-intro {
+  position: relative;
+  z-index: 5;
+  height: 60vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.sample14-cinema-intro h2 {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: var(--color-title);
+  line-height: 1.05;
+  margin: 0 0 1rem;
+}
+
+.sample14-cinema-intro span {
+  opacity: 0.7;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-link);
+}
+
+.sample14-cinema {
+  position: relative;
+  height: 400vh;
+}
+
+.sample14-cinema__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.sample14-cinema__pin canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sample14-cinema__texts {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  padding: 0 1.5rem;
+  z-index: 2;
+}
+
+.sample14-cinema__txt {
+  position: absolute;
+  text-align: center;
+  max-width: 30rem;
+  clip-path: inset(0% 0% 100% 0%);
+}
+
+.sample14-cinema__txt h3 {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 4vw, 2.75rem);
+  color: var(--color-title);
+  margin: 0 0 0.5rem;
+}
+
+.sample14-cinema__txt p {
+  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+  color: var(--color-text);
+  opacity: 0.75;
+  margin: 0;
+}
+
+.sample14-cinema__progress {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+  z-index: 5;
+}
+
+.sample14-cinema__progress .segment {
+  width: 2.5rem;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.sample14-cinema__progress .fill {
+  width: 0%;
+  height: 100%;
+  background: var(--color-title);
+}
+
+/* ==========================================================================
+   One-element scroll section — Sample 9's Flip.fit() technique (a single
+   travelling photo morphing through several layout slots), reskinned to
+   this page's dark palette and reusing Marisol's own photography.
+   ========================================================================== */
+
+.sample14-scroll {
+  position: relative;
+  z-index: 10;
+}
+
+.sample14-scroll__section {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'content';
+  position: relative;
+}
+
+.sample14-scroll__one {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+  background-size: cover;
+  background-position: 50% 50%;
+  border-radius: 8px;
+  will-change: transform, width, height, filter;
+}
+
+.sample14-scroll__section--center {
+  height: 100vh;
+  text-align: center;
+  justify-items: center;
+  display: grid;
+  gap: 1.5rem;
+  align-content: center;
+}
+
+.sample14-scroll__section--center .sample14-scroll__img {
+  height: 34vh;
+  width: auto;
+  aspect-ratio: 0.8;
+  grid-area: 1 / 1 / -1 / -1;
+  border-radius: 6px;
+}
+
+.sample14-scroll__title {
+  grid-area: content;
+  margin: 0;
+  line-height: 0.95;
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 12vw, 6rem);
+  color: var(--color-title);
+}
+
+.sample14-scroll__title span {
+  display: inline-block;
+}
+
+.sample14-scroll__text {
+  grid-area: content;
+  padding: 2rem;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  position: relative;
+  max-width: 480px;
+}
+
+.sample14-scroll__text--large {
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  max-width: 640px;
+}
+
+.sample14-scroll__section--lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sample14-scroll__section--lines .sample14-scroll__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+  gap: 10px;
+  font-size: clamp(1.75rem, 8vw, 4rem);
+  line-height: 1.15;
+}
+
+.sample14-scroll__section--lines .sample14-scroll__img {
+  height: 0.85em;
+  width: auto;
+  aspect-ratio: 16 / 9;
+  background-size: cover;
+  align-self: center;
+  flex: none;
+  border-radius: 3px;
+}
+
+.sample14-scroll__section--sides {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'img' 'content';
+  gap: 2rem;
+}
+
+.sample14-scroll__section--sides .sample14-scroll__img {
+  grid-area: img;
+  height: 45vh;
+  border-radius: 8px;
+}
+
+.sample14-scroll__img {
+  background-size: cover;
+  background-position: 50% 50%;
+  will-change: transform, filter, opacity;
+}
+
+.sample14-outro {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+  padding: 10vh 10vw 15vh;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.sample14-outro__title {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  color: var(--color-title);
+  margin: 0 0 0.75rem;
+}
+
+.sample14-outro__sub {
+  color: var(--color-link);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 53em) {
+  .sample14-scroll__section--sides {
+    grid-template-columns: 40% 1fr;
+    grid-template-areas: 'img content';
+  }
+  .sample14-scroll__section--lines .sample14-scroll__title {
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+}
+
+/* ==========================================================================
+   Archive galleries — Sample 17's on-scroll Flip layout technique (each
+   gallery briefly switches to a "final" CSS layout, Flip captures it, then
+   Flip.to() scrubs the morph via a pinned ScrollTrigger), reskinned to this
+   page's dark teal / tan / sage palette and Bodoni Moda / Inter type, sat
+   between the travelling-portrait section and the outro.
+   ========================================================================== */
+
+.sample14-note {
+  padding: 1rem 1.5rem;
+  max-width: 640px;
+  margin: 22vh auto;
+  position: relative;
+  z-index: 10;
+}
+
+.sample14-note--left { margin-right: auto; margin-left: 6vw; }
+.sample14-note--right { margin-left: auto; margin-right: 6vw; }
+
+.sample14-note__label {
+  display: block;
+  color: var(--color-link);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.sample14-note p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--color-text);
+  opacity: 0.85;
+  font-size: 1.05rem;
+}
+
+.sample14-gallery-wrap {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30vh auto;
+  overflow: hidden;
+}
+
+.sample14-gallery-wrap--dense {
+  margin: 0;
+}
+
+.sample14-gallery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: none;
+}
+
+.sample14-gallery--grid {
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(3, auto);
+  row-gap: 2.5vw;
+  column-gap: 3vw;
+}
+
+.sample14-gallery--grid .sample14-gallery__item {
+  height: 33vh;
+  width: 33vw;
+}
+
+.sample14-gallery--switch.sample14-gallery--grid {
+  gap: 0;
+}
+
+.sample14-gallery--switch.sample14-gallery--grid .sample14-gallery__item {
+  height: 110vh;
+  width: 110vw;
+  filter: brightness(0.6);
+}
+
+.sample14-gallery--breakout {
+  width: min-content;
+}
+
+.sample14-gallery__item {
+  background-position: 50% 50%;
+  background-size: cover;
+  flex: none;
+  border-radius: 6px;
+  position: relative;
+  filter: brightness(0.9);
+}
+
+.sample14-gallery__item-cut {
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.sample14-gallery__item-inner {
+  width: 100%;
+  height: 100%;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.sample14-gallery-caption {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 400;
+  font-size: clamp(1.1rem, 3vw, 1.85rem);
+  z-index: 101;
+  color: var(--color-title);
+}
+
+/* --- row --- */
+.sample14-gallery--row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  --size-factor: 1.25;
+  --item-height: 20vh;
+}
+
+.sample14-gallery--row .sample14-gallery__item { width: auto; aspect-ratio: 2 / 3; }
+.sample14-gallery--row .sample14-gallery__item--s { height: var(--item-height); }
+.sample14-gallery--row .sample14-gallery__item--m { height: calc(var(--size-factor) * var(--item-height)); }
+.sample14-gallery--row .sample14-gallery__item--l { height: calc(var(--size-factor) * 2 * var(--item-height)); }
+.sample14-gallery--row .sample14-gallery__item--xl { z-index: 100; height: calc(var(--size-factor) * 3 * var(--item-height)); }
+
+.sample14-gallery--switch.sample14-gallery--row .sample14-gallery__item--m,
+.sample14-gallery--switch.sample14-gallery--row .sample14-gallery__item--l {
+  height: var(--item-height);
+}
+
+.sample14-gallery--row .sample14-gallery-caption {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  bottom: -50vh;
+  left: 0;
+  padding: 4.5vw;
+  max-width: 620px;
+  opacity: 0;
+}
+
+.sample14-gallery--switch.sample14-gallery--row .sample14-gallery-caption {
+  bottom: 0;
+  opacity: 1;
+}
+
+/* --- stack --- */
+.sample14-gallery--stack {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: center;
+  justify-content: start;
+  gap: 2rem;
+  padding: 2rem;
+  --offset: 1rem;
+}
+
+.sample14-gallery--stack .sample14-gallery__item {
+  border-radius: 1.5vw;
+  width: 25vw;
+  height: 35vw;
+  z-index: 1;
+}
+
+.sample14-gallery--switch.sample14-gallery--stack .sample14-gallery__item {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.sample14-gallery--stack .sample14-gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 100vw;
+  width: 100vw;
+  padding: 5vw;
+  color: var(--color-text);
+  opacity: 0;
+  z-index: 0;
+}
+
+.sample14-gallery--stack .sample14-gallery-caption p { margin: 0; opacity: 0.8; }
+
+.sample14-gallery--switch.sample14-gallery--stack .sample14-gallery-caption {
+  left: 0;
+  opacity: 1;
+}
+
+.sample14-gallery--stack-inverse .sample14-gallery__item:nth-child(5) { z-index: 2; }
+.sample14-gallery--stack-inverse .sample14-gallery__item:nth-child(4) { z-index: 3; }
+.sample14-gallery--stack-inverse .sample14-gallery__item:nth-child(3) { z-index: 4; }
+.sample14-gallery--stack-inverse .sample14-gallery__item:nth-child(2) { z-index: 5; }
+.sample14-gallery--stack-inverse .sample14-gallery__item:nth-child(1) { z-index: 6; }
+
+.sample14-gallery--switch.sample14-gallery--stack .sample14-gallery__item:nth-child(2) { margin-left: var(--offset); }
+.sample14-gallery--switch.sample14-gallery--stack .sample14-gallery__item:nth-child(3) { margin-left: calc(var(--offset) * 2); }
+.sample14-gallery--switch.sample14-gallery--stack .sample14-gallery__item:nth-child(4) { margin-left: calc(var(--offset) * 3); }
+.sample14-gallery--switch.sample14-gallery--stack .sample14-gallery__item:nth-child(5) { margin-left: calc(var(--offset) * 4); }
+.sample14-gallery--switch.sample14-gallery--stack .sample14-gallery__item:nth-child(6) { margin-left: calc(var(--offset) * 5); }
+
+.sample14-gallery--switch.sample14-gallery--stack-dark .sample14-gallery__item:nth-child(2) { filter: brightness(0.8); }
+.sample14-gallery--switch.sample14-gallery--stack-dark .sample14-gallery__item:nth-child(3) { filter: brightness(0.7); }
+.sample14-gallery--switch.sample14-gallery--stack-dark .sample14-gallery__item:nth-child(4) { filter: brightness(0.6); }
+.sample14-gallery--switch.sample14-gallery--stack-dark .sample14-gallery__item:nth-child(5) { filter: brightness(0.5); }
+.sample14-gallery--switch.sample14-gallery--stack-dark .sample14-gallery__item:nth-child(6) { filter: brightness(0.4); }
+
+/* --- bento --- */
+.sample14-gallery--bento {
+  display: grid;
+  gap: 1vh;
+  grid-template-columns: repeat(3, 32.5vw);
+  grid-template-rows: repeat(4, 23vh);
+  justify-content: center;
+  align-content: center;
+}
+
+.sample14-gallery--switch.sample14-gallery--bento {
+  grid-template-columns: repeat(3, 100vw);
+  grid-template-rows: repeat(4, 49.5vh);
+  gap: 15vh;
+}
+
+.sample14-gallery--bento .sample14-gallery__item:nth-child(1) { grid-area: 1 / 1 / 3 / 2; }
+.sample14-gallery--bento .sample14-gallery__item:nth-child(2) { grid-area: 1 / 2 / 2 / 3; }
+.sample14-gallery--bento .sample14-gallery__item:nth-child(3) { grid-area: 2 / 2 / 4 / 3; }
+.sample14-gallery--bento .sample14-gallery__item:nth-child(4) { grid-area: 1 / 3 / 3 / 3; }
+.sample14-gallery--bento .sample14-gallery__item:nth-child(5) { grid-area: 3 / 1 / 3 / 2; }
+.sample14-gallery--bento .sample14-gallery__item:nth-child(6) { grid-area: 3 / 3 / 5 / 4; }
+.sample14-gallery--bento .sample14-gallery__item:nth-child(7) { grid-area: 4 / 1 / 5 / 2; }
+.sample14-gallery--bento .sample14-gallery__item:nth-child(8) { grid-area: 4 / 2 / 5 / 3; }
+
+.sample14-gallery--bento .sample14-gallery-caption {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  margin: 100vh 0 0 -50vw;
+  font-size: clamp(2rem, 8vw, 4rem);
+  display: grid;
+  place-items: center;
+}
+
+.sample14-gallery--switch.sample14-gallery--bento .sample14-gallery-caption {
+  margin-top: -50vh;
+}
+
+@media screen and (min-width: 53em) {
+  .sample14-gallery--stack .sample14-gallery-caption {
+    bottom: 40%;
+    width: 60vw;
+    max-width: 800px;
+  }
+  .sample14-gallery--switch.sample14-gallery--stack .sample14-gallery-caption {
+    left: 40vw;
+  }
+}

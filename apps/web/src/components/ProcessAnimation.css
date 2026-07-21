@@ -1,0 +1,110 @@
+/* Stacking-cards process reveal: each step is a full-viewport panel that
+   slides up over the previous one as you scroll (plain CSS position:
+   sticky, one per panel, later panels layered on top via z-index) — the
+   outgoing panel scales down and dims slightly as the next one arrives,
+   for a "deck of cards" depth effect. Real step photography, shown large
+   and full-bleed rather than squeezed into a shared canvas. */
+
+.process-stack {
+  position: relative;
+  background: #0a0a0a;
+}
+
+.process-panel {
+  position: relative;
+  height: 100vh;
+}
+
+.process-panel__inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  transform-origin: center top;
+  will-change: transform, filter;
+}
+
+.process-panel__media {
+  position: absolute;
+  inset: 0;
+}
+.process-panel__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.08);
+  will-change: transform;
+}
+.process-panel__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.35) 32%,
+    rgba(0, 0, 0, 0.05) 60%
+  );
+}
+
+.process-panel__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 0 clamp(1.5rem, 6vw, 5rem) clamp(2.5rem, 7vw, 5rem);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(1rem, 4vw, 3rem);
+  color: #fff;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+.process-panel__index {
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  color: #b7d61a;
+  flex: none;
+}
+
+.process-panel__text {
+  max-width: 34rem;
+}
+.process-panel__label {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.75rem, 4.5vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+.process-panel__desc {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+  max-width: 28rem;
+}
+
+.process-panel__ticks {
+  position: absolute;
+  z-index: 2;
+  top: clamp(1.5rem, 5vw, 3rem);
+  right: clamp(1.5rem, 6vw, 5rem);
+  display: flex;
+  gap: 0.4rem;
+}
+.process-panel__tick {
+  width: 1.6rem;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.process-panel__tick.is-active {
+  background: #b7d61a;
+}

@@ -1,0 +1,227 @@
+/* Sample 9 — "Consecutive Scroll Animations with One Element". Ported
+   from Codrops' "One Element Scroll" demo (MIT licensed,
+   tympanus.net/Development/OneElementScroll/): a single image element
+   morphs — via GSAP Flip.fit(), scrubbed by one shared ScrollTrigger
+   timeline — into the position/size of a series of invisible placeholder
+   slots as you scroll, so it reads as one photo travelling through the
+   whole page rather than several separate images. Independent
+   implementation, written from scratch — no CSS/JS source copied, only
+   the layout structure and animation technique (Flip config, ScrollTrigger
+   start/end/scrub values, which are functional, not creative). Photos are
+   the demo's own real images (its README credits them "Images generated
+   with Midjourney"). Font is a Google Fonts pairing (Fraunces for display
+   headings, the site's existing Space Grotesk for everything else) rather
+   than the demo's bundled Adobe Fonts kit, tied to Codrops' own Typekit
+   account. Body copy throughout is our own original writing, not the
+   demo's fictional "Seraph Kamos" clothing-brand text. */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+.sample9-page {
+  --color-text: #503717;
+  --color-bg: rgb(234 234 234);
+  --color-link: #b19162;
+  --color-title: #1a1208;
+  --gradient-1: rgb(234 234 234 / 80%);
+  --gradient-2: rgb(229 134 27 / 30%);
+  position: relative;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  background-image:
+    url(/images/one-element-scroll/noise.png),
+    radial-gradient(ellipse at top, var(--gradient-1), transparent),
+    radial-gradient(ellipse at bottom, var(--gradient-2), transparent);
+  background-size: 180px, 100%, 200%;
+  background-attachment: fixed;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+.sample9-page__back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 6000;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  background: #000;
+  color: #fff;
+  padding: 0.4rem 0.9rem;
+  border-radius: 2rem;
+}
+.sample9-page__back:hover { opacity: 0.85; }
+
+.sample9-main { position: relative; overflow: hidden; width: 100%; }
+
+.sample9-page.is-loading::before,
+.sample9-page.is-loading::after {
+  content: '';
+  position: fixed;
+  z-index: 10000;
+}
+.sample9-page.is-loading::before {
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: var(--color-bg);
+}
+.sample9-page.is-loading::after {
+  top: 50%; left: 50%; width: 100px; height: 1px;
+  margin: 0 0 0 -50px;
+  background: var(--color-link);
+  animation: sample9-loaderAnim 1.5s ease-in-out infinite alternate forwards;
+}
+@keyframes sample9-loaderAnim {
+  0% { transform: scaleX(0); transform-origin: 0% 50%; }
+  50% { transform: scaleX(1); transform-origin: 0% 50%; }
+  50.1% { transform: scaleX(1); transform-origin: 100% 50%; }
+  100% { transform: scaleX(0); transform-origin: 100% 50%; }
+}
+
+.sample9-font-alt { font-family: 'Fraunces', serif; font-weight: 500; }
+
+.sample9-content {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'content';
+  position: relative;
+  z-index: 90;
+}
+
+.sample9-content--initial { height: 100vh; }
+.sample9-one {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+  background-size: cover;
+  background-position: 50% 50%;
+  will-change: transform, width, height, filter;
+}
+
+.sample9-content--blend { mix-blend-mode: overlay; }
+.sample9-content--center {
+  height: 100vh;
+  text-align: center;
+  justify-items: center;
+  display: grid;
+  gap: 1.5rem;
+  align-content: center;
+  position: relative;
+}
+.sample9-content--center .sample9-content__img {
+  height: 38vh;
+  width: auto;
+  aspect-ratio: 0.8;
+  grid-area: 1 / 1 / -1 / -1;
+}
+.sample9-content--center-tall { padding-top: 20vh; margin-bottom: 30vh; }
+.sample9-content--center-tall .sample9-content__img { height: 30vh; width: auto; aspect-ratio: 0.8; }
+
+.sample9-content__title {
+  grid-area: content;
+  margin: 0;
+  line-height: 0.9;
+  text-transform: uppercase;
+  font-size: clamp(3rem, 19vw, 8rem);
+  max-width: 1000px;
+  color: var(--color-title);
+}
+.sample9-content__title span { display: inline-block; }
+.sample9-content__title--medium { line-height: 1.1; max-width: none; font-size: clamp(2rem, 12vw, 6rem); }
+
+.sample9-content__text {
+  grid-area: content;
+  padding: 2rem;
+  margin: 0 auto;
+  font-size: 1rem;
+  position: relative;
+  max-width: 500px;
+}
+.sample9-content__text--large { font-size: clamp(1rem, 4vw, 2rem); max-width: none; }
+
+.sample9-content--column {
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-areas: unset;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto 20vh;
+  z-index: 80;
+  justify-items: center;
+}
+.sample9-content--column .sample9-content__img {
+  height: auto;
+  width: 100%;
+  max-width: 150px;
+  aspect-ratio: 0.8;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.sample9-content--lines { display: flex; flex-direction: column; }
+.sample9-content--lines .sample9-content__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+  gap: 10px;
+}
+.sample9-content--lines .sample9-content__img {
+  height: 0.725em;
+  width: auto;
+  aspect-ratio: 16 / 9;
+  background-size: cover;
+  align-self: center;
+  flex: none;
+}
+
+.sample9-content--sides {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'img' 'content';
+}
+.sample9-content--sides .sample9-content__img { grid-area: img; height: 50vh; }
+
+.sample9-content--grid {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas: unset;
+  width: 120%;
+  height: 100vh;
+  left: -10%;
+  gap: 1rem;
+  margin: 0 auto;
+  position: relative;
+}
+.sample9-content--grid .sample9-content__img { width: 100%; height: 100%; }
+
+.sample9-content__img {
+  background-size: cover;
+  background-position: 50% 50%;
+  will-change: transform, filter, opacity;
+}
+
+.sample9-outro {
+  display: grid;
+  place-items: center;
+  margin: 40vh 0 20vh;
+  padding: 0 10vw;
+  text-align: center;
+}
+.sample9-outro__title {
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 6vw, 3rem);
+}
+
+@media screen and (min-width: 53em) {
+  .sample9-content--sides {
+    grid-template-columns: 40% 1fr;
+    grid-template-areas: 'img content';
+  }
+  .sample9-content--lines .sample9-content__title { white-space: nowrap; flex-wrap: nowrap; }
+  .sample9-content--grid { height: 160vh; }
+}

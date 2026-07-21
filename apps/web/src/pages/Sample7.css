@@ -1,0 +1,213 @@
+/* Sample 7 — "Smooth, Draggable Product Grid". Ported from Codrops'
+   "Smooth, Draggable Product Grid" demo (MIT licensed,
+   tympanus.net/Tutorials/PalmerDraggableGrid/ — original idea by Uncommon,
+   recreating Palmer's site): a huge grid of repeating product tiles you
+   pan around with drag-inertia or the scroll wheel, click one to Flip it
+   into a detail panel that slides in from the right, with SplitText
+   line/char reveals for the copy and a small "×" cursor that follows the
+   mouse while the panel is open. Independent React implementation, written
+   from scratch — no CSS/JS source copied, only the layout/animation
+   technique (columns, gaps, Flip/Draggable/SplitText timing values, which
+   are functional, not creative). Photos are the demo's own real images
+   (its README credits them "Free for Personal and Business use from
+   rawpixel"). Font is Manrope (Google Fonts) rather than the demo's
+   bundled TWK Lausanne, which is a commercial typeface licensed for that
+   demo specifically, not for reuse elsewhere. Product names/descriptions
+   here are our own original copy, not the demo's. */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+.sample7-page {
+  --color-text: #1a1a1a;
+  --color-bg: #fff;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Manrope', system-ui, sans-serif;
+}
+
+.sample7-page__back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1001;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.sample7-page__back:hover { text-decoration: underline; }
+
+.sample7-hint {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1001;
+  font-size: 0.8rem;
+  opacity: 0.55;
+  text-align: right;
+  pointer-events: none;
+}
+
+.sample7-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.sample7-container.is-loaded .sample7-grid {
+  transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+  cursor: grab;
+}
+.sample7-container.is-loaded .sample7-grid.is-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.sample7-grid {
+  position: absolute;
+  width: max-content;
+  height: max-content;
+  display: flex;
+  gap: 5vw;
+}
+
+.sample7-column {
+  display: flex;
+  flex-direction: column;
+  gap: 5vw;
+}
+.sample7-column:nth-child(even) { margin-top: 10vw; }
+
+.sample7-product {
+  position: relative;
+  width: 18.5vw;
+  aspect-ratio: 1 / 1;
+}
+.sample7-product__inner {
+  width: 100%;
+  height: 100%;
+}
+.sample7-product img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  will-change: transform;
+  transition: transform 300ms ease-in-out;
+}
+.sample7-product:hover img { transform: scale(1.05); }
+
+.sample7-details {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 100vh;
+  padding: 3vw 4vw;
+  background-color: #f1f1f1;
+  transform: translate3d(50vw, 0, 0);
+  z-index: 6;
+  visibility: hidden;
+}
+.sample7-details.is-showing { visibility: visible; }
+
+@media (max-width: 600px) {
+  .sample7-details {
+    width: 90%;
+    height: 100vh;
+    padding: 8vw 7vw;
+    transform: translate3d(90%, 0, 0);
+  }
+}
+
+.sample7-details__title {
+  margin-bottom: 4vw;
+  position: relative;
+  display: grid;
+}
+.sample7-details__title p {
+  grid-area: 1 / -1;
+  overflow: hidden;
+  font-size: 3vw;
+  font-weight: 600;
+}
+@media (max-width: 600px) {
+  .sample7-details__title { margin-bottom: 8vw; }
+  .sample7-details__title p { font-size: 2rem; }
+}
+
+.sample7-details__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 2vw;
+}
+
+.sample7-details__texts {
+  position: relative;
+  height: 100%;
+  line-height: 1.5;
+  display: grid;
+  max-width: 15rem;
+}
+.sample7-details__texts span {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.sample7-details__texts button {
+  appearance: none;
+  display: block;
+  background-color: transparent;
+  margin-top: 1.5rem;
+  border: 1px solid;
+  border-radius: 1rem;
+  padding: 0.25rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  .sample7-details__texts button { margin-top: 5vw; }
+}
+.sample7-details__texts p {
+  grid-area: 1 / -1;
+  font-size: 0.9rem;
+  margin-bottom: 1vw;
+}
+
+.sample7-details__thumb {
+  position: relative;
+  width: 25vw;
+  aspect-ratio: 1 / 1;
+  z-index: 3;
+  will-change: transform;
+}
+@media (max-width: 600px) {
+  .sample7-details__thumb { width: 100%; }
+}
+
+.sample7-cross {
+  position: fixed;
+  width: 3vw;
+  height: 3vw;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 5;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+}
+.sample7-cross svg { width: 3vw; height: 3vw; }
+
+.sample7-page.is-details-showing { cursor: pointer; }
+.sample7-page.is-details-showing .sample7-grid { pointer-events: none; }
+
+.sample7-line, .sample7-char { display: inline-block; }

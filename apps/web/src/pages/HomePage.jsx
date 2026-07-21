@@ -584,23 +584,26 @@ const HomePage = () => {
 
   const showcaseProjects = [
     {
-      title: 'Web Conversion Overhaul',
-      category: 'Web Architecture',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
+      title: 'deQollab',
+      slug: 'deqollab',
+      category: 'Strategic Communications',
+      image: '/images/DeQollab.png',
       rotation: '-rotate-3',
       margin: 'mt-0'
     },
     {
-      title: 'GMB Local Dominance',
-      category: 'Local SEO',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
+      title: 'KISS Professional Solutions',
+      slug: 'kiss-professional-solutions',
+      category: 'Enterprise Lead Generation',
+      image: '/images/KISS.png',
       rotation: 'rotate-2',
       margin: 'mt-16 md:mt-32'
     },
     {
-      title: 'AI Lead Automation',
-      category: 'AI Agents',
-      image: 'https://images.unsplash.com/photo-1697893156187-8598ba865712',
+      title: 'XpertPatient.com',
+      slug: 'xpertpatient',
+      category: 'Healthcare · Empathetic UX',
+      image: '/images/XpertPatient.png',
       rotation: '-rotate-1',
       margin: 'mt-16'
     }
@@ -954,7 +957,7 @@ const HomePage = () => {
                   transition={{ duration: 0.7, delay: index * 0.2 }}
                   className={`${project.margin}`}
                 >
-                  <Link to="/portfolio" className="block group">
+                  <Link to={`/portfolio/${project.slug}`} className="block group">
                     <div className={`transition-all duration-500 transform ${project.rotation} group-hover:rotate-0 group-hover:-translate-y-4`}>
                       <div className="editorial-frame">
                         <img

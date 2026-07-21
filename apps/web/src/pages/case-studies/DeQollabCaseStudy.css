@@ -1,0 +1,92 @@
+/* deQollab — dark, precision-minimalist case study page */
+
+.dq-page {
+  background: #0a0a0a;
+  color: #f5f5f2;
+}
+
+.dq-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.dq-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes dq-scan {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.dq-scanline {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.dq-scanline::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(to bottom, transparent, rgba(175,234,0,0.06), transparent);
+  animation: dq-scan 5s linear infinite;
+}
+
+.dq-chip {
+  border: 1px solid rgba(245,245,242,0.18);
+  color: rgba(245,245,242,0.65);
+  background: transparent;
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.dq-chip:hover {
+  border-color: rgba(175,234,0,0.6);
+  color: #f5f5f2;
+}
+.dq-chip.is-active {
+  background: #AFEA00;
+  border-color: #AFEA00;
+  color: #0a0a0a;
+}
+
+.dq-tile {
+  border: 1px solid rgba(245,245,242,0.1);
+  background: rgba(245,245,242,0.02);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.dq-console {
+  border: 1px solid rgba(175,234,0,0.25);
+  background: radial-gradient(120% 120% at 0% 0%, rgba(175,234,0,0.08), transparent 60%), #0f0f0d;
+}
+
+.dq-glow-text {
+  text-shadow: 0 0 40px rgba(175,234,0,0.35);
+}
+
+/* Header renders transparent-with-dark-text by default (designed for the
+   site's light pages). This page opens on a full dark hero, so force light
+   text on the header only while it's still in its transparent (unscrolled)
+   state — once scrolled it gets its own opaque light background and the
+   default dark text is correct again. */
+.dq-page header.bg-transparent a,
+.dq-page header.bg-transparent button:not([class*="bg-primary"]) {
+  color: #f5f5f2 !important;
+}
+.dq-page header.bg-transparent .text-muted-foreground {
+  color: rgba(245,245,242,0.55) !important;
+}
+.dq-page header.bg-transparent .text-foreground,
+.dq-page header.bg-transparent span.bg-foreground {
+  color: #f5f5f2 !important;
+}
+.dq-page header.bg-transparent span.bg-foreground {
+  background-color: #f5f5f2 !important;
+}

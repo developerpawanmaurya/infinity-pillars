@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Anton&display=swap');
+
+.sample16-page {
+  --color-text: #000;
+  --color-bg: #de5f40;
+  --type-line-opacity: 0.05;
+
+  font-size: 14px;
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sample16-page__back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 300;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.sample16-page__back:hover {
+  text-decoration: underline;
+}
+
+.sample16-frame {
+  position: relative;
+  z-index: 100;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  padding-left: 4.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  text-transform: uppercase;
+}
+
+.sample16-hint {
+  opacity: 0.7;
+  font-size: 1rem;
+}
+
+.sample16-type {
+  position: fixed;
+  height: 100vmax;
+  width: 100vmax;
+  top: 50%;
+  left: 50%;
+  margin: -50vmax 0 0 -50vmax;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  text-transform: uppercase;
+  will-change: transform;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.sample16-type__line {
+  white-space: nowrap;
+  font-size: clamp(7rem, 18.75vh, 15rem);
+  line-height: 0.75;
+  font-weight: 400;
+  font-family: 'Anton', sans-serif;
+  color: #000;
+  opacity: var(--type-line-opacity);
+  will-change: transform, opacity;
+}
+
+.sample16-item-wrap {
+  position: relative;
+  z-index: 10;
+  text-transform: uppercase;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding: 0 1rem 2rem;
+}
+
+.sample16-item {
+  --base: 7vh;
+  --interval: 9vh;
+  padding: 1rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  width: 100%;
+  position: relative;
+  will-change: transform, opacity;
+}
+
+.sample16-item__img {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+  will-change: transform;
+}
+
+.sample16-item__title {
+  font-size: 1rem;
+  margin: 0.75rem 0 0.35rem;
+  font-weight: 700;
+}
+
+.sample16-item__desc {
+  display: none;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+@media screen and (min-width: 53em) {
+  .sample16-page {
+    font-size: 16px;
+  }
+  .sample16-frame {
+    position: fixed;
+    text-align: left;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 1rem 2vw 0 4.5rem;
+  }
+  .sample16-item-wrap {
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    width: 100vw;
+    position: relative;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+  }
+  .sample16-item {
+    width: 22vw;
+    padding: 0;
+    margin: auto 2vw var(--base);
+    flex: none;
+  }
+  .sample16-item:nth-child(2) { margin-bottom: calc(var(--base) + var(--interval)); }
+  .sample16-item:nth-child(3) { margin-bottom: calc(var(--base) + var(--interval) * 2); }
+  .sample16-item:nth-child(4) { margin-bottom: calc(var(--base) + var(--interval) * 3); }
+  .sample16-item__desc {
+    display: block;
+  }
+}
+
+.sample16-back {
+  position: fixed;
+  top: 1.5rem;
+  left: 4.5rem;
+  z-index: 300;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  stroke: #000;
+  opacity: 0;
+  pointer-events: none;
+  width: 50px;
+}
+
+.sample16-back svg {
+  stroke-linecap: round;
+  fill: none;
+  stroke-width: 1.5px;
+}
+
+.sample16-back:hover {
+  stroke: #221108;
+}
+
+.sample16-article-wrap {
+  position: absolute;
+  top: 5vh;
+  width: 100%;
+  padding: 1rem;
+  pointer-events: none;
+}
+
+.sample16-article {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  width: 100%;
+  align-items: start;
+  grid-template-areas: 'img img' 'number title' 'intro intro' 'desc desc';
+}
+
+.sample16-article.is-current {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
+}
+
+.sample16-article__img-wrap {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  grid-area: img;
+  transform-origin: 50% 100%;
+  margin-bottom: 1rem;
+  border-radius: 17px 17px 0 0;
+  transform: translateY(100%);
+}
+
+.sample16-article__img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 50% 35%;
+  transform: translateY(-100%);
+}
+
+.sample16-article__number {
+  grid-area: number;
+  font-weight: 700;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(50%);
+}
+
+.sample16-article__title {
+  grid-area: title;
+  line-height: 0.85;
+  font-size: 8vw;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-family: 'Anton', sans-serif;
+  margin: 1rem 0 0.5rem;
+  opacity: 0;
+  transform: translateY(50%);
+}
+
+.sample16-article__intro {
+  grid-area: intro;
+  font-weight: 700;
+  padding-right: 2rem;
+  opacity: 0;
+  transform: translateY(50%);
+}
+
+.sample16-article__description {
+  grid-area: desc;
+  padding-right: 2rem;
+  opacity: 0;
+  transform: translateY(50%);
+}
+
+@media screen and (min-width: 53em) {
+  .sample16-back {
+    position: absolute;
+    left: calc(((100vw - (38vw + 280px)) / 2) + 1.5rem);
+  }
+  .sample16-article-wrap {
+    top: 20vh;
+    height: 80vh;
+    padding: 0;
+  }
+  .sample16-article {
+    height: 100%;
+    width: calc(38vw + 280px);
+    margin: 0 auto;
+    grid-template-rows: 10vw 2rem 12vw auto auto;
+    grid-template-columns: 1.5rem 30% 1fr 1.5rem;
+    grid-template-areas:
+      '... ... img ...'
+      'number ... img ...'
+      '... title img ...'
+      '... intro img ...'
+      '... desc img ...';
+  }
+  .sample16-article__title {
+    grid-column-end: 4;
+    margin: 0;
+  }
+  .sample16-article__intro {
+    margin: 1.5rem 0;
+  }
+  .sample16-article__img-wrap {
+    align-self: end;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+  .sample16-article__img {
+    background-position: 50% 50%;
+  }
+}
+
+.sample16-credit {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.5rem;
+  z-index: 5;
+  font-size: 11px;
+  opacity: 0.6;
+}

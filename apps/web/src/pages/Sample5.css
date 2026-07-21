@@ -1,0 +1,119 @@
+/* Sample 5 — "Cylinder Carousel: Scroll-Accurate Cut". Same panorama-
+   cylinder technique as Sample 3, but with the camera itself choreographed
+   through several vantage points as the cylinder spins (rather than staying
+   fixed at center), matching the actual scroll behaviour of the source
+   demo in JosephASG's "codrops-cinematic-scroll-animations" (MIT licensed)
+   more closely: a single GSAP timeline scrubs both the camera path and the
+   cylinder's rotation together, using the same shaped custom easing curves
+   as the source (cubic-bezier control points only — functional numbers, not
+   copyrightable expression), and the same ~500vh scroll length. Independent
+   Three.js implementation, written from scratch; no shader/component source
+   was copied. */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+.sample5-page {
+  position: relative;
+  background: #000;
+  color: #fff;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+.sample5-page__back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1001;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+.sample5-page__back:hover { opacity: 1; }
+
+.sample5-intro {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+.sample5-intro h1 {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 1rem;
+}
+.sample5-intro span {
+  opacity: 0.6;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sample5-stage {
+  position: relative;
+  height: 500vh;
+}
+.sample5-stage__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+.sample5-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sample5-texts {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  padding: 0 1.5rem;
+}
+.sample5-txt {
+  position: absolute;
+  text-align: center;
+  max-width: 32rem;
+  clip-path: inset(0% 0% 100% 0%);
+}
+.sample5-txt h2 {
+  font-size: clamp(1.75rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+.sample5-txt p {
+  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+  opacity: 0.7;
+  margin: 0;
+}
+
+.sample5-progress {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+  z-index: 5;
+}
+.sample5-progress .segment {
+  width: 2.5rem;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+.sample5-progress .fill {
+  width: 0%;
+  height: 100%;
+  background: #fff;
+}

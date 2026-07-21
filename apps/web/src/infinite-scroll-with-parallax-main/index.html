@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Never Ending Story: Building a Seamless Infinite Scroll Experience with Lenis + GSAP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Ms+Madi&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/druk-trial" rel="stylesheet">
+                
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.23/dist/lenis.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <header>
+                <h1>The Never Ending Story: Building a Seamless Infinite Scroll Experience with Lenis + GSAP</h1>
+
+                <nav>
+                    
+                    <a href="https://tympanus.net/codrops/?p=108074&preview=1&_ppp=7fd710ab15" target="_blank">Tutorial</a>
+                    <a href="https://github.com/joebentaylor1995/infinite-scroll-with-parallax" target="_blank">Github</a>
+                    <a href="https://tympanus.net/codrops/all-posts/" target="_blank">All Posts</a>
+                </nav>
+            </header>
+
+
+            <section class="hero">
+                <picture class="hero-image">
+                    <img src="./assets/01.webp" alt="Hero Image 1" />
+                </picture>
+            </section>
+
+            <section class="hero">
+                <picture class="hero-image">
+                    <img src="./assets/02.webp" alt="Hero Image 2" />
+                </picture>
+            </section>
+
+            <section class="hero">
+                <picture class="hero-image">
+                    <img src="./assets/03.webp" alt="Hero Image 3" />
+                </picture>
+            </section>
+
+            <!-- Repeated First section for infinite scroll -->
+            <section class="hero" aria-hidden="true">
+                <picture class="hero-image" aria-hidden="true">
+                    <img src="./assets/01.webp" alt="Hero Image 1 Duplicate" aria-hidden="true" />
+                </picture>
+            </section>
+
+
+            <footer>
+                <nav>
+                    <a href="https://tympanus.net/codrops/tag/gsap/" target="_blank">#gsap</a>
+                    <a href="https://tympanus.net/codrops/tag/lenis/" target="_blank">#lenis</a>
+                    <a href="https://tympanus.net/codrops/tag/scroll/" target="_blank">#scroll</a>
+                </nav>
+            </footer>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.3.23/dist/lenis-snap.min.js"></script>
+    <script src="./scripts.js"></script>
+</body>
+</html>

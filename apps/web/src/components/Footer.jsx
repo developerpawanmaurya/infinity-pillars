@@ -35,8 +35,8 @@ const Footer = () => {
             <span className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-6 block">Company</span>
             <ul className="space-y-4">
               <li>
-                <Link to="/about" className="text-sm font-medium hover:text-muted-foreground transition-colors duration-200">
-                  About Our Studio
+                <Link to="/services" className="text-sm font-medium hover:text-muted-foreground transition-colors duration-200">
+                  Core Offerings
                 </Link>
               </li>
               <li>
@@ -47,6 +47,21 @@ const Footer = () => {
               <li>
                 <Link to="/about" className="text-sm font-medium hover:text-muted-foreground transition-colors duration-200">
                   The Playbook
+                </Link>
+              </li>
+              <li>
+                <Link to="/careers" className="text-sm font-medium hover:text-muted-foreground transition-colors duration-200">
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-sm font-medium hover:text-muted-foreground transition-colors duration-200">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/referral" className="text-sm font-medium hover:text-muted-foreground transition-colors duration-200">
+                  Refer & Earn 10%
                 </Link>
               </li>
               <li>

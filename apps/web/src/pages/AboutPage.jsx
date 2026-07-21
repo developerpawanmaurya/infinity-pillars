@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import LimeRevealSection from '@/components/LimeRevealSection.jsx';
+import ThreePillarsSection from '@/components/ThreePillarsSection.jsx';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -74,22 +75,8 @@ const AboutPage = () => {
           </motion.div>
         </section>
 
-        {/* Hero Image */}
-        <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="editorial-frame mx-auto max-w-5xl transform -rotate-1 hover:rotate-0 transition-transform duration-700"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1567080185975-88eedc2b273a"
-              alt="Infinity Pillars team at work building digital infrastructure"
-              className="w-full h-[400px] md:h-[600px] object-cover grayscale-[30%]"
-            />
-          </motion.div>
-        </section>
+        {/* Three Pillars — the system this whole site demonstrates */}
+        <ThreePillarsSection />
 
         {/* The 4-Step Playbook */}
         <section className="py-32 bg-muted/20 border-y border-border">

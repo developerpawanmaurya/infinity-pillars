@@ -63,9 +63,22 @@ const CustomCursor = () => {
   const [hovering, setHovering] = useState(false);
   const [gameMode, setGameMode] = useState(false);
   const [splashes, setSplashes] = useState([]);
+  // Some sample pages ship their own bespoke cursor as the actual subject
+  // of the demo (e.g. Sample 15's turbulence-filtered SVG cursor) — those
+  // pages add this class to <body> so ours doesn't render on top of it.
+  const [suppressed, setSuppressed] = useState(() => document.body.classList.contains('suppress-custom-cursor'));
 
   useEffect(() => {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const observer = new MutationObserver(() => {
+      setSuppressed(document.body.classList.contains('suppress-custom-cursor'));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (suppressed) return undefined;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
 
     let mX = 0, mY = 0, rX = 0, rY = 0, rafId;
     let _vis = false, _hov = false;
@@ -128,11 +141,13 @@ const CustomCursor = () => {
       document.documentElement.removeEventListener('mouseenter', onEnter);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [suppressed]);
 
   const removeSplash = useCallback((id) => setSplashes(p => p.filter(s => s.id !== id)), []);
   const halo = '0 0 0 1px rgba(255,255,255,0.6)';
   const arm  = hovering ? '18px' : '12px';
+
+  if (suppressed) return null;
 
   return (
     <>

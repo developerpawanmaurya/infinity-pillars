@@ -1,0 +1,168 @@
+/* Ported from Codrops "Rotating On-Scroll Animations" (Demo 1), MIT
+   licensed: https://github.com/codrops/RotatingOnScrollAnimations
+   Structure/values kept faithful to the source for an accurate replica;
+   only the gallery imagery and marquee copy are ours (their curated
+   photography and name list aren't reused — everything else, structure and
+   animation math, matches the original). */
+
+.catalog-sample {
+  --page-padding: 1.5rem;
+  --color-text: #ffffffea;
+  --color-bg: #141414;
+  --color-link: #ffffffb3;
+  --color-link-hover: #ffffffea;
+  --item-br: 0px;
+  --item-ar: 4 / 5;
+  --item-width: 300px;
+
+  font-size: 11px;
+  margin: 0;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  position: relative;
+  min-height: 100vh;
+  /* .gallery's margin-top/margin-bottom (25vh/35vh) were collapsing straight
+     through this wrapper since nothing separates them from its edges —
+     that collapsed space isn't painted with this element's own background,
+     so the page's own (light) background showed through above and below,
+     as a white band. display:flow-root creates a new block formatting
+     context, which contains child margins properly without the clipping
+     side effects overflow:hidden would have on the gallery's horizontal
+     sine-wave offsets. */
+  display: flow-root;
+}
+
+.catalog-sample * {
+  box-sizing: border-box;
+}
+
+.catalog-sample a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+.catalog-sample a:hover {
+  color: var(--color-link-hover);
+}
+
+/* ── Frame (header) ───────────────────────────────────────────────── */
+.catalog-sample .frame {
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: var(--page-padding);
+  display: grid;
+  z-index: 10000;
+  position: relative;
+  gap: 1rem;
+  pointer-events: none;
+  justify-items: start;
+  grid-template-columns: 100%;
+  grid-template-areas: "title" "links" "demos" "tags";
+}
+
+.catalog-sample .frame a {
+  pointer-events: auto;
+}
+
+.catalog-sample .frame__title {
+  grid-area: title;
+  font-size: 1.3rem;
+  margin: 0;
+  max-width: 30ch;
+  line-height: 1.3;
+}
+
+.catalog-sample .frame__links {
+  grid-area: links;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.catalog-sample .frame__tags {
+  grid-area: tags;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0.6;
+}
+
+@media screen and (min-width: 53em) {
+  .catalog-sample .frame {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    gap: 3rem;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "title links ." "tags tags .";
+  }
+}
+
+/* ── Gallery ──────────────────────────────────────────────────────── */
+.catalog-sample .gallery {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25vh;
+  margin-bottom: 35vh;
+}
+
+.catalog-sample .gallery__item-wrap {
+  width: 100%;
+  max-width: var(--item-width);
+  perspective: 900px;
+  margin-bottom: -5rem;
+}
+
+.catalog-sample .gallery__item {
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform-style: preserve-3d;
+  will-change: transform, filter;
+  border-radius: var(--item-br);
+  aspect-ratio: var(--item-ar);
+}
+
+/* ── Marquee ──────────────────────────────────────────────────────── */
+.catalog-sample .mark {
+  position: fixed;
+  width: 100vw;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  z-index: 1;
+  overflow: hidden;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.catalog-sample .mark__inner {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  position: relative;
+  will-change: transform;
+}
+
+.catalog-sample .mark__inner span {
+  font-size: 8rem;
+  font-weight: bold;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+}
+
+@media screen and (max-width: 53em) {
+  .catalog-sample .mark__inner span {
+    font-size: 4rem;
+  }
+}

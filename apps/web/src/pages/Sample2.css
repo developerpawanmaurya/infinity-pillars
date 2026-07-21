@@ -1,0 +1,197 @@
+/* Ported from Hiro-kiii's "Scroll-Transition", MIT licensed:
+   https://github.com/Hiro-kiii/Scroll-Transition
+   CSS values (fonts, colors, spacing, clip-path/txt sizing) kept faithful
+   to the real style.css the user added to this project. Caption copy is
+   ours (translated/adapted from the original's Japanese descriptions —
+   same factual meaning, our own words) and a 5th "custom" variant (this
+   project's own earlier build) is included alongside the 4 real ones. */
+
+.sample2-page {
+  position: relative;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sample2-page__back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1001;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+.sample2-page__back:hover { opacity: 1; }
+
+.sample2-switcher {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1001;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 60vw;
+}
+
+.sample2-switcher button {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  color: #ffffffb7;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.sample2-switcher button:hover { color: #fff; border-color: rgba(255, 255, 255, 0.6); }
+.sample2-switcher button[aria-pressed="true"] {
+  background: #afea00;
+  color: #121212;
+  border-color: #afea00;
+}
+
+/* ── The transition itself — faithful to the real demo ───────────────── */
+.svgmask {
+  font-size: 11px;
+  background-color: #000;
+  font-family: 'Playfair Display', 'Shippori Mincho', serif;
+}
+
+.svgmask .spacer {
+  height: 100vh;
+  font-size: 1.25rem;
+  display: grid;
+  text-align: center;
+  place-items: center;
+  align-content: space-between;
+  padding: 40vh 0 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.svgmask .spacer h1 {
+  font-size: 3rem;
+  letter-spacing: -0.025em;
+  line-height: 0.85;
+  font-weight: 300;
+  margin: 0;
+}
+.svgmask .spacer h1 span { opacity: 0.6; line-height: 1.2; }
+.svgmask .info {
+  max-width: 20ch;
+  opacity: 0.6;
+  margin-bottom: 4rem;
+  padding-bottom: 1rem;
+  position: relative;
+}
+.svgmask .info::after {
+  content: '';
+  width: 1px;
+  height: 2rem;
+  background: #fff;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+}
+
+.svgmask .stage { height: 500vh; position: relative; }
+.svgmask .layers {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.svgmask .layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+.svgmask .layer image { filter: brightness(0.8); }
+
+.svgmask .texts { padding: 3vw; }
+.svgmask .txt {
+  position: absolute;
+  width: 100%;
+  color: #fff;
+  text-transform: uppercase;
+  clip-path: inset(100% 0 0 0);
+  transform: translateY(40px);
+}
+.svgmask .txt h1 {
+  margin-top: 10vh;
+  font-size: clamp(4.8rem, 6.8vw, 13.6rem);
+  letter-spacing: -0.025em;
+  line-height: 0.85;
+}
+.svgmask .txt h2 {
+  margin-top: 6vw;
+  font-size: clamp(1.4rem, 1.067vw, 1.8rem);
+  letter-spacing: 0.24em;
+}
+.svgmask .txt span {
+  display: block;
+  font-size: clamp(1.1rem, 0.8vw, 1.2rem);
+  width: 20%;
+  margin-top: 30px;
+  line-height: 1.8;
+  letter-spacing: normal;
+}
+@media screen and (max-width: 1024px) { .svgmask .txt span { width: 35%; } }
+@media screen and (max-width: 599px) { .svgmask .txt span { width: 50%; } }
+
+.svgmask .progress-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 4rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 20;
+}
+.svgmask .segment {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+.svgmask .fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: #fff;
+}
+
+/* ── Variant 5 (this project's own earlier build) ─────────────────────── */
+.sample2 {
+  position: relative;
+  background: #0b0b0b;
+  color: #fff;
+  font-family: "DM Sans", sans-serif;
+  overflow-x: clip;
+}
+.sample2 .stage { height: 400vh; position: relative; }
+.sample2 .layers { position: sticky; top: 0; width: 100vw; height: 100vh; overflow: hidden; }
+.sample2 .layer { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.sample2 .layer image { filter: saturate(1.02); }
+.sample2 .txt {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 0 4rem 6rem;
+  clip-path: inset(100% 0 0 0);
+  transform: translateY(40px);
+  pointer-events: none;
+}
+.sample2 .txt h1 { font-size: clamp(3rem, 6.5vw, 8rem); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; line-height: 0.95; }
+.sample2 .txt h2 { font-size: clamp(1.1rem, 1.4vw, 1.6rem); font-weight: 500; opacity: 0.75; margin: 0 0 0.75rem; }
+.sample2 .txt span { display: block; max-width: 32ch; font-size: 0.95rem; opacity: 0.55; line-height: 1.5; }
+.sample2 .progress-bar { position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem 4rem; display: flex; gap: 1rem; z-index: 20; }
+.sample2 .segment { position: relative; flex: 1; height: 2px; background: rgba(255, 255, 255, 0.2); overflow: hidden; }
+.sample2 .fill { position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: #afea00; }
+@media (max-width: 700px) { .sample2 .txt { padding: 0 1.5rem 3rem; } }
