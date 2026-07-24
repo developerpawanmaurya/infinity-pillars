@@ -21,10 +21,27 @@ const LimeRevealSection = ({ children, className = '' }) => {
     // distance (i.e. plays faster relative to scroll) on mobile/tablet.
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
     const isTablet = !isMobile && window.matchMedia('(max-width: 1023px)').matches;
-    const speedMultiplier = isMobile ? 1.75 : isTablet ? 1.5 : 1;
+    const speedMultiplier = isMobile ? 2.2 * 0.75 * 0.5 : isTablet ? 1.5 : 1; // mobile: 0.825x (dialed back again from 1.65x)
     const startOffset = 200;
     const baseRange   = 400; // desktop: end (600) - start (200)
     const endOffset   = startOffset + baseRange / speedMultiplier;
+
+    // The square is sized in vmax and centered ON the viewport's bottom edge
+    // (bottom/marginLeft are always exactly half its own size — half sits
+    // below the fold, half above). vmax is the LARGER of width/height, which
+    // on a landscape desktop is the width — plenty of headroom to also
+    // cover the (smaller) height once scaled up. On a portrait phone/tablet
+    // vmax IS the height, and this geometry only reaches half its size
+    // above the bottom edge — at the old 160vmax that's 0.8×viewport
+    // height, leaving the top ~20% of the screen never covered no matter
+    // how far it scales. Needs to be genuinely >= 2x viewport height in
+    // that orientation, not 1.6x, so bump the multiplier for narrower
+    // devices instead of reusing the desktop value everywhere.
+    const sizeVmax = isMobile ? 240 : isTablet ? 210 : 160;
+    square.style.width = `${sizeVmax}vmax`;
+    square.style.height = `${sizeVmax}vmax`;
+    square.style.bottom = `${-sizeVmax / 2}vmax`;
+    square.style.marginLeft = `${-sizeVmax / 2}vmax`;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(square,

@@ -37,7 +37,14 @@ const ThemeToggleButton = ({ isDark, onToggle }) => (
   <button
     onClick={onToggle}
     aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-    className="w-10 h-10 flex items-center justify-center hover:bg-muted transition-colors duration-200 shrink-0 relative overflow-hidden"
+    // Circle, not the plain square the hamburger uses — reads as its own
+    // distinct control. Hover glow is wrapped in [@media(hover:hover)] so it
+    // can never get stuck "on" after a tap on a touch screen (bare
+    // Tailwind `hover:` compiles to a plain CSS :hover, which touch
+    // browsers latch onto until the next tap elsewhere) — active: (a real
+    // touch-safe pseudo-class, always releases on touch-end) carries the
+    // tactile feedback instead.
+    className="group w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative overflow-hidden transition-transform duration-200 active:scale-90 [@media(hover:hover)]:hover:bg-primary/15 [@media(hover:hover)]:hover:shadow-[0_0_0_1px_rgba(175,234,0,0.4),0_0_16px_rgba(175,234,0,0.35)]"
   >
     <AnimatePresence mode="wait" initial={false}>
       <motion.span
@@ -46,7 +53,7 @@ const ThemeToggleButton = ({ isDark, onToggle }) => (
         animate={{ rotate: 0, opacity: 1 }}
         exit={{ rotate: 90, opacity: 0 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="flex items-center justify-center"
+        className="flex items-center justify-center transition-colors duration-200 [@media(hover:hover)]:group-hover:text-primary"
       >
         {isDark ? <Sun className="w-[18px] h-[18px]" /> : <Moon className="w-[18px] h-[18px]" />}
       </motion.span>
@@ -107,7 +114,9 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 transition-all duration-300 ${
+          isMobileMenuOpen ? 'z-[999995]' : 'z-50'
+        } ${
           isScrolled || isMobileMenuOpen ? 'bg-background border-b border-border/60 py-4' : 'bg-transparent py-6'
         }`}
       >
@@ -151,7 +160,7 @@ const Header = () => {
               <ThemeToggleButton isDark={isDark} onToggle={toggleTheme} />
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="w-10 h-10 flex items-center justify-center hover:bg-muted transition-colors duration-200"
+                className="w-10 h-10 flex items-center justify-center transition-transform duration-200 active:scale-90 [@media(hover:hover)]:hover:bg-muted"
                 aria-label="Toggle menu"
                 aria-expanded={isMobileMenuOpen}
               >
@@ -170,7 +179,14 @@ const Header = () => {
 
       {/* Mobile Menu — portaled straight to <body> (see the note up top on
           why: it can't live inside <header> without risking getting boxed
-          into whatever transform a page's scroll animation puts there). */}
+          into whatever transform a page's scroll animation puts there).
+          z-index is intentionally very high (not just "above header"): a
+          few page elements sit above the header's own z-50 already — the
+          homepage hero's "Scroll to explore" cue is z-60, LimeRevealSection's
+          content wrapper is z-45 — and both used to visibly float on top of
+          this panel. Header itself jumps to z-[999995] (see above) whenever
+          the menu is open so its logo/toggle/close button stay reachable on
+          top of this. */}
       {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {isMobileMenuOpen && (
@@ -180,7 +196,7 @@ const Header = () => {
               initial="closed"
               animate="open"
               exit="closed"
-              className="lg:hidden fixed inset-0 z-40 bg-background overflow-y-auto"
+              className="lg:hidden fixed inset-0 z-[999990] bg-background overflow-y-auto"
               style={{ transformOrigin: 'top' }}
             >
               <motion.ul
