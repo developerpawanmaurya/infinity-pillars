@@ -156,10 +156,21 @@ const KissCaseStudy = () => {
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="pt-40 pb-24 md:pt-52 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <Link to="/portfolio" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors group mb-14">
-          <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          Back to Success Blueprints
-        </Link>
+        <div className="flex items-center justify-between flex-wrap gap-4 mb-14">
+          <Link to="/portfolio" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors group">
+            <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to Success Blueprints
+          </Link>
+          <a
+            href="https://kissps.com.au/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors group"
+          >
+            Visit live site
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          </a>
+        </div>
 
         <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.3em] mb-8" style={{ color: 'hsl(var(--kc-accent))' }}>
           <Printer className="w-3.5 h-3.5" />

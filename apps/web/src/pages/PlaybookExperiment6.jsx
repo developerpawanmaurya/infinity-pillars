@@ -175,7 +175,7 @@ const PlaybookExperiment6 = () => {
               <Button
                 asChild
                 size="lg"
-                className="bg-background text-foreground hover:bg-background/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
               >
                 <Link to="#booking">Book Audit Call</Link>
               </Button>

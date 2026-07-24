@@ -15,6 +15,17 @@ const LimeRevealSection = ({ children, className = '' }) => {
     const section = sectionRef.current;
     if (!square || !overlay || !section) return;
 
+    // Same scroll-distance-to-reveal ratio on every device would make the
+    // square feel sluggish on small screens, where there's less page to
+    // scroll through overall — so the reveal completes over a shorter scroll
+    // distance (i.e. plays faster relative to scroll) on mobile/tablet.
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const isTablet = !isMobile && window.matchMedia('(max-width: 1023px)').matches;
+    const speedMultiplier = isMobile ? 1.75 : isTablet ? 1.5 : 1;
+    const startOffset = 200;
+    const baseRange   = 400; // desktop: end (600) - start (200)
+    const endOffset   = startOffset + baseRange / speedMultiplier;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(square,
         { scale: 0.04, rotation: 0 },
@@ -24,8 +35,8 @@ const LimeRevealSection = ({ children, className = '' }) => {
           ease: 'none',
           scrollTrigger: {
             trigger: section,
-            start: 'top+=200 132%',
-            end: 'top+=600 68%',
+            start: `top+=${startOffset} 132%`,
+            end: `top+=${endOffset} 68%`,
             scrub: 0.8,          // was 1.6 — slightly slower/laggier catch-up to scroll
 
             // Section entering — show growing square over the page

@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import LimeRevealSection from '@/components/LimeRevealSection.jsx';
+import SplitReveal from '@/components/SplitReveal.jsx';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -102,8 +103,13 @@ const ServicesPage = () => {
             className="max-w-5xl"
           >
             <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-12">
-              Core<br />
-              <span className="text-muted-foreground italic font-medium">Offerings.</span>
+              <SplitReveal text="Core" trigger="mount" />
+              <SplitReveal
+                text="Offerings."
+                trigger="mount"
+                delay={0.28}
+                className="text-muted-foreground italic font-medium"
+              />
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-20 border-t border-border pt-12">

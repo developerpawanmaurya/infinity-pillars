@@ -117,13 +117,24 @@ const DeQollabCaseStudy = () => {
       <section className="relative min-h-screen flex flex-col justify-center overflow-hidden dq-grid-bg dq-noise pt-32 pb-24">
         <div className="dq-scanline" aria-hidden="true" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-          <Link
-            to="/portfolio"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/50 hover:text-[#AFEA00] transition-colors group mb-16"
-          >
-            <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Success Blueprints
-          </Link>
+          <div className="flex items-center justify-between flex-wrap gap-4 mb-16">
+            <Link
+              to="/portfolio"
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/50 hover:text-[#AFEA00] transition-colors group"
+            >
+              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              Back to Success Blueprints
+            </Link>
+            <a
+              href="https://deqollab.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/50 hover:text-[#AFEA00] transition-colors group"
+            >
+              Visit live site
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </a>
+          </div>
 
           <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.3em] text-[#AFEA00] mb-8">
             <Radio className="w-3.5 h-3.5" />

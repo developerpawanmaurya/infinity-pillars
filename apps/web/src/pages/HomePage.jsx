@@ -5,7 +5,7 @@ import { ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import LimeRevealSection from '@/components/LimeRevealSection.jsx';
-import ShootingGameSection from '@/components/ShootingGameSection.jsx';
+import StackPillarsSection from '@/components/StackPillarsSection.jsx';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
@@ -588,6 +588,7 @@ const HomePage = () => {
       slug: 'deqollab',
       category: 'Strategic Communications',
       image: '/images/DeQollab.png',
+      liveUrl: 'https://deqollab.com/',
       rotation: '-rotate-3',
       margin: 'mt-0'
     },
@@ -596,6 +597,7 @@ const HomePage = () => {
       slug: 'kiss-professional-solutions',
       category: 'Enterprise Lead Generation',
       image: '/images/KISS.png',
+      liveUrl: 'https://kissps.com.au/',
       rotation: 'rotate-2',
       margin: 'mt-16 md:mt-32'
     },
@@ -604,21 +606,21 @@ const HomePage = () => {
       slug: 'xpertpatient',
       category: 'Healthcare · Empathetic UX',
       image: '/images/XpertPatient.png',
+      liveUrl: 'https://xpertpatient.com/',
       rotation: '-rotate-1',
       margin: 'mt-16'
     }
   ];
 
-  const localBusinesses = [
-    'The Daily Brew Coffee',
-    'Riverside Bakery',
-    'Pinch of Spice',
-    'Urban Tech Solutions',
-    'Green Leaf Landscaping',
-    'Coastal Fitness Studio',
-    'Artisan Woodworks',
-    'Bloom & Petals Florist',
-    'Swift Delivery Co'
+  const trustPoints = [
+    'Conversion-Focused Design',
+    'Google Business Authority',
+    '24/7 AI Lead Engagement',
+    'Built for Measurable ROI',
+    'Data-Driven Strategy',
+    'Performance-First Engineering',
+    'Scalable Digital Infrastructure',
+    'Transparent Reporting'
   ];
 
   return (
@@ -676,7 +678,14 @@ const HomePage = () => {
                 // 10.5vw reaches 8.125rem (130px) right around a 1240px
                 // viewport (10.5% of 1240px ≈ 130px), so screens wider than
                 // that plateau at exactly 130px instead of the old 115.2px.
-                fontSize: 'clamp(3.2rem, 10.5vw, 8.125rem)',
+                // Floor dropped from 3.2rem to 2.5rem — 3.2rem was wider than
+                // the JS resting scale below could shrink for on narrow
+                // phones during the brief window before that JS runs (the
+                // scale correction is applied in a useEffect, so it always
+                // lands a frame after first paint), so the heading visibly
+                // overshot the screen for a beat on load. 2.5rem keeps that
+                // first paint already phone-sized.
+                fontSize: 'clamp(2.5rem, 10.5vw, 8.125rem)',
                 fontWeight: 700,
                 letterSpacing: '-0.03em',
                 lineHeight: 0.92,
@@ -805,24 +814,30 @@ const HomePage = () => {
           </motion.div>
         </div>
 
-        {/* Trust Banner + Local Businesses Marquee */}
+        {/* Trust Banner Marquee */}
         <section className="py-10 border-t border-border bg-background overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground/60 mb-6 text-center">
-              Validated by Ambitious Brands
+              Built on a Foundation of Performance
             </p>
             <div className="flex gap-8 fade-left-edge">
               <div className="flex shrink-0 animate-scroll gap-8 items-center justify-between min-w-full">
-                {localBusinesses.map((logo, idx) => (
-                  <span key={`logo-1-${idx}`} className="text-lg md:text-xl font-bold tracking-widest uppercase text-muted-foreground/60 whitespace-nowrap">
-                    {logo}
+                {trustPoints.map((point, idx) => (
+                  <span key={`trust-1-${idx}`} className="flex items-center gap-8 shrink-0">
+                    <span className="text-lg md:text-xl font-bold tracking-widest uppercase text-muted-foreground/60 whitespace-nowrap">
+                      {point}
+                    </span>
+                    <span className="text-muted-foreground/30" aria-hidden="true">/</span>
                   </span>
                 ))}
               </div>
               <div className="flex shrink-0 animate-scroll gap-8 items-center justify-between min-w-full" aria-hidden="true">
-                {localBusinesses.map((logo, idx) => (
-                  <span key={`logo-2-${idx}`} className="text-lg md:text-xl font-bold tracking-widest uppercase text-muted-foreground/60 whitespace-nowrap">
-                    {logo}
+                {trustPoints.map((point, idx) => (
+                  <span key={`trust-2-${idx}`} className="flex items-center gap-8 shrink-0">
+                    <span className="text-lg md:text-xl font-bold tracking-widest uppercase text-muted-foreground/60 whitespace-nowrap">
+                      {point}
+                    </span>
+                    <span className="text-muted-foreground/30" aria-hidden="true">/</span>
                   </span>
                 ))}
               </div>
@@ -955,9 +970,20 @@ const HomePage = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: index * 0.2 }}
-                  className={`${project.margin}`}
+                  className={`${project.margin} group relative`}
                 >
-                  <Link to={`/portfolio/${project.slug}`} className="block group">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 bg-background/90 backdrop-blur-sm text-foreground text-[10px] font-bold uppercase tracking-widest px-3 py-2 border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                      Visit site
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                  )}
+                  <Link to={`/portfolio/${project.slug}`} className="block">
                     <div className={`transition-all duration-500 transform ${project.rotation} group-hover:rotate-0 group-hover:-translate-y-4`}>
                       <div className="editorial-frame">
                         <img
@@ -1098,7 +1124,7 @@ const HomePage = () => {
         </section>
 
         {/* Closing CTA */}
-        <section className="py-40 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="py-20 md:py-40 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1119,7 +1145,7 @@ const HomePage = () => {
           </motion.div>
         </section>
 
-        <ShootingGameSection />
+        <StackPillarsSection />
         <Footer />
       </div>
     </>

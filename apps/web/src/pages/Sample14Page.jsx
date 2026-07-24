@@ -63,7 +63,12 @@ const CINEMA_SLOT_H = 620;
 const CINEMA_HEIGHT = (2 * Math.PI * CINEMA_RADIUS / CINEMA_SLOT_COUNT) * (CINEMA_SLOT_H / CINEMA_SLOT_W);
 const CINEMA_TOTAL_ROTATION = 16;
 const CINEMA_SCALE = CINEMA_RADIUS / 2.5;
-const CINEMA_WIDE = 0.5;
+// How far back the camera sits for the opening/closing "wide" shots. 0.5
+// read as uncomfortably close (the drum filled the frame instantly); 1.05
+// swung too far the other way and left it looking small and distant.
+// This is the middle ground: the whole drum visible with a little margin,
+// but still reads as "big" rather than a tiny object far away.
+const CINEMA_WIDE = 0.75;
 const CINEMA_CAMERA_START = [0, 0, 8 * CINEMA_SCALE * CINEMA_WIDE];
 const CINEMA_CAMERA_PATH = [
   { pos: [0 * CINEMA_SCALE * CINEMA_WIDE, 0 * CINEMA_SCALE * CINEMA_WIDE, 8 * CINEMA_SCALE * CINEMA_WIDE], duration: 1.0, ease: 'cinema14Silk' },
@@ -101,7 +106,7 @@ function buildCinemaCylinder(texture, fogColor, fogNear, fogFar) {
   const material = new THREE.ShaderMaterial({
     uniforms: {
       uMap: { value: texture },
-      uDarkness: { value: 0.45 },
+      uDarkness: { value: 0.12 },
       uFogColor: { value: new THREE.Color(fogColor) },
       uFogNear: { value: fogNear },
       uFogFar: { value: fogFar },
@@ -397,7 +402,10 @@ const Sample14Page = () => {
   // instance driving GSAP ScrollTrigger.
   function initLongPage() {
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
-    const lenis = new Lenis({ lerp: 0.15, smoothWheel: true, smoothTouch: !isTouch });
+    // Slower, heavier trail (lower lerp) plus a reduced wheel multiplier —
+    // the previous 0.15/1 combo let a single scroll gesture blow through
+    // several camera waypoints and gallery beats at once.
+    const lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 0.7, smoothWheel: true, smoothTouch: !isTouch });
     lenis.on('scroll', ScrollTrigger.update);
     const rafFn = (time) => lenis.raf(time * 1000);
     gsap.ticker.add(rafFn);
@@ -456,11 +464,17 @@ const Sample14Page = () => {
     CustomEase.create('cinema14Linear', 'M0,0 C0.4,0 0.6,1 1,1');
 
     const FOG_COLOR = 0x161a19;
-    const FOG_NEAR = CINEMA_RADIUS * 2;
-    const FOG_FAR = CINEMA_RADIUS * 6;
+    // Pushed out well past the old 2x/6x radius — at the new, closer
+    // CINEMA_WIDE camera distances that range started fogging the far
+    // side of the cylinder almost immediately, on top of uDarkness below,
+    // which read as a solid black overlay across the photos.
+    const FOG_NEAR = CINEMA_RADIUS * 4;
+    const FOG_FAR = CINEMA_RADIUS * 14;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(FOG_COLOR);
+    // No scene.background: leave the canvas transparent (renderer already
+    // has alpha:true) so the page's own hero background — the safelight
+    // glow and film grain — shows through instead of a flat solid fill.
     scene.fog = new THREE.Fog(FOG_COLOR, FOG_NEAR, FOG_FAR);
 
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 4000);

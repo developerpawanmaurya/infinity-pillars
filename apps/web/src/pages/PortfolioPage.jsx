@@ -7,6 +7,7 @@ import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import AnimatedCounter from '@/components/AnimatedCounter.jsx';
 import PortfolioCaseCard from '@/components/PortfolioCaseCard.jsx';
+import SplitReveal from '@/components/SplitReveal.jsx';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ const PortfolioPage = () => {
       category: 'Strategic Communications · Brand Authority',
       description: 'A premium PR & comms agency needed a digital presence to match their real-world prestige. We organized a 17-sector portfolio into a seamless, minimalist experience built to command premium retainer fees.',
       image: '/images/DeQollab.png',
+      liveUrl: 'https://deqollab.com/',
       metrics: ['17 sectors unified', '345+ verified media placements', '9–12% CVR lift potential'],
       rotation: 'rotate-2',
       dark: true
@@ -30,6 +32,7 @@ const PortfolioPage = () => {
       category: 'Enterprise Lead Generation · Office Technology',
       description: 'An Australian office tech & managed services provider needed to unify diverse enterprise verticals under one brand. We deployed an 8-step interactive quote engine and a self-service support bot.',
       image: '/images/KISS.png',
+      liveUrl: 'https://kissps.com.au/',
       metrics: ['3,000+ organizations served', '8-step quote engine', '5 regional offices unified'],
       rotation: '-rotate-2',
       dark: false
@@ -40,6 +43,7 @@ const PortfolioPage = () => {
       category: 'Healthcare · Empathetic UX',
       description: 'An award-winning oncology education platform translating dense clinical guidelines into calm, intuitive digital experiences for newly diagnosed patients and caregivers.',
       image: '/images/XpertPatient.png',
+      liveUrl: 'https://xpertpatient.com/',
       metrics: ['Stevie Award winner', '90% of diagnosed community supported', 'WCAG 2.1 AA / ADA compliant'],
       rotation: 'rotate-1',
       dark: false
@@ -73,8 +77,13 @@ const PortfolioPage = () => {
             className="max-w-5xl"
           >
             <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-12">
-              Success<br />
-              <span className="text-muted-foreground italic font-medium">Blueprints.</span>
+              <SplitReveal text="Success" trigger="mount" />
+              <SplitReveal
+                text="Blueprints."
+                trigger="mount"
+                delay={0.28}
+                className="text-muted-foreground italic font-medium"
+              />
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-20 border-t border-border pt-12">

@@ -5,6 +5,7 @@ import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import LimeRevealSection from '@/components/LimeRevealSection.jsx';
 import ThreePillarsSection from '@/components/ThreePillarsSection.jsx';
+import SplitReveal from '@/components/SplitReveal.jsx';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -61,8 +62,13 @@ const AboutPage = () => {
             className="max-w-5xl"
           >
             <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-12">
-              The Playbook:<br />
-              <span className="text-muted-foreground italic font-medium">Our Work Philosophy.</span>
+              <SplitReveal text="The Playbook:" trigger="mount" />
+              <SplitReveal
+                text="Our Work Philosophy."
+                trigger="mount"
+                delay={0.28}
+                className="text-muted-foreground italic font-medium"
+              />
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-20 border-t border-border pt-12">
@@ -170,7 +176,7 @@ const AboutPage = () => {
               <Button
                 asChild
                 size="lg"
-                className="bg-background text-foreground hover:bg-background/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] rounded-none px-12 py-8 text-lg shadow-editorial"
               >
                 <Link to="#booking">Book Audit Call</Link>
               </Button>

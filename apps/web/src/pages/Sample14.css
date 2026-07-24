@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,500;1,6..96,400&display=swap');
 
 .sample14-page {
   --color-text: #fff;
@@ -6,13 +6,22 @@
   --color-bg: #161a19;
   --color-link: #7f9993;
   --color-menu: #7f9993;
+  --color-safelight: #b8492a;
   --img-ratio: 1.5;
 
   position: relative;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text);
-  background: var(--color-bg);
-  font-family: 'Inter', -apple-system, sans-serif;
+  /* A literal darkroom safelight (warm red/amber, one corner) against the
+     cool sage in the other, plus a soft vignette pulling the edges darker
+     than the centre — creative rather than a flat wash of one hue. */
+  background:
+    radial-gradient(ellipse 55% 50% at 12% 8%, rgba(184, 73, 42, 0.35), transparent 62%),
+    radial-gradient(ellipse 65% 60% at 88% 92%, rgba(127, 153, 147, 0.28), transparent 58%),
+    radial-gradient(ellipse 120% 100% at 50% 40%, transparent 45%, rgba(0, 0, 0, 0.45) 100%),
+    var(--color-bg);
+  background-attachment: fixed, fixed, fixed, scroll;
+  font-family: 'Bodoni Moda', Georgia, serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -21,14 +30,41 @@
   overflow: hidden;
 }
 
-.sample14-page::after {
+/* Fine, animated film-grain — ties the "darkroom" theme into the texture
+   itself instead of just its colour, and keeps the background from
+   reading as a flat, dull wash no matter how far down the page you are. */
+.sample14-page::before {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  z-index: 900;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  animation: sample14-grain 1s steps(3) infinite;
+}
+
+@keyframes sample14-grain {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-2%, 1%); }
+  66% { transform: translate(1%, -2%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Scoped to the hero only (not `.sample14-page`, and not `position: fixed`)
+   — it was covering every picture for the rest of this now much longer,
+   scrolling page, since a fixed full-viewport layer never goes away. */
+.sample14-main::after {
   z-index: 1000;
   content: '';
   pointer-events: none;
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: url('/images/intro-trail/shadow.png') no-repeat 100% 0%;
   background-size: cover;
+  opacity: 0.6;
 }
 
 .sample14-page__back {
@@ -261,8 +297,8 @@
   grid-area: content-about;
   display: flex;
   flex-direction: column;
-  font-size: 1.1rem;
-  line-height: 1.3;
+  font-size: clamp(1.2rem, 1.6vw, 1.4rem);
+  line-height: 1.45;
   opacity: 0;
 }
 
@@ -387,7 +423,7 @@
 
 .sample14-cinema {
   position: relative;
-  height: 400vh;
+  height: 650vh;
 }
 
 .sample14-cinema__pin {
@@ -395,7 +431,9 @@
   top: 0;
   height: 100vh;
   overflow: hidden;
-  background: var(--color-bg);
+  /* No background here — the canvas itself is transparent now, so the
+     page's own hero background (safelight glow + grain) shows through
+     instead of a flat, separate solid fill for this section. */
 }
 
 .sample14-cinema__pin canvas {
@@ -432,9 +470,10 @@
 }
 
 .sample14-cinema__txt p {
-  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  line-height: 1.45;
   color: var(--color-text);
-  opacity: 0.75;
+  opacity: 0.8;
   margin: 0;
 }
 
@@ -529,15 +568,15 @@
   grid-area: content;
   padding: 2rem;
   margin: 0 auto;
-  font-size: 1.05rem;
-  line-height: 1.5;
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  line-height: 1.55;
   position: relative;
-  max-width: 480px;
+  max-width: 520px;
 }
 
 .sample14-scroll__text--large {
-  font-size: clamp(1.1rem, 3vw, 1.6rem);
-  max-width: 640px;
+  font-size: clamp(1.4rem, 3.2vw, 1.9rem);
+  max-width: 680px;
 }
 
 .sample14-scroll__section--lines {
@@ -651,10 +690,10 @@
 
 .sample14-note p {
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--color-text);
   opacity: 0.85;
-  font-size: 1.05rem;
+  font-size: clamp(1.2rem, 1.7vw, 1.4rem);
 }
 
 .sample14-gallery-wrap {

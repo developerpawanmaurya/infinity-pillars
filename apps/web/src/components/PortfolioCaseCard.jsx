@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Globe } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,7 +21,7 @@ const PortfolioCaseCard = ({ project, index }) => {
     if (!card) return undefined;
 
     const ctx = gsap.context(() => {
-      const curtain = card.querySelector('[data-curtain]');
+      const reveal = card.querySelector('[data-img-reveal]');
       const img = card.querySelector('[data-parallax-img]');
       const indexNum = card.querySelector('[data-index-num]');
       const metrics = card.querySelectorAll('[data-metric]');
@@ -37,21 +37,28 @@ const PortfolioCaseCard = ({ project, index }) => {
         defaults: { ease: 'power3.out' },
       });
 
+      // Clip-path wipe reveals the framed image edge-to-edge — no separate
+      // solid curtain layer sliding over it (that read as a slider dragging
+      // across the image, which is what this replaced), just the image's
+      // own visible region growing open in one clean motion.
       tl.fromTo(indexNum, { opacity: 0, x: reversed ? -24 : 24 }, { opacity: 1, x: 0, duration: 0.7 }, 0)
-        .fromTo(curtain,
-          { scaleX: 1, skewX: reversed ? -6 : 6 },
-          { scaleX: 0, skewX: 0, duration: 1, ease: 'power3.inOut', transformOrigin: reversed ? 'left center' : 'right center' },
+        .fromTo(reveal,
+          { clipPath: reversed ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)' },
+          { clipPath: 'inset(0 0% 0 0%)', duration: 1, ease: 'power3.inOut' },
           0.05)
-        .fromTo(img, { scale: 1.35 }, { scale: 1.1, duration: 1.3, ease: 'power2.out' }, 0.05)
+        .fromTo(img, { scale: 1.15 }, { scale: 1.05, duration: 1.3, ease: 'power2.out' }, 0.05)
         .fromTo(category, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.5 }, 0.3)
         .fromTo(titleInner, { yPercent: 100 }, { yPercent: 0, duration: 0.8, ease: 'power4.out' }, 0.35)
         .fromTo(desc, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6 }, 0.55)
         .fromTo(metrics, { opacity: 0, y: 16, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, ease: 'back.out(2)' }, 0.6)
         .fromTo(cta, { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.9);
 
-      // Ambient parallax while the card scrolls through the viewport
+      // Ambient parallax while the card scrolls through the viewport — kept
+      // small so it stays inside the image's now-modest overscan margin
+      // (scale settles at 1.05, not the old 1.1, to stop the permanent
+      // upscale from softening the image at rest)
       gsap.to(img, {
-        yPercent: 8,
+        yPercent: 3,
         ease: 'none',
         scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
       });
@@ -101,7 +108,7 @@ const PortfolioCaseCard = ({ project, index }) => {
           className={`relative transform ${project.rotation}`}
           style={{ transformStyle: 'preserve-3d' }}
         >
-          <div className="editorial-frame relative overflow-hidden">
+          <div data-img-reveal className="editorial-frame relative overflow-hidden">
             <div className="w-full h-[400px] md:h-[600px] overflow-hidden relative">
               <img
                 data-parallax-img
@@ -113,8 +120,6 @@ const PortfolioCaseCard = ({ project, index }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
               )}
             </div>
-            {/* Wipe-reveal curtain — animated closed via GSAP on scroll-into-view */}
-            <div data-curtain className="absolute inset-0 bg-background z-10" />
           </div>
         </div>
       </div>
@@ -139,7 +144,7 @@ const PortfolioCaseCard = ({ project, index }) => {
           ))}
         </div>
 
-        <div data-cta>
+        <div data-cta className="flex flex-wrap items-center gap-x-8 gap-y-4">
           <Link
             to={`/portfolio/${project.slug}`}
             className="group inline-flex items-center gap-3 font-bold uppercase tracking-widest text-sm border-b border-foreground pb-1 hover:text-muted-foreground hover:border-muted-foreground transition-all duration-300"
@@ -147,6 +152,17 @@ const PortfolioCaseCard = ({ project, index }) => {
             Read full case study
             <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </Link>
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 font-bold uppercase tracking-widest text-sm text-muted-foreground border-b border-transparent pb-1 hover:text-foreground hover:border-muted-foreground transition-all duration-300"
+            >
+              <Globe className="w-4 h-4" />
+              Visit live site
+            </a>
+          )}
         </div>
       </div>
     </div>

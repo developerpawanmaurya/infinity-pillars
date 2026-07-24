@@ -36,7 +36,7 @@ const ACTS = [
   },
 ];
 
-const PILLAR_WIDTHS = [56, 80, 56];
+const PILLAR_WIDTHS = [64, 64, 64];
 
 const WebsiteMock = () => (
   <div className="tp-mock w-full max-w-sm rounded-md overflow-hidden">
@@ -163,7 +163,7 @@ const ThreePillarsSection = () => {
           trigger: wrap,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.7,
+          scrub: 0.35,
           onUpdate: (self) => {
             const p = self.progress;
             setActiveStep(p < 0.3 ? 0 : p < 0.6 ? 1 : p < 0.9 ? 2 : 3);
@@ -173,12 +173,18 @@ const ThreePillarsSection = () => {
 
       [0, 1, 2].forEach((i) => {
         const base = i * 3;
+        // Fill spans the act's *entire* scroll slice at a linear ease, not a
+        // quick eased burst at the top of it — with scrub already providing
+        // the smoothing, an eased tween here just meant the pillar snapped
+        // to full height early then sat idle for the rest of the scroll.
+        // Linear + full-span keeps scaleY directly proportional to scroll
+        // position the whole way through.
         tl.to(pillarRefs.current[i], {
           scaleY: 1,
           backgroundColor: '#AFEA00',
           boxShadow: '0 0 40px rgba(175,234,0,0.35)',
-          duration: 1.1,
-          ease: 'power3.out',
+          duration: 3,
+          ease: 'none',
         }, base)
           .to(actRefs.current[i], { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, base + 0.15)
           .to(actRefs.current[i], { opacity: 0, y: -18, duration: 0.6, ease: 'power2.in' }, base + 2.5);
@@ -313,7 +319,12 @@ const ThreePillarsSection = () => {
             {ACTS.map((act, i) => {
               const Mock = MOCKS[i];
               return (
-                <div key={act.title} ref={(el) => (actRefs.current[i] = el)} className="tp-act">
+                <div
+                  key={act.title}
+                  ref={(el) => (actRefs.current[i] = el)}
+                  className="tp-act"
+                  style={{ pointerEvents: activeStep === i ? 'auto' : 'none' }}
+                >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center h-full">
                     <div>
                       <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
@@ -334,7 +345,11 @@ const ThreePillarsSection = () => {
             })}
 
             {/* Finale */}
-            <div ref={finaleRef} className="tp-act">
+            <div
+              ref={finaleRef}
+              className="tp-act"
+              style={{ pointerEvents: activeStep === 3 ? 'auto' : 'none' }}
+            >
               <div className="flex flex-col items-center text-center justify-center h-full">
                 <svg width="0" height="0" aria-hidden="true">
                   <defs />

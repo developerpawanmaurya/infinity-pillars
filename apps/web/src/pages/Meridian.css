@@ -1,0 +1,353 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Caveat:wght@500;600&display=swap');
+
+:root {
+  --mer-bg: #FAFAF8;
+  --mer-fg: #121210;
+  --mer-fg-muted: #8A8A85;
+  --mer-line: rgba(18, 18, 16, 0.12);
+}
+
+.mer-page {
+  background: var(--mer-bg);
+  color: var(--mer-fg);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  overflow-x: clip;
+  position: relative;
+}
+
+.mer-page * { box-sizing: border-box; }
+
+.mer-wrap {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: clamp(24px, 5vw, 96px);
+  padding-right: clamp(24px, 5vw, 96px);
+}
+
+.mer-section {
+  padding-top: clamp(80px, 12vh, 200px);
+  padding-bottom: clamp(80px, 12vh, 200px);
+}
+
+.mer-eyebrow {
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--mer-fg-muted);
+  margin-bottom: 1.5rem;
+}
+
+.mer-section-heading {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.mer-section-heading sup {
+  font-size: 0.4em;
+  color: var(--mer-fg-muted);
+  font-weight: 400;
+}
+
+.mer-pullquote {
+  font-family: 'Newsreader', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  line-height: 1.15;
+  max-width: 900px;
+  margin-bottom: 2rem;
+}
+
+.mer-body {
+  font-family: 'Newsreader', serif;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.6;
+  max-width: 640px;
+  color: var(--mer-fg);
+}
+
+.mer-underline-link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: inherit;
+}
+
+/* ---------- Back link + cursor tooltip ---------- */
+.mer-back {
+  position: fixed; top: 20px; left: 20px; z-index: 200;
+  font-size: 0.8rem; color: var(--mer-fg); text-decoration: none;
+  mix-blend-mode: difference;
+}
+.mer-cursor-tooltip {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  background: #111; color: #fff; font-family: monospace; font-size: 12px;
+  padding: 6px 12px; border-radius: 20px; opacity: 0;
+  transform-origin: left center; pointer-events: none;
+}
+
+/* ---------- Nav ---------- */
+.mer-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: clamp(20px, 3vw, 40px) clamp(24px, 5vw, 96px);
+  color: #fff;
+  pointer-events: none;
+}
+.mer-nav__mark {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.03em; line-height: 1.35;
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+.mer-nav__links {
+  font-size: 0.8125rem; letter-spacing: 0.02em;
+  pointer-events: auto;
+}
+.mer-nav__links a { color: inherit; text-decoration: none; margin: 0 2px; }
+.mer-nav__links a.is-active,
+.mer-nav__links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---------- SECTION 1: Hero ---------- */
+.mer-hero {
+  position: relative; height: 100vh; min-height: 640px; overflow: hidden;
+  color: #fff;
+  display: flex; align-items: flex-end;
+}
+.mer-hero__media { position: absolute; inset: 0; }
+.mer-hero__img { width: 100%; height: 120%; object-fit: cover; will-change: transform; }
+.mer-hero__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.55) 100%);
+}
+.mer-hero__body { position: relative; z-index: 2; width: 100%; padding: 0 clamp(24px, 5vw, 96px) clamp(48px, 8vh, 96px); }
+.mer-hero__title {
+  font-weight: 700; line-height: 0.95; letter-spacing: -0.02em;
+  font-size: clamp(3rem, 7vw, 7.5rem);
+  margin: 0 0 2.5rem;
+}
+.mer-hero__title-line { display: block; overflow: hidden; }
+.mer-hero__captions { display: flex; gap: clamp(24px, 6vw, 120px); flex-wrap: wrap; }
+.mer-hero__caption {
+  font-size: 15px; line-height: 1.5; max-width: 380px; opacity: 0.9;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+/* ---------- SECTION 2: Flagship ---------- */
+.mer-flagship { position: relative; width: 100%; height: 90vh; overflow: hidden; }
+.mer-flagship img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+
+/* ---------- SECTION 3: About ---------- */
+.mer-about__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.mer-about__labels { grid-column: 1 / 5; display: flex; flex-direction: column; gap: 1.5rem; }
+.mer-label-row { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.95rem; border-bottom: 1px solid var(--mer-line); padding-bottom: 0.75rem; }
+.mer-label-row span { color: var(--mer-fg-muted); flex-shrink: 0; }
+.mer-label-row strong { font-weight: 400; text-align: right; }
+.mer-label-row--block { flex-direction: column; align-items: flex-start; }
+.mer-label-row--block strong { text-align: left; font-weight: 400; margin-top: 0.5rem; }
+.mer-about__mission { grid-column: 5 / 13; }
+.mer-about__mission p {
+  font-family: 'Newsreader', serif; font-weight: 300;
+  font-size: clamp(1.4rem, 2.4vw, 2rem); line-height: 1.4;
+}
+
+/* ---------- SECTION 4a: Achievements ---------- */
+.mer-achievements__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.mer-achievements__list { display: flex; flex-direction: column; }
+.mer-achievements__item { padding: 0.9rem 0; border-bottom: 1px solid var(--mer-line); font-size: 0.95rem; }
+.mer-achievements__name { font-weight: 500; }
+.mer-achievements__detail { color: var(--mer-fg-muted); font-size: 0.85rem; margin-top: 2px; }
+.mer-achievements__item--note { color: var(--mer-fg-muted); font-style: italic; border-bottom: none; }
+
+/* ---------- SECTION 4b: Offices ---------- */
+.mer-offices__table { margin-top: 1rem; }
+.mer-offices__row {
+  display: grid; grid-template-columns: 1.4fr 1.4fr 2fr 40px;
+  gap: 16px; align-items: center;
+  padding: 1rem 1.25rem; border: 1px solid var(--mer-line); border-top: none;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.mer-offices__row:first-child { border-top: 1px solid var(--mer-line); }
+.mer-offices__row.is-active { background: var(--mer-fg); color: var(--mer-bg); }
+.mer-offices__role { font-weight: 500; }
+.mer-offices__city { color: var(--mer-fg-muted); }
+.mer-offices__row.is-active .mer-offices__city { color: inherit; opacity: 0.7; }
+.mer-offices__link { text-align: right; }
+
+/* ---------- SECTION 5: Sketch to System (cursor X-ray lens) ---------- */
+.mer-sketch {
+  position: relative; min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: clamp(120px, 16vh, 200px) 2rem;
+}
+.mer-sketch__label {
+  position: absolute; top: clamp(90px, 14vh, 140px); left: clamp(24px, 5vw, 96px);
+  font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.02em; color: var(--mer-fg-muted);
+}
+.mer-sketch__heading {
+  font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 700; margin: 0 0 0.75rem;
+  text-align: center;
+}
+.mer-sketch__hint {
+  font-size: 0.85rem; color: var(--mer-fg-muted); margin-bottom: 2rem; text-align: center;
+}
+.mer-sketch__canvas {
+  position: relative; width: min(70vw, 900px); height: min(60vh, 620px);
+  color: var(--mer-fg); flex: none;
+}
+
+/* cursor-driven X-ray blueprint lens: two pixel-aligned photo layers, the
+   top one clip-revealed to a square that trails the mouse via gsap.ticker.
+   No width/height here — .mer-sketch__canvas above already sizes this
+   element; redeclaring 100%/100% on the same node would resolve against
+   its flex-column parent's indefinite height and collapse to 0. */
+.xray-container { overflow: hidden; border-radius: 4px; }
+.xray-photo, .xray-skeleton {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.xray-skeleton {
+  filter: url(#mer-blueprint);
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+}
+.xray-lens {
+  position: absolute; top: 0; left: 0; width: 260px; height: 260px; margin: -130px 0 0 -130px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 2px;
+  pointer-events: none; opacity: 0;
+}
+@media (max-width: 768px) {
+  .xray-lens { width: 140px; height: 140px; margin: -70px 0 0 -70px; }
+}
+
+/* ---------- Sketch copy + Precision ---------- */
+.mer-sketch-copy .mer-body { margin-top: 1rem; }
+.mer-precision__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.mer-precision__svg { width: 100%; height: auto; color: var(--mer-fg); }
+.mer-precision__annot {
+  font-family: 'Caveat', cursive; font-size: 22px; fill: var(--mer-fg-muted);
+}
+
+/* ---------- SECTION 7: Projects ---------- */
+.mer-projects__head { margin-bottom: 2rem; }
+.mer-projects__grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px 24px;
+}
+.mer-project--offset { margin-top: 120px; }
+.mer-project__frame { position: relative; overflow: hidden; aspect-ratio: 4 / 3; cursor: pointer; }
+.mer-project__frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mer-project__visit {
+  position: absolute; bottom: 16px; left: 16px; color: #fff;
+  font-size: 0.85rem; padding: 6px 14px; background: rgba(0,0,0,0.55); border-radius: 20px;
+  opacity: 0; transform: translateX(-8px); transition: opacity 0.3s, transform 0.3s;
+}
+.mer-project__frame:hover .mer-project__visit { opacity: 1; transform: translateX(0); }
+.mer-project__caption { display: flex; justify-content: space-between; margin-top: 1rem; font-size: 0.9rem; }
+.mer-project__area { color: var(--mer-fg-muted); }
+.mer-projects__footer { text-align: center; margin-top: 3rem; }
+
+/* ---------- SECTION 8: Radial diagram / theme transition ---------- */
+.mer-radial { position: relative; height: 220vh; }
+.mer-radial__stage {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.mer-radial__svg { position: absolute; width: min(90vw, 800px); height: min(90vw, 800px); color: var(--mer-fg); }
+.mer-radial__label {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; fill: var(--mer-fg-muted);
+  opacity: 0; transition: opacity 0.4s ease;
+}
+.mer-radial__label.is-visible { opacity: 1; }
+.mer-radial__headline { position: relative; width: min(900px, 80vw); min-height: 260px; text-align: center; }
+.mer-radial__line {
+  position: absolute; top: 50%; left: 0; width: 100%; transform: translateY(-50%);
+  font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.1;
+  opacity: 1;
+}
+.mer-radial__line--b { opacity: 0; }
+
+/* ---------- SECTION 9: Culture intro ---------- */
+.mer-culture { text-align: center; }
+.mer-culture .mer-pullquote { margin: 0 auto; }
+
+/* ---------- SECTION 9/10: shared photo-ring → cascade → stats stage ---------- */
+.mer-culture-stats { position: relative; height: 600vh; }
+.mer-culture-stats__sticky {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.mer-culture__ring { position: relative; width: 1px; height: 1px; }
+.mer-culture__photo {
+  position: absolute; top: 0; left: 0; width: 90px; height: 90px; margin: -45px;
+  border-radius: 4px; overflow: hidden; box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  opacity: 0;
+}
+.mer-culture__photo img { width: 100%; height: 100%; object-fit: cover; }
+.mer-culture__caption { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; opacity: 0; pointer-events: none; }
+.mer-culture__year { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; }
+.mer-culture__year span { display: block; font-size: 0.9rem; font-weight: 400; color: var(--mer-fg-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.5rem; }
+.mer-culture__cols { display: flex; gap: 64px; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+.mer-culture__cols p { max-width: 320px; font-size: 0.9rem; color: var(--mer-fg-muted); }
+
+.mer-stats__inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; z-index: 3; }
+.mer-stats__beat { position: absolute; }
+.mer-stats__value { font-size: clamp(4rem, 9vw, 8rem); font-weight: 700; line-height: 1; }
+.mer-stats__label { font-size: 1rem; color: var(--mer-fg-muted); margin-top: 1rem; }
+
+/* ---------- SECTION 11: Clients ---------- */
+.mer-clients { text-align: center; }
+.mer-clients__field {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 24px;
+  margin-top: 3rem;
+}
+.mer-badge {
+  width: 96px; height: 96px; border-radius: 50%;
+  border: 1px solid var(--mer-line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 600;
+  transform: rotate(var(--r, 0deg));
+}
+
+/* ---------- SECTION 12: Marquee + Footer ---------- */
+.mer-marquee { overflow: hidden; padding: clamp(20px, 4vh, 60px) 0; }
+.mer-marquee__track { display: flex; width: max-content; white-space: nowrap; }
+.mer-marquee__track span {
+  font-size: 18vw; font-weight: 800; line-height: 1; letter-spacing: -0.02em;
+}
+.mer-footer { padding: clamp(48px, 8vh, 96px) 0; border-top: 1px solid var(--mer-line); }
+.mer-footer__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; font-size: 0.9rem; }
+.mer-footer__grid a { display: block; color: inherit; text-decoration: none; }
+.mer-footer__grid a:hover { text-decoration: underline; }
+.mer-footer__label { color: var(--mer-fg-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1200px) {
+  .mer-project--offset { margin-top: 60px; }
+  .mer-culture__photo { width: 70px; height: 70px; margin: -35px; }
+}
+
+@media (max-width: 768px) {
+  .mer-nav__mark { font-size: 10px; }
+  .mer-nav__links { display: none; }
+  .mer-hero__captions { flex-direction: column; gap: 16px; }
+  .mer-about__grid { display: flex; flex-direction: column; gap: 32px; }
+  .mer-about__labels, .mer-about__mission { grid-column: auto; }
+  .mer-achievements__grid { grid-template-columns: 1fr; gap: 24px; }
+  .mer-offices__row { grid-template-columns: 1fr; gap: 4px; text-align: left; }
+  .mer-offices__link { display: none; }
+  .mer-precision__grid { grid-template-columns: 1fr; gap: 32px; }
+  .mer-projects__grid { grid-template-columns: 1fr; }
+  .mer-project--offset { margin-top: 0; }
+  .mer-culture__photo { width: 40px; height: 40px; margin: -20px; }
+  .mer-culture__cols { flex-direction: column; align-items: center; gap: 24px; }
+  .mer-footer__grid { grid-template-columns: 1fr 1fr; }
+  .mer-sketch__canvas { width: 90vw; height: 40vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mer-page * { animation: none !important; transition: none !important; }
+}

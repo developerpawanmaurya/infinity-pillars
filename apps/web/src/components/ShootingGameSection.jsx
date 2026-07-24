@@ -26,13 +26,13 @@ const BirdSVG = ({ size, dir }) => (
     viewBox="0 0 44 24" fill="none"
     style={{ transform: dir === 'rtl' ? 'scaleX(-1)' : 'none', display: 'block' }}
   >
-    <path d="M22,13 Q14,4 3,8" stroke="#1a1a1a" strokeWidth="2.8" strokeLinecap="round"
+    <path d="M22,13 Q14,4 3,8" stroke="#f2f0e8" strokeWidth="2.8" strokeLinecap="round"
       style={{ transformOrigin: '22px 13px', animation: `birdWing ${0.5 + Math.random() * 0.2}s ease-in-out infinite` }} />
-    <path d="M22,13 Q30,4 41,8" stroke="#1a1a1a" strokeWidth="2.8" strokeLinecap="round"
+    <path d="M22,13 Q30,4 41,8" stroke="#f2f0e8" strokeWidth="2.8" strokeLinecap="round"
       style={{ transformOrigin: '22px 13px', animation: `birdWing ${0.5 + Math.random() * 0.2}s ease-in-out infinite`, animationDelay: '0.1s' }} />
-    <ellipse cx="22" cy="13" rx="3" ry="2.2" fill="#1a1a1a" />
-    <circle cx={dir === 'rtl' ? 19 : 25} cy="10" r="2.5" fill="#1a1a1a" />
-    <circle cx={dir === 'rtl' ? 18.5 : 25.5} cy="9.5" r="0.8" fill="white" />
+    <ellipse cx="22" cy="13" rx="3" ry="2.2" fill="#f2f0e8" />
+    <circle cx={dir === 'rtl' ? 19 : 25} cy="10" r="2.5" fill="#0c0c0c" />
+    <circle cx={dir === 'rtl' ? 18.5 : 25.5} cy="9.5" r="0.8" fill="#AFEA00" />
   </svg>
 );
 
@@ -61,7 +61,7 @@ const Bird = React.memo(({ bird, onShoot }) => {
 const Cloud = ({ top, duration, delay, width }) => (
   <div style={{
     position: 'absolute', top: `${top}%`, width: `${width}px`, height: `${Math.round(width * 0.42)}px`,
-    background: 'rgba(255,255,255,0.82)', borderRadius: '60px', filter: 'blur(5px)',
+    background: 'rgba(242,240,232,0.08)', borderRadius: '60px', filter: 'blur(9px)',
     animation: `cloudDrift ${duration}s linear ${delay}s infinite`, zIndex: 2, pointerEvents: 'none',
   }} />
 );
@@ -375,15 +375,15 @@ export default function ShootingGameSection() {
             minHeight: 480,
             overflow: 'hidden',
             userSelect: 'none',
-            background: 'linear-gradient(to bottom, #5ba8d4 0%, #87CEEB 38%, #b0deb0 56%, #3d9e3d 62%, #256325 100%)',
+            background: 'linear-gradient(to bottom, #0c0c0c 0%, #14170f 42%, #1d2712 62%, #0c0c0c 100%)',
           }}
         >
-          {/* Sun */}
+          {/* Horizon glow — reads as a target reticle at dusk, not a sun */}
           <div style={{
             position: 'absolute', top: '6%', right: '7%', zIndex: 3,
             width: 64, height: 64,
-            background: 'radial-gradient(circle, #fff9c4 55%, rgba(255,250,180,0) 100%)',
-            borderRadius: '50%', boxShadow: '0 0 35px 14px rgba(255,248,180,0.55)',
+            background: 'radial-gradient(circle, rgba(175,234,0,0.65) 0%, rgba(175,234,0,0) 70%)',
+            borderRadius: '50%', boxShadow: '0 0 35px 14px rgba(175,234,0,0.25)',
             pointerEvents: 'none',
           }} />
 
@@ -397,15 +397,15 @@ export default function ShootingGameSection() {
           }}>
             <h2 style={{
               fontSize: 'clamp(2rem, 5vw, 4rem)', fontWeight: 900,
-              letterSpacing: '-0.03em', lineHeight: 1, color: '#051405',
-              textShadow: '0 2px 12px rgba(255,255,255,0.55)', margin: 0,
+              letterSpacing: '-0.03em', lineHeight: 1, color: '#f5f4ee',
+              textShadow: '0 2px 20px rgba(0,0,0,0.4)', margin: 0,
             }}>
               Still here?{' '}
-              <span style={{ fontStyle: 'italic', fontWeight: 400 }}>Shoot the birds.</span>
+              <span style={{ fontStyle: 'italic', fontWeight: 400, color: '#AFEA00' }}>Shoot the birds.</span>
             </h2>
             <p style={{
               fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.14em',
-              textTransform: 'uppercase', color: '#0a2a0a', marginTop: 10, opacity: 0.65,
+              textTransform: 'uppercase', color: '#f5f4ee', marginTop: 10, opacity: 0.5,
             }}>
               Click anywhere · crosshair activates · {HIT_THRESHOLD} hits unlocks a surprise
             </p>
@@ -455,13 +455,13 @@ export default function ShootingGameSection() {
             </div>
           ))}
 
-          {/* Fence */}
-          <div style={{ position: 'absolute', bottom: '37%', left: 0, right: 0, height: 2, background: 'rgba(0,0,0,0.25)', zIndex: 4, pointerEvents: 'none' }} />
+          {/* Range line — rangefinder ticks instead of a picket fence */}
+          <div style={{ position: 'absolute', bottom: '37%', left: 0, right: 0, height: 1, background: 'rgba(175,234,0,0.3)', zIndex: 4, pointerEvents: 'none' }} />
           {Array.from({ length: 22 }).map((_, i) => (
             <div key={i} style={{
               position: 'absolute', bottom: '37%', left: `${(i / 22) * 100 + 0.5}%`,
-              width: 6, height: 28, background: '#8B5E3C', zIndex: 4, pointerEvents: 'none',
-              boxShadow: '1px 0 0 rgba(0,0,0,0.2)',
+              width: 1, height: i % 2 === 0 ? 14 : 8, background: '#AFEA00', opacity: 0.35,
+              zIndex: 4, pointerEvents: 'none',
             }} />
           ))}
         </section>

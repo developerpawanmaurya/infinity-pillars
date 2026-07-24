@@ -35,6 +35,7 @@ import Sample14Page from './pages/Sample14Page.jsx';
 import Sample15Page from './pages/Sample15Page.jsx';
 import Sample16Page from './pages/Sample16Page.jsx';
 import Sample17Page from './pages/Sample17Page.jsx';
+import ArchivePage from './pages/ArchivePage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import BookingModal from './components/BookingModal.jsx';
 import CustomCursor from './components/CustomCursor.jsx';
@@ -49,6 +50,15 @@ import PlaybookExperiment4 from './pages/PlaybookExperiment4.jsx';
 import PlaybookExperiment5 from './pages/PlaybookExperiment5.jsx';
 import PlaybookExperiment6 from './pages/PlaybookExperiment6.jsx';
 import PlaybookExperiment7 from './pages/PlaybookExperiment7.jsx';
+import HomeExperiment4 from './pages/HomeExperiment4.jsx';
+import HalvorsenPage from './pages/HalvorsenPage.jsx';
+import MeridianPage from './pages/MeridianPage.jsx';
+import RadiantPage from './pages/RadiantPage.jsx';
+// Throwaway test pages for the image-blur investigation — no static tilt on
+// the case-study images, to confirm that's the fix before touching the
+// real pages. Delete these imports + routes once confirmed either way.
+import HomePageTest from './pages/HomePageTest.jsx';
+import PortfolioPageTest from './pages/PortfolioPageTest.jsx';
 
 // Resets the error boundary on every navigation — otherwise once a route
 // crashes, the fallback stays stuck even after the user clicks elsewhere.
@@ -89,6 +99,7 @@ function RoutedContent() {
                 <Route path="/sample-15" element={<Sample15Page />} />
                 <Route path="/sample-16" element={<Sample16Page />} />
                 <Route path="/sample-17" element={<Sample17Page />} />
+                <Route path="/archive" element={<ArchivePage />} />
                     {/* /:category handles headless WP category URLs */}
                     <Route path="/:category" element={<BlogPage />} />
                     {/* /:category/:slug handles headless WP post URLs */}
@@ -101,6 +112,13 @@ function RoutedContent() {
                     <Route path="/experiment-5" element={<PlaybookExperiment5 />} />
                     <Route path="/experiment-6" element={<PlaybookExperiment6 />} />
                     <Route path="/experiment-7" element={<PlaybookExperiment7 />} />
+                    <Route path="/experiment-8" element={<HomeExperiment4 />} />
+                    <Route path="/halvorsen" element={<HalvorsenPage />} />
+                    <Route path="/meridian" element={<MeridianPage />} />
+                    <Route path="/radiant" element={<RadiantPage />} />
+                    {/* Throwaway blur-fix test routes — see the imports above */}
+                    <Route path="/home-test" element={<HomePageTest />} />
+                    <Route path="/portfolio-test" element={<PortfolioPageTest />} />
                     <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </ErrorBoundary>
