@@ -52,14 +52,15 @@ jobs:
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
-          lftp -u "$FTP_USER,$FTP_PASS" -e "
+          lftp -e "
             set ftp:ssl-force true;
             set ssl:verify-certificate false;
             set net:max-retries 3;
             set net:timeout 20;
+            open -u $FTP_USER,$FTP_PASS $FTP_HOST;
             mirror --reverse --verbose --continue ./ ${WEB_DIR};
             bye
-          " "$FTP_HOST"
+          "
 
   # ── Gutenberg blocks plugin → …/blog/wp-content/plugins/ip-blocks/ ─────────
   deploy-wp-plugin:
@@ -81,11 +82,12 @@ jobs:
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
-          lftp -u "$FTP_USER,$FTP_PASS" -e "
+          lftp -e "
             set ftp:ssl-force true;
             set ssl:verify-certificate false;
             set net:max-retries 3;
             set net:timeout 20;
+            open -u $FTP_USER,$FTP_PASS $FTP_HOST;
             mirror --reverse --verbose --continue \
               --exclude-glob node_modules/ \
               --exclude-glob src/ \
@@ -96,7 +98,7 @@ jobs:
               --exclude-glob '.gitignore' \
               ./ ${PLUGIN_DIR};
             bye
-          " "$FTP_HOST"
+          "
 
   # ── Custom theme → …/blog/wp-content/themes/ip-theme/ ─────────────────────
   deploy-wp-theme:
