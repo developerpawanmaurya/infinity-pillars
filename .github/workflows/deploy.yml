@@ -30,33 +30,36 @@ jobs:
           VITE_API_URL: https://infinity-pillars.onrender.com/api
         run: npx vite build --outDir ../../dist/apps/web
 
-      # SamKirkland/FTP-Deploy-Action (basic-ftp under the hood) can't open a
-      # control-socket connection to this host at all — confirmed via the
-      # Actions logs ("Error: Timeout (control socket)"), even as the only
-      # job running with no other FTP traffic. Plain curl against the same
-      # host/credentials works fine (see deploy-wp-theme below, which never
-      # used the action), so every deploy job now uploads via curl instead.
-      #
-      # Two things the first curl attempt got wrong, both fixed here:
-      # - Several real paths contain spaces/parens (e.g. "House structural
-      #   wireframe/…", "rifle (1).glb"), which broke the ftp:// URL
-      #   ("bad/illegal format") — each path segment is now percent-encoded.
-      # - Uploading with `xargs -P 8` had many curl processes calling
-      #   --ftp-create-dirs on overlapping parent directories at once,
-      #   racing each other into "Server denied you to change to the given
-      #   directory". Uploading one file at a time avoids that race.
-      - name: Deploy build via curl
+      # Three fixes in, in order of what broke:
+      # 1. SamKirkland/FTP-Deploy-Action (basic-ftp) couldn't open a
+      #    control-socket connection to this host at all.
+      # 2. Switched to per-file curl, which hit unescaped spaces/parens in
+      #    real paths, then a --ftp-create-dirs race under `xargs -P 8`.
+      # 3. Fixed both of those, but 260+ files means 260+ separate
+      #    connect/login/quit cycles — the host started refusing new
+      #    connections partway through ("Couldn't connect to server"),
+      #    almost certainly a connection-rate limit on the FTP account.
+      # lftp's mirror keeps ONE control connection open for the entire
+      # transfer instead of reconnecting per file, which sidesteps all of
+      # that at once.
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy build via lftp
         working-directory: dist/apps/web
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
-          find . -type f | sed 's|^\./||' | while IFS= read -r file; do
-            encoded=$(python3 -c "import urllib.parse,sys; print('/'.join(urllib.parse.quote(p) for p in sys.argv[1].split('/')))" "$file")
-            curl --ssl-reqd --insecure --ftp-create-dirs --silent --show-error \
-              -T "$file" "ftp://${FTP_HOST}${WEB_DIR}/${encoded}" -u "${FTP_USER}:${FTP_PASS}"
-          done
+          lftp -u "$FTP_USER,$FTP_PASS" -e "
+            set ftp:ssl-force true;
+            set ssl:verify-certificate false;
+            set net:max-retries 3;
+            set net:timeout 20;
+            mirror --reverse --verbose --continue ./ ${WEB_DIR};
+            bye
+          " "$FTP_HOST"
 
   # ── Gutenberg blocks plugin → …/blog/wp-content/plugins/ip-blocks/ ─────────
   deploy-wp-plugin:
@@ -68,26 +71,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy plugin via curl
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy plugin via lftp
         working-directory: apps/wp-plugin-ip-blocks
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
-          find . -type f \
-            -not -path './node_modules/*' \
-            -not -path './src/*' \
-            -not -path './.git*' \
-            -not -name 'package.json' \
-            -not -name 'package-lock.json' \
-            -not -name 'webpack.config.js' \
-            -not -name '.gitignore' \
-            | sed 's|^\./||' | while IFS= read -r file; do
-            encoded=$(python3 -c "import urllib.parse,sys; print('/'.join(urllib.parse.quote(p) for p in sys.argv[1].split('/')))" "$file")
-            curl --ssl-reqd --insecure --ftp-create-dirs --silent --show-error \
-              -T "$file" "ftp://${FTP_HOST}${PLUGIN_DIR}/${encoded}" -u "${FTP_USER}:${FTP_PASS}"
-          done
+          lftp -u "$FTP_USER,$FTP_PASS" -e "
+            set ftp:ssl-force true;
+            set ssl:verify-certificate false;
+            set net:max-retries 3;
+            set net:timeout 20;
+            mirror --reverse --verbose --continue \
+              --exclude-glob node_modules/ \
+              --exclude-glob src/ \
+              --exclude-glob '.git*' \
+              --exclude-glob 'package.json' \
+              --exclude-glob 'package-lock.json' \
+              --exclude-glob 'webpack.config.js' \
+              --exclude-glob '.gitignore' \
+              ./ ${PLUGIN_DIR};
+            bye
+          " "$FTP_HOST"
 
   # ── Custom theme → …/blog/wp-content/themes/ip-theme/ ─────────────────────
   deploy-wp-theme:
