@@ -1,0 +1,36 @@
+/* Marisol Ferreira — light, warm-tan-accented photography case study page */
+
+.mf-page { --mf-accent: 28 42% 58%; }
+
+.mf-visit-btn {
+  color: hsl(var(--mf-accent));
+  background: hsl(var(--mf-accent) / 0.08);
+  border: 1px solid hsl(var(--mf-accent) / 0.35);
+}
+.mf-visit-btn:hover {
+  background: hsl(var(--mf-accent) / 0.16);
+  border-color: hsl(var(--mf-accent) / 0.65);
+}
+
+.mf-card {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.mf-card:hover {
+  border-color: hsl(var(--mf-accent) / 0.5);
+  transform: translateY(-4px);
+}
+
+.mf-outcome-card {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.mf-outcome-card:hover {
+  border-color: hsl(var(--mf-accent) / 0.5);
+  transform: translateY(-4px);
+}
+
+.mf-palette-swatch {
+  border: 1px solid hsl(var(--border));
+}

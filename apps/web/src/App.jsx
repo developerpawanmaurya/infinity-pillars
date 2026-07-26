@@ -14,6 +14,11 @@ import CaseStudyPage from './pages/CaseStudyPage.jsx';
 import DeQollabCaseStudy from './pages/case-studies/DeQollabCaseStudy.jsx';
 import KissCaseStudy from './pages/case-studies/KissCaseStudy.jsx';
 import XpertPatientCaseStudy from './pages/case-studies/XpertPatientCaseStudy.jsx';
+import DriftCaseStudy from './pages/case-studies/DriftCaseStudy.jsx';
+import PolyAgentCaseStudy from './pages/case-studies/PolyAgentCaseStudy.jsx';
+import NexusCaseStudy from './pages/case-studies/NexusCaseStudy.jsx';
+import MarisolFerreiraCaseStudy from './pages/case-studies/MarisolFerreiraCaseStudy.jsx';
+import MeridianCaseStudy from './pages/case-studies/MeridianCaseStudy.jsx';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage.jsx';
 import TermsOfServicePage from './pages/TermsOfServicePage.jsx';
 import BlogPage from './pages/BlogPage.jsx';
@@ -42,7 +47,6 @@ import CustomCursor from './components/CustomCursor.jsx';
 import Preloader from './components/Preloader.jsx';
 import PlaybookExperiment8 from './pages/PlaybookExperiment8.jsx';
 import HalvorsenPage from './pages/HalvorsenPage.jsx';
-import MeridianPage from './pages/MeridianPage.jsx';
 import RadiantPage from './pages/RadiantPage.jsx';
 import CyborgPage from './pages/CyborgPage.jsx';
 import ApartmentPage from './pages/ApartmentPage.jsx';
@@ -52,6 +56,14 @@ import MeridianCopyPage from './pages/MeridianCopyPage.jsx';
 // real pages. Delete these imports + routes once confirmed either way.
 import HomePageTest from './pages/HomePageTest.jsx';
 import PortfolioPageTest from './pages/PortfolioPageTest.jsx';
+// Portfolio-section redesign comparison builds — GSAP/Framer Motion/Lenis
+// variants to compare side by side before picking one for the real
+// /portfolio page. Delete these imports + routes once a variant ships.
+import PortfolioPreviewIndexPage from './pages/PortfolioPreviewIndexPage.jsx';
+import PortfolioPreviewGridPage from './pages/PortfolioPreviewGridPage.jsx';
+import PortfolioPreviewSlideshowPage from './pages/PortfolioPreviewSlideshowPage.jsx';
+import PortfolioPreviewCardsPage from './pages/PortfolioPreviewCardsPage.jsx';
+import PortfolioPreviewSidebarPage from './pages/PortfolioPreviewSidebarPage.jsx';
 
 // Resets the error boundary on every navigation — otherwise once a route
 // crashes, the fallback stays stuck even after the user clicks elsewhere.
@@ -68,6 +80,11 @@ function RoutedContent() {
                     <Route path="/portfolio/deqollab" element={<DeQollabCaseStudy />} />
                     <Route path="/portfolio/kiss-professional-solutions" element={<KissCaseStudy />} />
                     <Route path="/portfolio/xpertpatient" element={<XpertPatientCaseStudy />} />
+                    <Route path="/portfolio/drift-app" element={<DriftCaseStudy />} />
+                    <Route path="/portfolio/polyagent" element={<PolyAgentCaseStudy />} />
+                    <Route path="/portfolio/nexus" element={<NexusCaseStudy />} />
+                    <Route path="/portfolio/marisol-ferreira" element={<MarisolFerreiraCaseStudy />} />
+                    <Route path="/portfolio/meridian" element={<MeridianCaseStudy />} />
                     <Route path="/portfolio/:slug" element={<CaseStudyPage />} />
                     <Route path="/careers" element={<CareersPage />} />
                     <Route path="/referral" element={<ReferralPage />} />
@@ -88,7 +105,7 @@ function RoutedContent() {
                     <Route path="/sample-11" element={<Sample11Page />} />
                 <Route path="/sample-12" element={<Sample12Page />} />
                 <Route path="/sample-13" element={<Sample13Page />} />
-                <Route path="/sample-14" element={<Sample14Page />} />
+                <Route path="/marisol-ferreira" element={<Sample14Page />} />
                 <Route path="/sample-15" element={<Sample15Page />} />
                 <Route path="/sample-16" element={<Sample16Page />} />
                 <Route path="/sample-17" element={<Sample17Page />} />
@@ -99,22 +116,35 @@ function RoutedContent() {
                     {/* /:category/:slug handles headless WP post URLs */}
                     <Route path="/:category/:slug" element={<BlogPostPage />} />
                     <Route path="/halvorsen" element={<HalvorsenPage />} />
-                    <Route path="/meridian" element={<MeridianPage />} />
+                    <Route path="/meridian" element={<MeridianCopyPage />} />
                     <Route path="/radiant" element={<RadiantPage />} />
                     <Route path="/cyborg" element={<CyborgPage />} />
                     <Route path="/apartment" element={<ApartmentPage />} />
-                    <Route path="/meridian-copy" element={<MeridianCopyPage />} />
                     {/* Throwaway blur-fix test routes — see the imports above */}
                     <Route path="/home-test" element={<HomePageTest />} />
                     <Route path="/portfolio-test" element={<PortfolioPageTest />} />
+                    <Route path="/portfolio-preview-index" element={<PortfolioPreviewIndexPage />} />
+                    <Route path="/portfolio-preview-grid" element={<PortfolioPreviewGridPage />} />
+                    <Route path="/portfolio-preview-slideshow" element={<PortfolioPreviewSlideshowPage />} />
+                    <Route path="/portfolio-preview-cards" element={<PortfolioPreviewCardsPage />} />
+                    <Route path="/portfolio-preview-sidebar" element={<PortfolioPreviewSidebarPage />} />
                     <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </ErrorBoundary>
     );
 }
 
+// Marisol Ferreira and Meridian are their own fictional-site experiences,
+// each with its own intro/entrance treatment — the Infinity Pillars boot
+// preloader doesn't belong in front of them. Checked once at mount via
+// window.location (App renders outside <Router>, so useLocation isn't
+// available here) so a fresh load/refresh on either route skips straight
+// past it; internal navigation there doesn't re-trigger it anyway since
+// preloaderDone only matters once, on initial load.
+const PRELOADER_SKIP_PATHS = ['/marisol-ferreira', '/meridian'];
+
 function App() {
-    const [preloaderDone, setPreloaderDone] = useState(false);
+    const [preloaderDone, setPreloaderDone] = useState(() => PRELOADER_SKIP_PATHS.includes(window.location.pathname));
 
     return (
         <>

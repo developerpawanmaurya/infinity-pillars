@@ -29,7 +29,7 @@ const SPECIMENS = [
   { n: '11', name: 'Quiet Orbit', note: 'Eight photographs fly in, settle into a ring, and never fully stop turning.', tag: '3D', path: '/sample-11' },
   { n: '12', name: 'Noise Field', note: "A model's surface dissolves into procedural static.", tag: 'Shader', path: '/sample-12' },
   { n: '13', name: 'Cart Drop', note: 'The satisfying half-second between a click and its confirmation.', tag: 'Micro', path: '/sample-13' },
-  { n: '14', name: 'Image Trail', note: 'Move the cursor, leave a trail of frames behind it.', tag: 'Cursor', path: '/sample-14' },
+  { n: '14', name: 'Image Trail', note: 'Move the cursor, leave a trail of frames behind it.', tag: 'Cursor', path: '/marisol-ferreira' },
   { n: '15', name: 'From the Lines', note: 'A page built from lines that decide, mid-scroll, to become content.', tag: 'Layout', path: '/sample-15' },
   { n: '16', name: 'Kinetic Type', note: 'Words that move as if the sentence is still being decided.', tag: 'Type', path: '/sample-16' },
   { n: '17', name: 'Layout Shift', note: 'Images that quietly rearrange themselves as you scroll past.', tag: 'Scroll', path: '/sample-17' },

@@ -22,6 +22,47 @@
 
 .merc-page * { box-sizing: border-box; }
 
+.merc-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  background: var(--merc-bg);
+}
+
+.merc-preloader__blocks {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(6px, 1vw, 10px);
+  height: clamp(80px, 12vw, 140px);
+}
+
+.merc-preloader__block {
+  width: clamp(12px, 2vw, 20px);
+  background: var(--merc-fg);
+  border-radius: 2px;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  will-change: transform;
+}
+
+.merc-preloader__block:nth-child(3) {
+  background: var(--merc-accent);
+}
+
+.merc-preloader__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--merc-fg-muted);
+  opacity: 0;
+}
+
 .merc-wrap {
   max-width: 1920px;
   margin: 0 auto;

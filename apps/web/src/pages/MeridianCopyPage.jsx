@@ -82,7 +82,11 @@ const MeridianCopyPage = () => {
   const heroImgRef = useRef(null);
   const flagshipImgRef = useRef(null);
   const tooltipRef = useRef(null);
-  
+
+  const preloaderRef = useRef(null);
+  const preloaderBlockRefs = useRef([]);
+  const preloaderLabelRef = useRef(null);
+
   // Projects Wipe Refs
   const projectsWipeRef = useRef(null);
   const projectsWipePinRef = useRef(null);
@@ -132,11 +136,25 @@ const MeridianCopyPage = () => {
 
     const domCleanups = [];
     const ctx = gsap.context(() => {
-      const heroTl = gsap.timeline({ delay: 0.1 });
+      const heroTl = gsap.timeline({ delay: 0.1, paused: true });
       heroTl
         .fromTo('.merc-hero__title-line span', { yPercent: 120, rotate: 3 }, { yPercent: 0, rotate: 0, duration: 1.1, ease: 'power4.out', stagger: 0.08 }, 0.2)
         .fromTo('.merc-hero__kicker', { opacity: 0, letterSpacing: '0.5em' }, { opacity: 1, letterSpacing: '0.28em', duration: 0.9, ease: 'power2.out' }, 0.1)
         .fromTo('.merc-hero__caption', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.08 }, 0.9);
+
+      // Building-blocks preloader — a small skyline grows in column by
+      // column, holds, then collapses as the whole overlay lifts away.
+      // The hero reveal stays paused until this finishes so it isn't
+      // wasted playing out underneath the preloader.
+      const blocks = preloaderBlockRefs.current;
+      gsap.timeline({ onComplete: () => heroTl.play() })
+        .to(blocks, { scaleY: 1, duration: 0.7, ease: 'power3.out', stagger: 0.09 })
+        .to(preloaderLabelRef.current, { opacity: 1, duration: 0.4 }, '-=0.35')
+        .to({}, { duration: 0.3 })
+        .to(preloaderLabelRef.current, { opacity: 0, duration: 0.25 })
+        .to(blocks, { scaleY: 0, duration: 0.4, ease: 'power3.in', stagger: 0.04 }, '<')
+        .to(preloaderRef.current, { yPercent: -100, duration: 0.7, ease: 'power4.inOut' }, '-=0.1')
+        .set(preloaderRef.current, { pointerEvents: 'none' });
 
       gsap.to(heroImgRef.current, {
         yPercent: -15, ease: 'none',
@@ -456,8 +474,26 @@ const MeridianCopyPage = () => {
   return (
     <div className="merc-page" ref={rootRef}>
       <Helmet>
-        <title>Meridian Architectural Bureau (Copy) — Structured Vision</title>
+        <title>Meridian Architectural Bureau — Structured Vision, Honest Form</title>
+        <meta
+          name="description"
+          content="Meridian Architectural Bureau: precision architecture, interiors, and master planning across Portugal and Denmark."
+        />
       </Helmet>
+
+      <div className="merc-preloader" ref={preloaderRef} aria-hidden="true">
+        <div className="merc-preloader__blocks">
+          {[45, 70, 100, 60, 85].map((h, i) => (
+            <span
+              key={i}
+              className="merc-preloader__block"
+              style={{ height: `${h}%` }}
+              ref={(el) => { preloaderBlockRefs.current[i] = el; }}
+            />
+          ))}
+        </div>
+        <div className="merc-preloader__label" ref={preloaderLabelRef}>Meridian</div>
+      </div>
 
       <div className="merc-cursor-tooltip" ref={tooltipRef} />
 

@@ -6,49 +6,19 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import AnimatedCounter from '@/components/AnimatedCounter.jsx';
-import PortfolioCaseCard from '@/components/PortfolioCaseCard.jsx';
+import PortfolioIndexSection from '@/components/portfolio-variants/PortfolioIndexSection.jsx';
 import SplitReveal from '@/components/SplitReveal.jsx';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { portfolioProjects as projects } from '@/data/portfolioProjects.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const PortfolioPage = () => {
-  const projects = [
-    {
-      title: 'deQollab',
-      slug: 'deqollab',
-      category: 'Strategic Communications · Brand Authority',
-      description: 'A premium PR & comms agency needed a digital presence to match their real-world prestige. We organized a 17-sector portfolio into a seamless, minimalist experience built to command premium retainer fees.',
-      image: '/images/DeQollab.png',
-      liveUrl: 'https://deqollab.com/',
-      metrics: ['17 sectors unified', '345+ verified media placements', '9–12% CVR lift potential'],
-      rotation: 'rotate-2',
-      dark: true
-    },
-    {
-      title: 'KISS Professional Solutions',
-      slug: 'kiss-professional-solutions',
-      category: 'Enterprise Lead Generation · Office Technology',
-      description: 'An Australian office tech & managed services provider needed to unify diverse enterprise verticals under one brand. We deployed an 8-step interactive quote engine and a self-service support bot.',
-      image: '/images/KISS.png',
-      liveUrl: 'https://kissps.com.au/',
-      metrics: ['3,000+ organizations served', '8-step quote engine', '5 regional offices unified'],
-      rotation: '-rotate-2',
-      dark: false
-    },
-    {
-      title: 'XpertPatient.com',
-      slug: 'xpertpatient',
-      category: 'Healthcare · Empathetic UX',
-      description: 'An award-winning oncology education platform translating dense clinical guidelines into calm, intuitive digital experiences for newly diagnosed patients and caregivers.',
-      image: '/images/XpertPatient.png',
-      liveUrl: 'https://xpertpatient.com/',
-      metrics: ['Stevie Award winner', '90% of diagnosed community supported', 'WCAG 2.1 AA / ADA compliant'],
-      rotation: 'rotate-1',
-      dark: false
-    }
-  ];
+  // Ticker tags derived from every project's category so the marquee scales
+  // automatically as builds are added, instead of a hand-maintained list
+  // that quietly goes stale (it used to hard-code just the original 3).
+  const industries = Array.from(new Set(projects.flatMap((p) => p.category.split(' · '))));
 
   // Fonts swapping in after ScrollTrigger positions were first measured
   // shifts everything below the fold slightly — recalculate once they
@@ -96,7 +66,7 @@ const PortfolioPage = () => {
           </motion.div>
         </section>
 
-        {/* Marquee ticker — the industries behind the three flagship builds below */}
+        {/* Marquee ticker — the industries behind every build below */}
         <section className="border-y border-border py-6 overflow-hidden">
           <div
             className="flex whitespace-nowrap"
@@ -104,7 +74,7 @@ const PortfolioPage = () => {
           >
             {[0, 1].map((dupe) => (
               <div key={dupe} className="flex items-center animate-scroll" aria-hidden={dupe === 1}>
-                {['Strategic Communications', 'Office Technology & Managed Services', 'Oncology Patient Education', 'Brand Authority', 'Enterprise Lead Generation', 'Empathetic Healthcare UX'].map((tag) => (
+                {industries.map((tag) => (
                   <span key={tag} className="mx-6 text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-6">
                     {tag}
                     <span className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -115,23 +85,15 @@ const PortfolioPage = () => {
           </div>
         </section>
 
-        {/* Portfolio Grid (Editorial / Scattered Layout) */}
-        <section className="py-24 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-40 md:space-y-56">
-              {projects.map((project, index) => (
-                <PortfolioCaseCard key={project.title} project={project} index={index} />
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Portfolio — editorial index, hover a title for a live preview */}
+        <PortfolioIndexSection projects={projects} />
 
         {/* Stats */}
         <section className="py-32 bg-foreground text-background">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
               {[
-                { value: 3, suffix: '', label: 'Custom Digital Ecosystems Engineered' },
+                { value: projects.length, suffix: '', label: 'Digital Products & Platforms Engineered' },
                 { value: 17, suffix: '', label: 'Sectors Unified Into One Platform (deQollab)' },
                 { value: 345, suffix: '+', label: 'Verified Media Placements Surfaced (deQollab)' },
                 { value: 90, suffix: '%', label: 'Of a Diagnosed Community Reached (XpertPatient)' }

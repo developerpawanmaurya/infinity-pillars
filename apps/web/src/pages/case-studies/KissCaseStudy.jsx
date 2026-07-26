@@ -165,7 +165,7 @@ const KissCaseStudy = () => {
             href="https://kissps.com.au/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors group"
+            className="kc-visit-btn group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest rounded-full px-4 py-2 transition-all duration-300"
           >
             Visit live site
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -395,6 +395,32 @@ const KissCaseStudy = () => {
               <div key={r.name} className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2" style={{ left: r.x, top: r.y }}>
                 <div className="kc-pin" />
                 <span className="text-[10px] font-bold uppercase tracking-widest bg-background border border-border px-2 py-1 whitespace-nowrap">{r.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Visual Identity ──────────────────────────────────────────── */}
+      <section className="py-32 bg-muted/20 border-y border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div data-kc-reveal className="mb-14 max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'hsl(var(--kc-accent))' }}>Solution 05</p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-6">Corporate-grade confidence.</h2>
+            <p className="text-muted-foreground text-lg leading-relaxed max-w-xl">
+              A trustworthy teal for the brand, a decisive orange for the one action that matters — enterprise clarity without enterprise clutter.
+            </p>
+          </div>
+          <div data-kc-stagger className="flex flex-wrap gap-6">
+            {[
+              { color: 'hsl(var(--kc-accent))', label: 'Trust-building teal' },
+              { color: 'hsl(var(--kc-accent-2))', label: 'Decisive action orange' },
+              { color: 'hsl(var(--foreground))', label: 'Ink text' },
+              { color: 'hsl(var(--border))', label: 'Hairline dividers' },
+            ].map((c) => (
+              <div key={c.label} className="flex items-center gap-3">
+                <span className="w-10 h-10 rounded-full shrink-0 border border-border" style={{ backgroundColor: c.color }} />
+                <span className="text-sm text-muted-foreground">{c.label}</span>
               </div>
             ))}
           </div>

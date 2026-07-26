@@ -1,0 +1,65 @@
+/* PolyAgent — light, terminal-inspired trading dashboard case study page */
+
+.pa-page { --pa-accent: 160 100% 34%; }
+
+.pa-visit-btn {
+  color: hsl(var(--pa-accent));
+  background: hsl(var(--pa-accent) / 0.08);
+  border: 1px solid hsl(var(--pa-accent) / 0.35);
+}
+.pa-visit-btn:hover {
+  background: hsl(var(--pa-accent) / 0.16);
+  border-color: hsl(var(--pa-accent) / 0.65);
+}
+
+.pa-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+.pa-card {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+}
+
+.pa-card.is-glow {
+  border-color: hsl(var(--pa-accent) / 0.45);
+  box-shadow: 0 20px 60px -28px hsl(var(--pa-accent) / 0.35);
+}
+
+.pa-pill {
+  border: 1px solid hsl(var(--pa-accent) / 0.4);
+  color: hsl(var(--pa-accent));
+  background: hsl(var(--pa-accent) / 0.08);
+}
+
+.pa-toggle {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.pa-toggle.is-active {
+  border-color: hsl(var(--pa-accent) / 0.5);
+  background: hsl(var(--pa-accent) / 0.08);
+  color: hsl(var(--pa-accent));
+}
+.pa-toggle.is-paused {
+  border-color: rgba(220,38,38,0.4);
+  background: rgba(220,38,38,0.06);
+  color: #dc2626;
+}
+
+.pa-signal-card {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.pa-signal-card:hover {
+  border-color: hsl(var(--pa-accent) / 0.45);
+  transform: translateY(-4px);
+}
+
+.pa-outcome-card {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.pa-outcome-card:hover {
+  border-color: hsl(var(--pa-accent) / 0.45);
+  transform: translateY(-4px);
+}

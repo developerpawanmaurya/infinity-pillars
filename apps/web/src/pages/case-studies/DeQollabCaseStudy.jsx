@@ -129,7 +129,7 @@ const DeQollabCaseStudy = () => {
               href="https://deqollab.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/50 hover:text-[#AFEA00] transition-colors group"
+              className="dq-visit-btn group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest rounded-full px-4 py-2 transition-all duration-300"
             >
               Visit live site
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -319,6 +319,32 @@ const DeQollabCaseStudy = () => {
             <div className="mt-8 bg-[#AFEA00] text-black text-center py-4 text-xs font-bold uppercase tracking-widest">
               Book Strategy Call
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Visual Identity ──────────────────────────────────────────── */}
+      <section className="py-32 border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div data-dq-reveal className="mb-14 max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#AFEA00] mb-4">Solution 05</p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-6">Boardroom-grade minimalism.</h2>
+            <p className="text-white/50 text-lg leading-relaxed max-w-xl">
+              A near-black canvas and a single signal-lime accent — restraint that reads as authority, not decoration.
+            </p>
+          </div>
+          <div data-dq-stagger className="flex flex-wrap gap-6">
+            {[
+              { hex: '#0a0a0a', label: 'Near-black canvas' },
+              { hex: '#AFEA00', label: 'Signal lime accent' },
+              { hex: '#f5f5f2', label: 'Off-white text' },
+              { hex: 'rgba(245,245,242,0.1)', label: 'Hairline dividers' },
+            ].map((c) => (
+              <div key={c.label} className="flex items-center gap-3">
+                <span className="w-10 h-10 rounded-full shrink-0 border border-white/15" style={{ backgroundColor: c.hex }} />
+                <span className="text-sm text-white/50">{c.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>

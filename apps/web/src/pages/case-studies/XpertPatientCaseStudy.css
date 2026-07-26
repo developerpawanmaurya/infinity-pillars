@@ -2,6 +2,16 @@
 
 .xp-page { --xp-accent: 217 91% 55%; --xp-mint: 160 84% 34%; --xp-amber: 38 92% 48%; }
 
+.xp-visit-btn {
+  color: hsl(var(--xp-accent));
+  background: hsl(var(--xp-accent) / 0.08);
+  border: 1px solid hsl(var(--xp-accent) / 0.35);
+}
+.xp-visit-btn:hover {
+  background: hsl(var(--xp-accent) / 0.16);
+  border-color: hsl(var(--xp-accent) / 0.65);
+}
+
 @keyframes xp-breathe {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }

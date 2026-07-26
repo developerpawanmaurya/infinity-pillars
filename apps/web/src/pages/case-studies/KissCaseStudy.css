@@ -2,6 +2,16 @@
 
 .kc-page { --kc-accent: 173 80% 32%; --kc-accent-2: 32 95% 52%; }
 
+.kc-visit-btn {
+  color: hsl(var(--kc-accent));
+  background: hsl(var(--kc-accent) / 0.08);
+  border: 1px solid hsl(var(--kc-accent) / 0.35);
+}
+.kc-visit-btn:hover {
+  background: hsl(var(--kc-accent) / 0.16);
+  border-color: hsl(var(--kc-accent) / 0.65);
+}
+
 .kc-progress-track {
   height: 4px;
   background: hsl(var(--border));
