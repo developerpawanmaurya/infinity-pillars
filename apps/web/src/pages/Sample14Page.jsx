@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as THREE from 'three';
 import gsap from 'gsap';
@@ -701,10 +700,9 @@ const Sample14Page = () => {
   return (
     <div className="sample14-page is-intro-locked" ref={pageRef}>
       <Helmet>
-        <title>Sample 14 — Intro Image Trail Animation | Infinity Pillars</title>
+        <title>Marisol Ferreira — Fine Art Photography</title>
+        <meta name="description" content="Marisol Ferreira: analog fine art photography, printed by hand in the darkroom before it ever reaches a screen." />
       </Helmet>
-
-      <Link to="/" className="sample14-page__back">&larr; Back</Link>
 
       <div className="sample14-main">
         <span className="sample14-intro-progress" ref={progressRef}>0%</span>

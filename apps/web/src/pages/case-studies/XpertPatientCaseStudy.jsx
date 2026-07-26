@@ -117,7 +117,7 @@ const XpertPatientCaseStudy = () => {
             href="https://xpertpatient.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors group"
+            className="xp-visit-btn group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest rounded-full px-4 py-2 transition-all duration-300"
           >
             Visit live site
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -360,6 +360,32 @@ const XpertPatientCaseStudy = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Visual Identity ──────────────────────────────────────────── */}
+      <section className="py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div data-xp-reveal className="mb-14 max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'hsl(var(--xp-accent))' }}>Solution 04</p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-6">Calm, clinical confidence.</h2>
+            <p className="text-muted-foreground text-lg leading-relaxed max-w-xl">
+              A trustworthy blue, a reassuring mint, and a gentle amber for encouragement — colors chosen to lower anxiety, not raise it.
+            </p>
+          </div>
+          <div data-xp-stagger className="flex flex-wrap gap-6">
+            {[
+              { color: 'hsl(var(--xp-accent))', label: 'Trustworthy blue' },
+              { color: 'hsl(var(--xp-mint))', label: 'Reassuring mint' },
+              { color: 'hsl(var(--xp-amber))', label: 'Gentle amber' },
+              { color: 'hsl(var(--border))', label: 'Hairline dividers' },
+            ].map((c) => (
+              <div key={c.label} className="flex items-center gap-3">
+                <span className="w-10 h-10 rounded-full shrink-0 border border-border" style={{ backgroundColor: c.color }} />
+                <span className="text-sm text-muted-foreground">{c.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>

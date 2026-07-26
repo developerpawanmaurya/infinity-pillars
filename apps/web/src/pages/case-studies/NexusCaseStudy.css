@@ -1,0 +1,61 @@
+/* Nexus — light, violet-accented, predictive-AI case study page */
+
+.nx-page { --nx-accent: 258 90% 66%; }
+
+.nx-visit-btn {
+  color: hsl(var(--nx-accent));
+  background: hsl(var(--nx-accent) / 0.08);
+  border: 1px solid hsl(var(--nx-accent) / 0.35);
+}
+.nx-visit-btn:hover {
+  background: hsl(var(--nx-accent) / 0.16);
+  border-color: hsl(var(--nx-accent) / 0.65);
+}
+
+.nx-grid-bg {
+  background-image:
+    linear-gradient(to right, hsl(var(--nx-accent) / 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--nx-accent) / 0.08) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.nx-glow {
+  background: radial-gradient(60% 60% at 30% 0%, hsl(var(--nx-accent) / 0.14), transparent 65%);
+}
+
+.nx-gradient-text {
+  background: linear-gradient(90deg, #7c3aed, #6366f1, #0891b2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nx-badge {
+  border: 1px solid hsl(var(--nx-accent) / 0.35);
+  background: hsl(var(--nx-accent) / 0.08);
+  color: hsl(var(--nx-accent));
+}
+
+.nx-card {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.nx-card:hover {
+  border-color: hsl(var(--nx-accent) / 0.4);
+  transform: translateY(-4px);
+}
+
+.nx-swatch {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+}
+
+.nx-outcome-card {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.nx-outcome-card:hover {
+  border-color: hsl(var(--nx-accent) / 0.4);
+  transform: translateY(-4px);
+}

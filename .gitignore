@@ -21,3 +21,12 @@ apps/api/data/*.db-wal
 # OS
 .DS_Store
 Thumbs.db
+
+# Raw/unused 3D model sources (too large for git, unreferenced by code — keep optimized versions only)
+apps/web/public/models/ak-47.glb
+apps/web/public/models/call_of_duty_black_ops_7_-_maddox_rfb.glb
+apps/web/public/models/hover_bike_-_the_rocket.glb
+apps/web/public/models/sci-fi_bullpup_rifle.glb
+apps/web/public/models/sci-fi_bullpup_rifle (1).glb
+apps/web/public/models/Robot/cyborg_with_thermal_katana.glb
+apps/web/public/models/apartment/source/

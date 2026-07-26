@@ -1,0 +1,51 @@
+/* Drift — warm, calm, off-white independent-product case study page */
+
+.drift-page { --drift-accent: 22 55% 58%; --drift-accent-soft: 22 55% 58%; }
+
+.drift-visit-btn {
+  color: hsl(var(--drift-accent));
+  background: hsl(var(--drift-accent) / 0.08);
+  border: 1px solid hsl(var(--drift-accent) / 0.35);
+}
+.drift-visit-btn:hover {
+  background: hsl(var(--drift-accent) / 0.16);
+  border-color: hsl(var(--drift-accent) / 0.65);
+}
+
+.drift-shift-tab {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.drift-shift-tab:hover { border-color: hsl(var(--drift-accent) / 0.5); }
+.drift-shift-tab.is-active {
+  background: hsl(var(--drift-accent) / 0.1);
+  border-color: hsl(var(--drift-accent));
+}
+
+.drift-phone-card {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  box-shadow: 0 24px 60px -24px hsl(var(--drift-accent) / 0.25);
+}
+
+.drift-debt-track {
+  height: 10px;
+  border-radius: 999px;
+  background: hsl(var(--muted));
+  overflow: hidden;
+}
+.drift-debt-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, hsl(var(--drift-accent) / 0.5), hsl(var(--drift-accent)));
+  transform-origin: left center;
+}
+
+.drift-outcome-card {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.drift-outcome-card:hover {
+  border-color: hsl(var(--drift-accent) / 0.5);
+  transform: translateY(-4px);
+}

@@ -1,0 +1,308 @@
+/* "The Draw" — scroll-triggered cyborg hero. Dark stage regardless of the
+   site's light/dark toggle (same convention as Sample4/Radiant/Halvorsen),
+   brand lime (#AFEA00) as the single accent for the blade glow / slash FX. */
+
+.cyborg-page {
+  position: relative;
+  background: #07070a;
+  color: #f6f5ef;
+}
+
+.cyborg-page__back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1001;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #f6f5ef;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.cyborg-page__back:hover { opacity: 1; color: #afea00; }
+
+/* ---------- Hero / pinned stage ---------- */
+
+.cyborg-hero {
+  position: relative;
+  height: 350vh;
+}
+
+.cyborg-hero__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #07070a;
+}
+
+/* Bottom layer: what the slash cuts open to reveal. Its content is
+   identical to cyborg-next__top so the wipe hands off seamlessly into the
+   real section once the pin releases. */
+.cyborg-hero__reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+  background: radial-gradient(circle at 50% 45%, #12160a 0%, #07070a 65%);
+}
+.cyborg-hero__reveal-inner { max-width: 34rem; }
+.cyborg-hero__reveal-inner h2 {
+  font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  margin: 0.5rem 0 0.75rem;
+}
+.cyborg-hero__reveal-inner p {
+  opacity: 0.7;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  margin: 0;
+}
+
+/* Top layer: the 3D scene + hero copy. This is what gets clip-path'd away
+   diagonally to expose .cyborg-hero__reveal beneath it. */
+.cyborg-hero__scene {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  clip-path: polygon(-40% 0%, 140% 0%, 140% 100%, -40% 100%);
+  will-change: clip-path;
+}
+.cyborg-hero__scene canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.cyborg-hero__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(7, 7, 10, 0.85) 0%, rgba(7, 7, 10, 0.15) 42%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.55) 0%, transparent 55%);
+}
+
+.cyborg-hero__copy {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 26rem;
+  padding: 0 2rem;
+  pointer-events: none;
+}
+.cyborg-hero__eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #afea00;
+  margin-bottom: 0.9rem;
+}
+.cyborg-hero__copy h1 {
+  font-size: clamp(2.1rem, 5.2vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.03;
+  margin: 0 0 0.9rem;
+}
+.cyborg-hero__copy p {
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  opacity: 0.65;
+  margin: 0;
+}
+
+.cyborg-hero__loader {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  background: #07070a;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(246, 245, 239, 0.6);
+}
+.cyborg-hero__loader span {
+  padding: 0.6rem 1.1rem;
+  border: 1px solid rgba(175, 234, 0, 0.35);
+}
+
+/* ---------- Slash FX overlay ---------- */
+
+.cyborg-hero__streak {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 6px;
+  transform: translate(-50%, -50%) rotate(-24deg);
+  background: linear-gradient(90deg, transparent 0%, rgba(175, 234, 0, 0) 30%, #afea00 50%, rgba(175, 234, 0, 0) 70%, transparent 100%);
+  filter: blur(1.5px);
+  box-shadow: 0 0 40px 6px rgba(175, 234, 0, 0.6);
+  opacity: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.cyborg-hero__cut-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent 0%, #eaffb0 15%, #afea00 50%, #eaffb0 85%, transparent 100%);
+  box-shadow: 0 0 24px 4px rgba(175, 234, 0, 0.75);
+  opacity: 0;
+  z-index: 5;
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.cyborg-hero__flash {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background: radial-gradient(ellipse at 62% 45%, rgba(240, 255, 220, 0.9) 0%, rgba(175, 234, 0, 0.35) 35%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.cyborg-hero__scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(246, 245, 239, 0.55);
+  pointer-events: none;
+}
+.cyborg-hero__scroll-cue span {
+  width: 1px;
+  height: 2rem;
+  background: linear-gradient(180deg, rgba(175, 234, 0, 0.9), transparent);
+  animation: cyborgCueDrop 1.6s ease-in-out infinite;
+}
+@keyframes cyborgCueDrop {
+  0% { transform: scaleY(0.3); transform-origin: top; opacity: 0.3; }
+  50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(0.3); transform-origin: bottom; opacity: 0.3; }
+}
+
+/* ---------- Next section (what the cut reveals) ---------- */
+
+.cyborg-next {
+  position: relative;
+  z-index: 1;
+  background: #07070a;
+  padding: 6rem 1.5rem 7rem;
+}
+.cyborg-next__top {
+  max-width: 34rem;
+  margin: 0 auto 4.5rem;
+  text-align: center;
+}
+.cyborg-next__top h2 {
+  font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  margin: 0.5rem 0 0.75rem;
+}
+.cyborg-next__top p {
+  opacity: 0.7;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  margin: 0;
+}
+
+.cyborg-next__grid {
+  max-width: 62rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.cyborg-next__card {
+  border: 1px solid rgba(246, 245, 239, 0.12);
+  padding: 1.75rem 1.5rem;
+  min-width: 0;
+}
+.cyborg-next__num {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #afea00;
+  margin-bottom: 1rem;
+}
+.cyborg-next__card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+}
+.cyborg-next__card p {
+  font-size: 0.9rem;
+  opacity: 0.65;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cyborg-next__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.5rem;
+}
+.cyborg-next__button {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  background: #afea00;
+  color: #101208;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cyborg-next__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -8px rgba(175, 234, 0, 0.55);
+}
+
+@media (max-width: 900px) {
+  .cyborg-next__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 820px) {
+  .cyborg-hero { height: 280vh; }
+  .cyborg-hero__copy {
+    top: auto;
+    bottom: 6.5rem;
+    transform: none;
+    padding: 0 1.5rem;
+    max-width: 22rem;
+  }
+  .cyborg-hero__vignette {
+    background:
+      linear-gradient(0deg, rgba(7, 7, 10, 0.9) 0%, rgba(7, 7, 10, 0.2) 38%, transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.55) 0%, transparent 55%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cyborg-hero__scroll-cue span { animation: none; }
+}

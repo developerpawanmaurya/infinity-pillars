@@ -1,0 +1,40 @@
+/* Meridian — light, slate-accented architecture case study page */
+
+.mer-cs-page { --mer-cs-accent: 210 18% 38%; }
+
+.mer-cs-visit-btn {
+  color: hsl(var(--mer-cs-accent));
+  background: hsl(var(--mer-cs-accent) / 0.08);
+  border: 1px solid hsl(var(--mer-cs-accent) / 0.35);
+}
+.mer-cs-visit-btn:hover {
+  background: hsl(var(--mer-cs-accent) / 0.16);
+  border-color: hsl(var(--mer-cs-accent) / 0.65);
+}
+
+.mer-cs-card {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.mer-cs-card:hover {
+  border-color: hsl(var(--mer-cs-accent) / 0.45);
+  transform: translateY(-4px);
+}
+
+.mer-cs-outcome-card {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.mer-cs-outcome-card:hover {
+  border-color: hsl(var(--mer-cs-accent) / 0.45);
+  transform: translateY(-4px);
+}
+
+.mer-cs-studio-row {
+  border-bottom: 1px solid hsl(var(--border));
+  transition: color 0.25s ease;
+}
+.mer-cs-studio-row:hover {
+  color: hsl(var(--mer-cs-accent));
+}

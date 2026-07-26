@@ -109,12 +109,12 @@ const PortfolioCaseCard = ({ project, index }) => {
           style={{ transformStyle: 'preserve-3d' }}
         >
           <div data-img-reveal className="editorial-frame relative overflow-hidden">
-            <div className="w-full h-[400px] md:h-[600px] overflow-hidden relative">
+            <div className="w-full h-[400px] md:h-[600px] overflow-hidden relative bg-muted">
               <img
                 data-parallax-img
                 src={project.image}
                 alt={`${project.title} case study showcase`}
-                className={`w-full h-full object-cover transition-all duration-500 ${project.dark ? 'grayscale brightness-[0.55]' : 'grayscale-[20%] hover:grayscale-0'}`}
+                className={`w-full h-full object-contain transition-all duration-500 ${project.dark ? 'grayscale brightness-[0.55]' : 'grayscale-[20%] hover:grayscale-0'}`}
               />
               {project.dark && (
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />

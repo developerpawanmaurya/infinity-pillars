@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import PortfolioIndexSection from '@/components/portfolio-variants/PortfolioIndexSection.jsx';
+import { portfolioProjects } from '@/data/portfolioProjects.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -582,35 +584,9 @@ const HomePage = () => {
     }
   ];
 
-  const showcaseProjects = [
-    {
-      title: 'deQollab',
-      slug: 'deqollab',
-      category: 'Strategic Communications',
-      image: '/images/DeQollab.png',
-      liveUrl: 'https://deqollab.com/',
-      rotation: '-rotate-3',
-      margin: 'mt-0'
-    },
-    {
-      title: 'KISS Professional Solutions',
-      slug: 'kiss-professional-solutions',
-      category: 'Enterprise Lead Generation',
-      image: '/images/KISS.png',
-      liveUrl: 'https://kissps.com.au/',
-      rotation: 'rotate-2',
-      margin: 'mt-16 md:mt-32'
-    },
-    {
-      title: 'XpertPatient.com',
-      slug: 'xpertpatient',
-      category: 'Healthcare · Empathetic UX',
-      image: '/images/XpertPatient.png',
-      liveUrl: 'https://xpertpatient.com/',
-      rotation: '-rotate-1',
-      margin: 'mt-16'
-    }
-  ];
+  // Just a teaser of the first 3 — the full 8-project set lives on /portfolio,
+  // reached via the "View Performance Archive" button below.
+  const showcaseProjects = portfolioProjects.slice(0, 3);
 
   const trustPoints = [
     'Conversion-Focused Design',
@@ -942,7 +918,7 @@ const HomePage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8"
+              className="flex flex-col md:flex-row md:items-end justify-between mb-4 gap-8"
             >
               <div>
                 <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4">Success Blueprints</h2>
@@ -961,51 +937,9 @@ const HomePage = () => {
                 </Link>
               </Button>
             </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              {showcaseProjects.map((project, index) => (
-                <motion.div
-                  key={project.title}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: index * 0.2 }}
-                  className={`${project.margin} group relative`}
-                >
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 bg-background/90 backdrop-blur-sm text-foreground text-[10px] font-bold uppercase tracking-widest px-3 py-2 border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    >
-                      Visit site
-                      <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  )}
-                  <Link to={`/portfolio/${project.slug}`} className="block">
-                    <div className={`transition-all duration-500 transform ${project.rotation} group-hover:rotate-0 group-hover:-translate-y-4`}>
-                      <div className="editorial-frame">
-                        <img
-                          src={project.image}
-                          alt={`${project.title} case study`}
-                          className="w-full h-[400px] object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
-                        />
-                      </div>
-                    </div>
-                    <div className="mt-8 text-center md:text-left">
-                      <div className="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-3">
-                        {project.category}
-                      </div>
-                      <h3 className="text-2xl font-bold tracking-tighter">
-                        {project.title}
-                      </h3>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
           </div>
+
+          <PortfolioIndexSection projects={showcaseProjects} />
         </section>
 
         {/* Lime Reveal — "Why Us" */}
