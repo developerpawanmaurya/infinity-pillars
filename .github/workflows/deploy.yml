@@ -30,41 +30,24 @@ jobs:
           VITE_API_URL: https://infinity-pillars.onrender.com/api
         run: npx vite build --outDir ../../dist/apps/web
 
-      # Step 1 — root files only (index.html, .htaccess, robots.txt …)
-      # Excludes the large assets/ folder so the LIST scan stays tiny.
-      - name: Deploy root files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./dist/apps/web/
-          server-dir: ${{ env.WEB_DIR }}/
-          exclude: '["**/assets/**"]'
-          timeout: 120000
-
-      # Step 2 — hashed JS/CSS bundles in assets/
-      # Separate step keeps the control socket alive under heavy payloads.
-      - name: Deploy assets
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./dist/apps/web/assets/
-          server-dir: ${{ env.WEB_DIR }}/assets/
-          timeout: 120000
+      # SamKirkland/FTP-Deploy-Action (basic-ftp under the hood) can't open a
+      # control-socket connection to this host at all — confirmed via the
+      # Actions logs ("Error: Timeout (control socket)"), even as the only
+      # job running with no other FTP traffic. Plain curl against the same
+      # host/credentials works fine (see deploy-wp-theme below, which never
+      # used the action), so every deploy job now uploads via curl instead.
+      - name: Deploy build via curl
+        working-directory: dist/apps/web
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          find . -type f | sed 's|^\./||' | xargs -P 8 -I {} \
+            curl --ssl-reqd --insecure --ftp-create-dirs --silent --show-error \
+              -T "{}" "ftp://${FTP_HOST}${WEB_DIR}/{}" -u "${FTP_USER}:${FTP_PASS}"
 
   # ── Gutenberg blocks plugin → …/blog/wp-content/plugins/ip-blocks/ ─────────
-  # needs: deploy-web — Hostinger's FTP server appears to cap concurrent
-  # connections per account; running all 3 deploy jobs in parallel made two
-  # of them hang on the control socket until they timed out (each job here
-  # opens its own FTP/FTPS connection to the same host). Chaining them
-  # sequentially avoids that connection contention.
   deploy-wp-plugin:
     needs: deploy-web
     runs-on: ubuntu-latest
@@ -74,39 +57,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Deploy only the root PHP file (rarely changes, tiny payload)
-      - name: Deploy plugin PHP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./apps/wp-plugin-ip-blocks/
-          server-dir: ${{ env.PLUGIN_DIR }}/
-          exclude: |
-            ["**/.git*", "**/node_modules/**", "**/src/**", "**/build/**",
-             "package.json", "package-lock.json", "webpack.config.js", ".gitignore"]
-          timeout: 120000
-
-      # Deploy only the 6 compiled build files (changes on every plugin update)
-      - name: Deploy plugin build assets
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./apps/wp-plugin-ip-blocks/build/
-          server-dir: ${{ env.PLUGIN_DIR }}/build/
-          timeout: 120000
+      - name: Deploy plugin via curl
+        working-directory: apps/wp-plugin-ip-blocks
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          find . -type f \
+            -not -path './node_modules/*' \
+            -not -path './src/*' \
+            -not -path './.git*' \
+            -not -name 'package.json' \
+            -not -name 'package-lock.json' \
+            -not -name 'webpack.config.js' \
+            -not -name '.gitignore' \
+            | sed 's|^\./||' | xargs -P 8 -I {} \
+            curl --ssl-reqd --insecure --ftp-create-dirs --silent --show-error \
+              -T "{}" "ftp://${FTP_HOST}${PLUGIN_DIR}/{}" -u "${FTP_USER}:${FTP_PASS}"
 
   # ── Custom theme → …/blog/wp-content/themes/ip-theme/ ─────────────────────
-  # Uses curl instead of FTP-Deploy-Action to avoid control socket timeouts:
-  # the action does a full remote directory scan before uploading; curl pushes
-  # each file directly with no listing step.
   deploy-wp-theme:
     needs: deploy-wp-plugin
     runs-on: ubuntu-latest
