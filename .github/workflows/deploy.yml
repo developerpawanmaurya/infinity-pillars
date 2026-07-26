@@ -60,7 +60,13 @@ jobs:
           timeout: 120000
 
   # ── Gutenberg blocks plugin → …/blog/wp-content/plugins/ip-blocks/ ─────────
+  # needs: deploy-web — Hostinger's FTP server appears to cap concurrent
+  # connections per account; running all 3 deploy jobs in parallel made two
+  # of them hang on the control socket until they timed out (each job here
+  # opens its own FTP/FTPS connection to the same host). Chaining them
+  # sequentially avoids that connection contention.
   deploy-wp-plugin:
+    needs: deploy-web
     runs-on: ubuntu-latest
     env:
       PLUGIN_DIR: /domains/infinitypillars.com/public_html/blog/wp-content/plugins/ip-blocks
@@ -102,6 +108,7 @@ jobs:
   # the action does a full remote directory scan before uploading; curl pushes
   # each file directly with no listing step.
   deploy-wp-theme:
+    needs: deploy-wp-plugin
     runs-on: ubuntu-latest
     env:
       THEME_DIR: /domains/infinitypillars.com/public_html/blog/wp-content/themes/ip-theme
