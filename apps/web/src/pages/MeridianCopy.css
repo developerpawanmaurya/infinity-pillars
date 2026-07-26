@@ -1,0 +1,406 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Caveat:wght@500;600&display=swap');
+
+:root {
+  --merc-bg: #FAFAF8;
+  --merc-fg: #121210;
+  --merc-fg-muted: #8A8A85;
+  --merc-accent: #C1622E;
+}
+
+.merc-page {
+  /* Declared here (not :root) so it re-resolves whenever the theme-transition
+     tween overwrites --merc-fg as an inline style on this same element —
+     a custom property only re-substitutes var() at the element that declares
+     it, not wherever it's inherited to. */
+  --merc-line: color-mix(in srgb, var(--merc-fg) 12%, transparent);
+  background: var(--merc-bg);
+  color: var(--merc-fg);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  overflow-x: clip;
+  position: relative;
+}
+
+.merc-page * { box-sizing: border-box; }
+
+.merc-wrap {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: clamp(24px, 5vw, 96px);
+  padding-right: clamp(24px, 5vw, 96px);
+}
+
+.merc-section {
+  padding-top: clamp(80px, 12vh, 200px);
+  padding-bottom: clamp(80px, 12vh, 200px);
+}
+
+.merc-eyebrow {
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--merc-fg-muted);
+  margin-bottom: 1.5rem;
+}
+
+.merc-section-heading {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.merc-section-heading sup {
+  font-size: 0.4em;
+  color: var(--merc-fg-muted);
+  font-weight: 400;
+}
+
+.merc-pullquote {
+  font-family: 'Newsreader', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  line-height: 1.15;
+  max-width: 900px;
+  margin-bottom: 2rem;
+}
+
+.merc-body {
+  font-family: 'Newsreader', serif;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.6;
+  max-width: 640px;
+  color: var(--merc-fg);
+}
+
+.merc-underline-link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: inherit;
+}
+
+/* ---------- Cursor tooltip (project hover preview) ---------- */
+.merc-cursor-tooltip {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  background: #111; color: #fff; font-family: monospace; font-size: 12px;
+  padding: 6px 12px; border-radius: 20px; opacity: 0;
+  transform-origin: left center; pointer-events: none;
+}
+
+/* ---------- SECTION 1: Hero ---------- */
+.merc-hero {
+  position: relative; height: 100vh; min-height: 640px; overflow: hidden;
+  color: #fff;
+  display: flex; align-items: flex-end;
+}
+.merc-hero__media { position: absolute; inset: 0; }
+.merc-hero__img { width: 100%; height: 120%; object-fit: cover; will-change: transform; }
+.merc-hero__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.55) 100%);
+}
+.merc-hero__body { position: relative; z-index: 2; width: 100%; padding: 0 clamp(24px, 5vw, 96px) clamp(48px, 8vh, 96px); }
+.merc-hero__kicker {
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.28em;
+  color: rgba(255,255,255,0.75); margin-bottom: 1.25rem; opacity: 0;
+}
+.merc-hero__title {
+  font-weight: 700; line-height: 0.95; letter-spacing: -0.02em;
+  font-size: clamp(3rem, 7vw, 7.5rem);
+  margin: 0 0 2.5rem;
+}
+.merc-hero__title-line { display: block; overflow: hidden; }
+.merc-hero__title-line span { display: block; will-change: transform; }
+.merc-hero__captions { display: flex; gap: clamp(24px, 6vw, 120px); flex-wrap: wrap; }
+.merc-hero__caption {
+  font-size: 15px; line-height: 1.5; max-width: 380px; opacity: 0.9;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+/* ---------- SECTION 2: Flagship ---------- */
+.merc-flagship { position: relative; width: 100%; height: 90vh; overflow: hidden; }
+.merc-flagship img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+
+/* ---------- SECTION 3: About ---------- */
+.merc-about__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.merc-about__labels { grid-column: 1 / 5; display: flex; flex-direction: column; gap: 1.5rem; }
+.merc-label-row { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.95rem; border-bottom: 1px solid var(--merc-line); padding-bottom: 0.75rem; }
+.merc-label-row span { color: var(--merc-fg-muted); flex-shrink: 0; }
+.merc-label-row strong { font-weight: 400; text-align: right; }
+.merc-label-row--block { flex-direction: column; align-items: flex-start; }
+.merc-label-row--block strong { text-align: left; font-weight: 400; margin-top: 0.5rem; }
+.merc-about__mission { grid-column: 5 / 13; }
+.merc-about__mission p {
+  font-family: 'Newsreader', serif; font-weight: 300;
+  font-size: clamp(1.4rem, 2.4vw, 2rem); line-height: 1.4;
+}
+
+/* ---------- SECTION 5: Inside Ashcombe Ridge House (3D room tour) ---------- */
+.merc-tour-intro { text-align: center; padding-bottom: clamp(40px, 6vh, 80px); }
+.merc-tour-intro .merc-body { max-width: 640px; margin: 1rem auto 0; }
+.merc-tour-intro .merc-section-heading { margin: 0.75rem 0 0; }
+/* Meridian's nav is position:fixed site-wide and sits in the same corner
+   as the tour's room-tag label — push the tag below it here only. */
+.merc-tour .rt-tour__room-tag { top: clamp(90px, 13vh, 130px); }
+
+/* ---------- Sketch copy + Precision ---------- */
+.merc-sketch-copy .merc-body { margin-top: 1rem; }
+.merc-precision__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.merc-precision__media { position: relative; }
+.merc-precision__text { position: sticky; top: 22vh; padding-top: clamp(8px, 3vh, 32px); }
+.merc-precision__index {
+  font-family: 'Newsreader', serif; font-style: italic; font-weight: 300;
+  font-size: clamp(3.5rem, 7vw, 6rem); line-height: 1;
+  color: var(--merc-line); margin-bottom: -0.4em;
+}
+.merc-scribble {
+  position: absolute; bottom: -1.5rem; right: 4%;
+  font-family: 'Caveat', cursive; font-size: 1.4rem;
+  color: var(--merc-accent); transform: rotate(-4deg);
+  pointer-events: none;
+}
+.merc-scribble::after {
+  content: ''; display: block; height: 6px; margin-top: 2px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10'%3E%3Cpath d='M0 5 Q 12 0, 25 5 T 50 5 T 75 5 T 100 5' fill='none' stroke='%23C1622E' stroke-width='2'/%3E%3C/svg%3E") repeat-x;
+  background-size: 40px 6px;
+}
+
+/* ---------- SECTION 7: Projects (REWRITTEN FOR WIPE) ---------- */
+.merc-projects-wipe {
+  position: relative;
+  /* height will be set dynamically via JS based on number of projects */
+}
+.merc-projects-wipe__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--merc-bg);
+}
+.merc-projects-wipe__layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Will-change for clip-path performance */
+  will-change: clip-path;
+}
+.merc-projects-wipe__img-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.merc-projects-wipe__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.merc-projects-wipe__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 50%);
+  pointer-events: none;
+}
+.merc-projects-wipe__content {
+  position: absolute;
+  inset: 0;
+  padding: clamp(24px, 5vw, 96px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #fff;
+  z-index: 2;
+  pointer-events: none;
+}
+.merc-projects-wipe__title {
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: 1;
+}
+.merc-projects-wipe__area {
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  opacity: 0.8;
+  margin-top: 0.5rem;
+  font-family: 'Newsreader', serif;
+}
+
+/* Slash FX (Neutral variant) */
+.merc-projects-wipe__cut-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.8) 20%, #ffffff 50%, rgba(255, 255, 255, 0.8) 80%, transparent 100%);
+  box-shadow: 0 0 20px 2px rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  z-index: 11;
+  pointer-events: none;
+  transform-origin: center;
+}
+.merc-projects-wipe__flash {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+
+/* ---------- SECTION 8: Radial diagram / theme transition ---------- */
+.merc-radial { position: relative; height: 220vh; }
+.merc-radial__stage {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.merc-radial__svg { position: absolute; width: min(90vw, 800px); height: min(90vw, 800px); color: var(--merc-fg); }
+.merc-radial__label {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; fill: var(--merc-fg-muted);
+  opacity: 0; transition: opacity 0.4s ease;
+}
+.merc-radial__label.is-visible { opacity: 1; }
+.merc-radial__headline { position: relative; width: min(900px, 80vw); min-height: 260px; text-align: center; }
+.merc-radial__line {
+  position: absolute; top: 50%; left: 50%; width: max-content; transform: translate(-50%, -50%);
+  padding: 16px 48px;
+  background: var(--merc-bg);
+  border-radius: 120px;
+  font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.1;
+  opacity: 1;
+}
+.merc-radial__line--b { opacity: 0; }
+.merc-radial__char { display: inline-block; min-width: 0.3em; }
+
+/* ---------- SECTION 9: Culture intro ---------- */
+.merc-culture { text-align: center; }
+.merc-culture .merc-pullquote { margin: 0 auto; }
+
+/* ---------- SECTION 9/10: shared photo-ring → cascade → stats stage ---------- */
+.merc-culture-stats { position: relative; height: 600vh; }
+.merc-culture-stats__sticky {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.merc-culture__ring { position: relative; width: 1px; height: 1px; }
+.merc-culture__photo {
+  position: absolute; top: 0; left: 0; width: 135px; height: 135px; margin: -67.5px;
+  border-radius: 50%; overflow: hidden; box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  opacity: 0;
+}
+.merc-culture__photo img { width: 100%; height: 100%; object-fit: cover; }
+.merc-culture__caption { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; opacity: 0; pointer-events: none; padding: 24px; }
+.merc-culture__card {
+  background: rgba(11, 11, 10, 0.6);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: clamp(28px, 4vw, 56px) clamp(24px, 5vw, 72px);
+  max-width: min(900px, 90vw);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+.merc-culture__year {
+  font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700;
+  background: linear-gradient(135deg, #FFFFFF 0%, #8A8A85 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.merc-culture__year span { display: block; font-size: 0.9rem; font-weight: 400; color: #8A8A85; -webkit-text-fill-color: #8A8A85; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.5rem; }
+.merc-culture__cols { display: flex; gap: 48px; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+.merc-culture__lead { max-width: 340px; font-family: 'Newsreader', serif; font-weight: 500; font-size: 1.15rem; line-height: 1.4; color: #F5F4F0; }
+.merc-culture__sub { max-width: 320px; font-size: 0.95rem; line-height: 1.5; color: #A8A8A3; }
+
+.merc-stats__inner { position: absolute; inset: 0; display: grid; place-items: center end; padding-right: 15vw; text-align: left; z-index: 3; }
+.merc-stats__beat { grid-area: 1 / 1; max-width: 26ch; }
+.merc-stats__index {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--merc-accent); margin-bottom: 0.9rem;
+}
+.merc-stats__note {
+  font-family: 'Newsreader', serif; font-style: italic; font-weight: 300;
+  font-size: clamp(1.8rem, 3.4vw, 3.1rem); line-height: 1.25;
+}
+
+/* ---------- SECTION 11: Clients ---------- */
+.merc-clients { text-align: center; }
+.merc-clients__field {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 24px;
+  margin-top: 3rem;
+}
+.merc-badge {
+  width: 96px; height: 96px; border-radius: 50%;
+  border: 1px solid var(--merc-line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 600;
+  transform: rotate(var(--r, 0deg));
+  cursor: default;
+  transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+.merc-badge:hover {
+  border-color: var(--merc-accent);
+  color: var(--merc-accent);
+  box-shadow: 0 0 0 1px var(--merc-accent), 0 8px 24px color-mix(in srgb, var(--merc-accent) 30%, transparent);
+}
+
+/* ---------- SECTION 11.5: Closing CTA ---------- */
+.merc-cta { text-align: center; }
+.merc-cta__wrap { display: flex; flex-direction: column; align-items: center; }
+.merc-cta__headline {
+  font-size: clamp(2.25rem, 6vw, 5rem); font-weight: 700;
+  letter-spacing: -0.01em; line-height: 1.05; max-width: 16ch; margin: 0 auto;
+}
+.merc-cta__sub { margin: 1.75rem auto 0; text-align: center; color: var(--merc-fg-muted); }
+.merc-cta__link {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  margin-top: 3rem; padding: 0.5rem 0;
+  font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 600;
+  color: var(--merc-fg); text-decoration: none;
+  border-bottom: 1px solid var(--merc-line);
+}
+.merc-cta__arrow { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease; }
+.merc-cta__link:hover { color: var(--merc-accent); }
+.merc-cta__link:hover .merc-cta__arrow { transform: rotate(45deg); color: var(--merc-accent); }
+
+/* ---------- SECTION 12: Marquee + Footer ---------- */
+.merc-marquee { overflow: hidden; padding: clamp(20px, 4vh, 60px) 0; }
+.merc-marquee__track { display: flex; width: max-content; white-space: nowrap; }
+.merc-marquee__track span {
+  font-size: 9vw; font-weight: 800; line-height: 1; letter-spacing: -0.02em;
+}
+.merc-footer { padding: clamp(48px, 8vh, 96px) 0; border-top: 1px solid var(--merc-line); }
+.merc-footer__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; font-size: 0.9rem; }
+.merc-footer__grid a { display: block; color: inherit; text-decoration: none; }
+.merc-footer__grid a:hover { text-decoration: underline; }
+.merc-footer__label { color: var(--merc-fg-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1200px) {
+  .merc-culture__photo { width: 105px; height: 105px; margin: -52.5px; }
+}
+
+@media (max-width: 768px) {
+  .merc-hero__captions { flex-direction: column; gap: 16px; }
+  .merc-about__grid { display: flex; flex-direction: column; gap: 32px; }
+  .merc-about__labels, .merc-about__mission { grid-column: auto; }
+  .merc-achievements__grid { grid-template-columns: 1fr; gap: 24px; }
+  .merc-precision__grid { grid-template-columns: 1fr; gap: 32px; }
+  .merc-precision__text { position: static; }
+  .merc-scribble { display: none; }
+  .merc-culture__photo { width: 60px; height: 60px; margin: -30px; }
+  .merc-culture__cols { flex-direction: column; align-items: center; gap: 24px; }
+  .merc-culture__card { padding: 20px; border-radius: 16px; }
+  .merc-footer__grid { grid-template-columns: 1fr 1fr; }
+  .merc-marquee__track span { font-size: 14vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .merc-page * { animation: none !important; transition: none !important; }
+}

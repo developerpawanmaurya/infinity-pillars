@@ -29,7 +29,6 @@ const PRODUCTS = [
   { id: 'aero-slide', name: 'Aero Slide', price: 8 },
   { id: 'quartz-high', name: 'Quartz High', price: 12 },
   { id: 'drift-low', name: 'Drift Low', price: 5 },
-  { id: 'solstice-boot', name: 'Solstice Boot', price: 20 },
   { id: 'ember-trainer', name: 'Ember Trainer', price: 8 },
 ].map((p, i) => {
   const n = String(i + 1).padStart(2, '0');

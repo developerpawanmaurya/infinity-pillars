@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+    "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
+    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/build/three.module.js": "sha384-8FCZ1eVO6it4+pbec2aDtnTrwjWXZLJRC+MAGCIPDgsYnUrl/E0A2YlF8ioMKI/J",
+    "https://unpkg.com/three@0.184.0/build/three.core.js": "sha384-dw2ooPewaEIrAgl6oFDBmmBWCE9oW9LxRGcfwZ0hLvEprzo202wXl7vCYHRlSnOT",
+    "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js": "sha384-4rziNxOBZKQ69i+w+f89KJ55TCYquwchVbByQwmaOeIOXdOU2PLDn3kOfXHwIJC9",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js": "sha384-nbwtoZENJD3Vq+ACK0CuGQdPMuDWHkamC2KJD70EV5nfg6jQjfppKOea07YJN+N3",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js": "sha384-VofkvpG6HERhFCYbsUOHeNXBCqID2nfqkQqnVzE1jc/oPcz+qJ13ADdXH08hE+cQ"
+  }
+}
+</script>
+<script src="./three-d-stage.js"></script>
+<style>
+html, body { margin: 0; background: #efe9dc; color: #22303c; }
+a { color: #22303c; } a:hover { color: #8a5a33; }
+three-d-stage:not(:defined) { visibility: hidden; }
+</style>
+</helmet>
+<div style="min-height:100vh; padding:36px 20px 64px; font-family:'Archivo',sans-serif; display:flex; justify-content:center;">
+<div style="width:100%; max-width:1240px; display:flex; flex-direction:column; gap:28px;">
+
+  <header style="border-top:3px solid #22303c; border-bottom:1px solid #22303c; padding:18px 4px 14px; display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap;">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.18em; color:#8a5a33;">STRUCTURAL STUDY · SET S</div>
+      <h1 style="margin:6px 0 0; font-size:30px; font-weight:700; letter-spacing:0.01em;">Seafront Villa — Structure &amp; Skeleton</h1>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; text-align:right; color:#5c6a74; line-height:1.7;">TWO STOREYS · RC FRAME + STEEL CANOPY<br>JUL 2026 · FOR STUDY ONLY · NOT FOR CONSTRUCTION</div>
+  </header>
+
+  <section style="background:#f8f4ea; border:1px solid #22303c; box-shadow:6px 6px 0 rgba(34,48,60,0.12);">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 18px; border-bottom:1px solid #22303c; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em;">
+      <span style="font-weight:600;">S-01 · FRONT ELEVATION</span>
+      <span style="color:#5c6a74;">SCALE INDICATIVE · GRID A–E</span>
+    </div>
+    <svg viewBox="0 0 1200 680" style="display:block; width:100%; height:auto;" font-family="IBM Plex Mono, monospace">
+      <defs>
+        <pattern id="slats" width="7" height="8" patternUnits="userSpaceOnUse">
+          <rect width="7" height="8" fill="#8a5a33"></rect>
+          <line x1="5.5" y1="0" x2="5.5" y2="8" stroke="#5e3a1e" stroke-width="2"></line>
+        </pattern>
+        <pattern id="louv" width="8" height="7" patternUnits="userSpaceOnUse">
+          <rect width="8" height="7" fill="#39424b"></rect>
+          <line x1="0" y1="5.5" x2="8" y2="5.5" stroke="#232b32" stroke-width="2"></line>
+        </pattern>
+        <pattern id="stone" width="26" height="18" patternUnits="userSpaceOnUse">
+          <rect width="26" height="18" fill="#e8cba9"></rect>
+          <ellipse cx="7" cy="5" rx="5.5" ry="3.5" fill="#d99d69" stroke="#a96f3f" stroke-width="1"></ellipse>
+          <ellipse cx="19" cy="12" rx="6" ry="4" fill="#cf9057" stroke="#a96f3f" stroke-width="1"></ellipse>
+          <ellipse cx="24" cy="3" rx="4" ry="2.5" fill="#dda874" stroke="#a96f3f" stroke-width="1"></ellipse>
+        </pattern>
+      </defs>
+
+      <g id="grid" visibility="{{ gridVis }}" stroke="#9aa8b2" stroke-width="1" stroke-dasharray="7 6">
+        <line x1="220" y1="112" x2="220" y2="622"></line>
+        <line x1="420" y1="112" x2="420" y2="622"></line>
+        <line x1="600" y1="112" x2="600" y2="622"></line>
+        <line x1="780" y1="112" x2="780" y2="622"></line>
+        <line x1="980" y1="112" x2="980" y2="622"></line>
+      </g>
+
+      <!-- pool + ground -->
+      <rect x="140" y="576" width="920" height="88" fill="#bfe3ef" stroke="#22303c" stroke-width="1.5"></rect>
+      <line x1="140" y1="584" x2="1060" y2="584" stroke="#7fb4c9" stroke-width="1"></line>
+      <path d="M200 620 q20 -8 40 0 q20 8 40 0 M560 640 q20 -8 40 0 q20 8 40 0 M840 612 q20 -8 40 0 q20 8 40 0" fill="none" stroke="#7fb4c9" stroke-width="1.5"></path>
+      <line x1="80" y1="560" x2="1120" y2="560" stroke="#22303c" stroke-width="2.5"></line>
+
+      <!-- terrace steps -->
+      <g stroke="#22303c" stroke-width="1.5" fill="none">
+        <line x1="300" y1="512" x2="900" y2="512"></line>
+        <line x1="280" y1="528" x2="920" y2="528"></line>
+        <line x1="260" y1="544" x2="940" y2="544"></line>
+        <line x1="300" y1="512" x2="280" y2="528"></line><line x1="280" y1="528" x2="260" y2="544"></line><line x1="260" y1="544" x2="240" y2="560"></line>
+        <line x1="900" y1="512" x2="920" y2="528"></line><line x1="920" y1="528" x2="940" y2="544"></line><line x1="940" y1="544" x2="960" y2="560"></line>
+      </g>
+
+      <!-- left side (tower + planter), mirrored for right -->
+      <g id="sideL">
+        <rect x="220" y="150" width="200" height="362" fill="#fdfbf5" stroke="#22303c" stroke-width="2"></rect>
+        <rect x="220" y="150" width="200" height="42" fill="url(#slats)" stroke="#22303c" stroke-width="1.5"></rect>
+        <rect x="220" y="192" width="26" height="92" fill="url(#slats)" stroke="#22303c" stroke-width="1.5"></rect>
+        <rect x="262" y="214" width="116" height="88" fill="url(#louv)" stroke="#22303c" stroke-width="1.5"></rect>
+        <g stroke="#6fa9c2">
+          <line x1="226" y1="302" x2="414" y2="302" stroke-width="3"></line>
+          <line x1="226" y1="308" x2="414" y2="308" stroke-width="1"></line>
+          <line x1="273" y1="308" x2="273" y2="366" stroke-width="1"></line>
+          <line x1="320" y1="308" x2="320" y2="366" stroke-width="1"></line>
+          <line x1="367" y1="308" x2="367" y2="366" stroke-width="1"></line>
+        </g>
+        <line x1="222" y1="352" x2="418" y2="352" stroke="#8fa3b0" stroke-width="1" stroke-dasharray="5 5"></line>
+        <line x1="222" y1="368" x2="418" y2="368" stroke="#8fa3b0" stroke-width="1" stroke-dasharray="5 5"></line>
+        <rect x="252" y="388" width="118" height="118" fill="url(#louv)" stroke="#22303c" stroke-width="1.5"></rect>
+        <rect x="234" y="398" width="10" height="18" fill="#22303c"></rect>
+        <path d="M172 540 L172 482 Q200 474 246 480 T322 478 L322 540 Z" fill="url(#stone)" stroke="#22303c" stroke-width="1.5"></path>
+        <line x1="172" y1="490" x2="322" y2="488" stroke="#22303c" stroke-width="1"></line>
+      </g>
+      <use href="#sideL" transform="translate(1200 0) scale(-1 1)"></use>
+
+      <!-- central bay -->
+      <rect x="420" y="192" width="360" height="320" fill="#fdfbf5" stroke="#22303c" stroke-width="2"></rect>
+      <line x1="420" y1="208" x2="780" y2="208" stroke="#22303c" stroke-width="1"></line>
+      <g>
+        <rect x="436" y="222" width="328" height="118" fill="#e8f1f4" stroke="#22303c" stroke-width="1.5"></rect>
+        <line x1="518" y1="222" x2="518" y2="340" stroke="#22303c" stroke-width="1"></line>
+        <line x1="600" y1="222" x2="600" y2="340" stroke="#22303c" stroke-width="1"></line>
+        <line x1="682" y1="222" x2="682" y2="340" stroke="#22303c" stroke-width="1"></line>
+        <line x1="436" y1="312" x2="764" y2="312" stroke="#8fa3b0" stroke-width="1"></line>
+        <line x1="470" y1="330" x2="560" y2="230" stroke="#b7cdd6" stroke-width="1.5"></line>
+        <line x1="640" y1="335" x2="740" y2="228" stroke="#b7cdd6" stroke-width="1.5"></line>
+      </g>
+      <rect x="402" y="340" width="396" height="26" fill="#2e353d" stroke="#22303c" stroke-width="1.5"></rect>
+      <rect x="430" y="366" width="340" height="12" fill="url(#slats)" stroke="#22303c" stroke-width="1"></rect>
+      <g>
+        <rect x="436" y="392" width="328" height="113" fill="#e8f1f4" stroke="#22303c" stroke-width="1.5"></rect>
+        <line x1="518" y1="392" x2="518" y2="505" stroke="#22303c" stroke-width="1"></line>
+        <line x1="600" y1="392" x2="600" y2="505" stroke="#22303c" stroke-width="1"></line>
+        <line x1="682" y1="392" x2="682" y2="505" stroke="#22303c" stroke-width="1"></line>
+        <line x1="466" y1="498" x2="548" y2="402" stroke="#b7cdd6" stroke-width="1.5"></line>
+        <line x1="642" y1="500" x2="736" y2="398" stroke="#b7cdd6" stroke-width="1.5"></line>
+      </g>
+
+      <!-- grid bubbles -->
+      <g visibility="{{ gridVis }}" font-size="13" font-weight="600" text-anchor="middle">
+        <g fill="#f8f4ea" stroke="#22303c" stroke-width="1.5">
+          <circle cx="220" cy="92" r="15"></circle><circle cx="420" cy="92" r="15"></circle><circle cx="600" cy="92" r="15"></circle><circle cx="780" cy="92" r="15"></circle><circle cx="980" cy="92" r="15"></circle>
+        </g>
+        <g fill="#22303c">
+          <text x="220" y="97">A</text><text x="420" y="97">B</text><text x="600" y="97">C</text><text x="780" y="97">D</text><text x="980" y="97">E</text>
+        </g>
+      </g>
+
+      <!-- level markers -->
+      <g font-size="10" fill="#5c6a74" text-anchor="end">
+        <g stroke="#5c6a74" stroke-width="1">
+          <line x1="96" y1="150" x2="200" y2="150" stroke-dasharray="3 4"></line>
+          <line x1="96" y1="368" x2="200" y2="368" stroke-dasharray="3 4"></line>
+          <line x1="96" y1="512" x2="200" y2="512" stroke-dasharray="3 4"></line>
+        </g>
+        <text x="200" y="142">+7.40 T.O. PARAPET</text>
+        <text x="200" y="360">+3.30 LEVEL 01</text>
+        <text x="200" y="527">±0.00 TERRACE</text>
+        <text x="76" y="577">−0.64 GARDEN</text>
+      </g>
+
+      <!-- labels -->
+      <g id="labels" visibility="{{ labelsVis }}" font-size="11" fill="#22303c" letter-spacing="0.05em">
+        <g stroke="#22303c" stroke-width="1" fill="none">
+          <polyline points="210,128 260,128 300,168"></polyline>
+          <polyline points="990,138 940,138 906,156"></polyline>
+          <polyline points="166,300 230,300 260,304"></polyline>
+          <polyline points="166,246 220,246 262,250"></polyline>
+          <polyline points="990,356 960,356 936,352"></polyline>
+          <polyline points="166,340 340,340 404,350"></polyline>
+          <polyline points="990,450 830,450 766,450"></polyline>
+          <polyline points="166,430 214,430 254,442"></polyline>
+          <polyline points="160,505 200,505 232,500"></polyline>
+          <polyline points="160,553 240,553 292,546"></polyline>
+          <polyline points="990,548 1030,548 1058,558"></polyline>
+          <polyline points="132,610 180,610 222,604"></polyline>
+        </g>
+        <g fill="#22303c">
+          <circle cx="300" cy="168" r="2.5"></circle><circle cx="906" cy="156" r="2.5"></circle><circle cx="260" cy="304" r="2.5"></circle>
+          <circle cx="262" cy="250" r="2.5"></circle><circle cx="936" cy="352" r="2.5"></circle><circle cx="404" cy="350" r="2.5"></circle>
+          <circle cx="766" cy="450" r="2.5"></circle><circle cx="254" cy="442" r="2.5"></circle><circle cx="232" cy="500" r="2.5"></circle>
+          <circle cx="292" cy="546" r="2.5"></circle><circle cx="1058" cy="560" r="2.5"></circle><circle cx="222" cy="604" r="2.5"></circle>
+        </g>
+        <g text-anchor="end">
+          <text x="206" y="124">TIMBER SLAT CANOPY</text>
+          <text x="162" y="296">GLASS BALUSTRADE</text>
+          <text x="162" y="242">LOUVERED SCREEN</text>
+          <text x="162" y="336">STEEL CANOPY BEAM</text>
+          <text x="162" y="426">LOUVERED PANEL</text>
+          <text x="156" y="501">STONE PLANTER WALL</text>
+          <text x="156" y="549">TERRACE STEPS</text>
+          <text x="128" y="606">POOL</text>
+        </g>
+        <g text-anchor="start">
+          <text x="994" y="134">RC PARAPET</text>
+          <text x="994" y="352">RC FLOOR SLAB</text>
+          <text x="994" y="446">FULL-HEIGHT GLAZING</text>
+          <text x="994" y="544">GROUND LINE</text>
+        </g>
+      </g>
+    </svg>
+    <div style="display:flex; gap:22px; flex-wrap:wrap; padding:12px 18px; border-top:1px solid #22303c; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.08em; align-items:center;">
+      <span style="display:flex; align-items:center; gap:7px;"><span style="width:14px; height:14px; background:#aab3bc; border:1px solid #22303c;"></span>CONCRETE / RC</span>
+      <span style="display:flex; align-items:center; gap:7px;"><span style="width:14px; height:14px; background:#2e353d; border:1px solid #22303c;"></span>STEEL</span>
+      <span style="display:flex; align-items:center; gap:7px;"><span style="width:14px; height:14px; background:#8a5a33; border:1px solid #22303c;"></span>TIMBER</span>
+      <span style="display:flex; align-items:center; gap:7px;"><span style="width:14px; height:14px; background:#bfe0ec; border:1px solid #22303c;"></span>GLASS</span>
+      <span style="display:flex; align-items:center; gap:7px;"><span style="width:14px; height:14px; background:#cf9057; border:1px solid #22303c;"></span>STONE</span>
+    </div>
+  </section>
+
+  <section style="background:#f8f4ea; border:1px solid #22303c; box-shadow:6px 6px 0 rgba(34,48,60,0.12);">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 18px; border-bottom:1px solid #22303c; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; flex-wrap:wrap; gap:8px;">
+      <span style="font-weight:600;">S-02 · STRUCTURAL SKELETON — 3D</span>
+      <span style="color:#5c6a74;">DRAG TO ORBIT · SCROLL TO ZOOM · EXPORT OBJ / GLB</span>
+    </div>
+    <three-d-stage id="skel-stage" name="villa-skeleton" background="#efe9dc" style="display:block; width:100%; height:640px;"></three-d-stage>
+    <div style="padding:12px 18px; border-top:1px solid #22303c; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.08em; color:#5c6a74;">RC COLUMN GRID (A–E) · FLOOR &amp; ROOF FRAMES AT +3.30 / +6.60 · TOWER PARAPETS +7.40 · CANTILEVERED STEEL CANOPY · TERRACE, PLANTERS &amp; POOL SHOWN FOR CONTEXT</div>
+  </section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;showLabels&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Elevation&quot; },
+  &quot;showGrid&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Elevation&quot; },
+  &quot;autorotate&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;3D skeleton&quot; }
+}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const stage = document.getElementById('skel-stage');
+    if (!stage) return;
+    this._syncRotate(stage);
+    import('./skeleton-model.js').then(m => m.mount(stage)).catch(e => console.error('skeleton mount failed', e));
+  }
+  componentDidUpdate() {
+    const stage = document.getElementById('skel-stage');
+    if (stage) this._syncRotate(stage);
+  }
+  _syncRotate(stage) {
+    if (this.props.autorotate ?? true) stage.setAttribute('autorotate', '');
+    else stage.removeAttribute('autorotate');
+  }
+  renderVals() {
+    return {
+      labelsVis: (this.props.showLabels ?? true) ? 'visible' : 'hidden',
+      gridVis: (this.props.showGrid ?? true) ? 'visible' : 'hidden'
+    };
+  }
+}
+</script>
+</body>
+</html>

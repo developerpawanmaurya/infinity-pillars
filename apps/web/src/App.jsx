@@ -40,20 +40,13 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 import BookingModal from './components/BookingModal.jsx';
 import CustomCursor from './components/CustomCursor.jsx';
 import Preloader from './components/Preloader.jsx';
-// Experiment pages (HomeExperiment/2/3) are drafted, not live — routes below
-// are commented out rather than deleted so the work isn't lost, just not
-// reachable from navigation. Un-comment to bring one back.
-// import HomeExperiment from './pages/HomeExperiment.jsx';
-// import HomeExperiment2 from './pages/HomeExperiment2.jsx';
-// import HomeExperiment3 from './pages/HomeExperiment3.jsx';
-import PlaybookExperiment4 from './pages/PlaybookExperiment4.jsx';
-import PlaybookExperiment5 from './pages/PlaybookExperiment5.jsx';
-import PlaybookExperiment6 from './pages/PlaybookExperiment6.jsx';
-import PlaybookExperiment7 from './pages/PlaybookExperiment7.jsx';
-import HomeExperiment4 from './pages/HomeExperiment4.jsx';
+import PlaybookExperiment8 from './pages/PlaybookExperiment8.jsx';
 import HalvorsenPage from './pages/HalvorsenPage.jsx';
 import MeridianPage from './pages/MeridianPage.jsx';
 import RadiantPage from './pages/RadiantPage.jsx';
+import CyborgPage from './pages/CyborgPage.jsx';
+import ApartmentPage from './pages/ApartmentPage.jsx';
+import MeridianCopyPage from './pages/MeridianCopyPage.jsx';
 // Throwaway test pages for the image-blur investigation — no static tilt on
 // the case-study images, to confirm that's the fix before touching the
 // real pages. Delete these imports + routes once confirmed either way.
@@ -100,22 +93,17 @@ function RoutedContent() {
                 <Route path="/sample-16" element={<Sample16Page />} />
                 <Route path="/sample-17" element={<Sample17Page />} />
                 <Route path="/archive" element={<ArchivePage />} />
+                <Route path="/experiment-8" element={<PlaybookExperiment8 />} />
                     {/* /:category handles headless WP category URLs */}
                     <Route path="/:category" element={<BlogPage />} />
                     {/* /:category/:slug handles headless WP post URLs */}
                     <Route path="/:category/:slug" element={<BlogPostPage />} />
-                    {/* Drafted, not live — see the commented imports above */}
-                    {/* <Route path="/experiment" element={<HomeExperiment />} /> */}
-                    {/* <Route path="/experiment-2" element={<HomeExperiment2 />} /> */}
-                    {/* <Route path="/experiment-3" element={<HomeExperiment3 />} /> */}
-                    <Route path="/experiment-4" element={<PlaybookExperiment4 />} />
-                    <Route path="/experiment-5" element={<PlaybookExperiment5 />} />
-                    <Route path="/experiment-6" element={<PlaybookExperiment6 />} />
-                    <Route path="/experiment-7" element={<PlaybookExperiment7 />} />
-                    <Route path="/experiment-8" element={<HomeExperiment4 />} />
                     <Route path="/halvorsen" element={<HalvorsenPage />} />
                     <Route path="/meridian" element={<MeridianPage />} />
                     <Route path="/radiant" element={<RadiantPage />} />
+                    <Route path="/cyborg" element={<CyborgPage />} />
+                    <Route path="/apartment" element={<ApartmentPage />} />
+                    <Route path="/meridian-copy" element={<MeridianCopyPage />} />
                     {/* Throwaway blur-fix test routes — see the imports above */}
                     <Route path="/home-test" element={<HomePageTest />} />
                     <Route path="/portfolio-test" element={<PortfolioPageTest />} />

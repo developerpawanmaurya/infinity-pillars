@@ -74,39 +74,13 @@
   color: inherit;
 }
 
-/* ---------- Back link + cursor tooltip ---------- */
-.mer-back {
-  position: fixed; top: 20px; left: 20px; z-index: 200;
-  font-size: 0.8rem; color: var(--mer-fg); text-decoration: none;
-  mix-blend-mode: difference;
-}
+/* ---------- Cursor tooltip (project hover preview) ---------- */
 .mer-cursor-tooltip {
   position: fixed; top: 0; left: 0; z-index: 9999;
   background: #111; color: #fff; font-family: monospace; font-size: 12px;
   padding: 6px 12px; border-radius: 20px; opacity: 0;
   transform-origin: left center; pointer-events: none;
 }
-
-/* ---------- Nav ---------- */
-.mer-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: flex-start; justify-content: space-between;
-  padding: clamp(20px, 3vw, 40px) clamp(24px, 5vw, 96px);
-  color: #fff;
-  pointer-events: none;
-}
-.mer-nav__mark {
-  font-size: 12px; font-weight: 600; letter-spacing: 0.03em; line-height: 1.35;
-  text-transform: uppercase;
-  pointer-events: auto;
-}
-.mer-nav__links {
-  font-size: 0.8125rem; letter-spacing: 0.02em;
-  pointer-events: auto;
-}
-.mer-nav__links a { color: inherit; text-decoration: none; margin: 0 2px; }
-.mer-nav__links a.is-active,
-.mer-nav__links a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ---------- SECTION 1: Hero ---------- */
 .mer-hero {
@@ -179,57 +153,17 @@
 .mer-offices__row.is-active .mer-offices__city { color: inherit; opacity: 0.7; }
 .mer-offices__link { text-align: right; }
 
-/* ---------- SECTION 5: Sketch to System (cursor X-ray lens) ---------- */
-.mer-sketch {
-  position: relative; min-height: 100vh; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; padding: clamp(120px, 16vh, 200px) 2rem;
-}
-.mer-sketch__label {
-  position: absolute; top: clamp(90px, 14vh, 140px); left: clamp(24px, 5vw, 96px);
-  font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.02em; color: var(--mer-fg-muted);
-}
-.mer-sketch__heading {
-  font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 700; margin: 0 0 0.75rem;
-  text-align: center;
-}
-.mer-sketch__hint {
-  font-size: 0.85rem; color: var(--mer-fg-muted); margin-bottom: 2rem; text-align: center;
-}
-.mer-sketch__canvas {
-  position: relative; width: min(70vw, 900px); height: min(60vh, 620px);
-  color: var(--mer-fg); flex: none;
-}
-
-/* cursor-driven X-ray blueprint lens: two pixel-aligned photo layers, the
-   top one clip-revealed to a square that trails the mouse via gsap.ticker.
-   No width/height here — .mer-sketch__canvas above already sizes this
-   element; redeclaring 100%/100% on the same node would resolve against
-   its flex-column parent's indefinite height and collapse to 0. */
-.xray-container { overflow: hidden; border-radius: 4px; }
-.xray-photo, .xray-skeleton {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
-}
-.xray-skeleton {
-  filter: url(#mer-blueprint);
-  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-}
-.xray-lens {
-  position: absolute; top: 0; left: 0; width: 260px; height: 260px; margin: -130px 0 0 -130px;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 2px;
-  pointer-events: none; opacity: 0;
-}
-@media (max-width: 768px) {
-  .xray-lens { width: 140px; height: 140px; margin: -70px 0 0 -70px; }
-}
+/* ---------- SECTION 5: Inside Ashcombe Ridge House (3D room tour) ---------- */
+.mer-tour-intro { text-align: center; padding-bottom: clamp(40px, 6vh, 80px); }
+.mer-tour-intro .mer-body { max-width: 640px; margin: 1rem auto 0; }
+.mer-tour-intro .mer-section-heading { margin: 0.75rem 0 0; }
+/* Meridian's nav is position:fixed site-wide and sits in the same corner
+   as the tour's room-tag label — push the tag below it here only. */
+.mer-tour .rt-tour__room-tag { top: clamp(90px, 13vh, 130px); }
 
 /* ---------- Sketch copy + Precision ---------- */
 .mer-sketch-copy .mer-body { margin-top: 1rem; }
 .mer-precision__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-.mer-precision__svg { width: 100%; height: auto; color: var(--mer-fg); }
-.mer-precision__annot {
-  font-family: 'Caveat', cursive; font-size: 22px; fill: var(--mer-fg-muted);
-}
 
 /* ---------- SECTION 7: Projects ---------- */
 .mer-projects__head { margin-bottom: 2rem; }
@@ -331,8 +265,6 @@
 }
 
 @media (max-width: 768px) {
-  .mer-nav__mark { font-size: 10px; }
-  .mer-nav__links { display: none; }
   .mer-hero__captions { flex-direction: column; gap: 16px; }
   .mer-about__grid { display: flex; flex-direction: column; gap: 32px; }
   .mer-about__labels, .mer-about__mission { grid-column: auto; }
@@ -345,7 +277,6 @@
   .mer-culture__photo { width: 40px; height: 40px; margin: -20px; }
   .mer-culture__cols { flex-direction: column; align-items: center; gap: 24px; }
   .mer-footer__grid { grid-template-columns: 1fr 1fr; }
-  .mer-sketch__canvas { width: 90vw; height: 40vh; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import SplitReveal from '../components/SplitReveal';
 import AnimatedCounter from '../components/AnimatedCounter';
+import RoomTour3D from '../components/RoomTour3D';
+import HouseXray from '../components/HouseXray';
+import { withRoomCopy, APARTMENT_MODEL_URL } from '../data/apartmentTourStops';
 import './Meridian.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -50,13 +52,9 @@ const OFFICES = [
 
 const PROJECTS = [
   { slug: 'ashcombe-ridge-house', name: 'Ashcombe Ridge House', area: '611 m²', img: IMG('proj-01') },
-  { slug: 'millbrook-private-park', name: 'Millbrook Private Park', area: '1,360 m²', img: IMG('proj-02') },
-  { slug: 'northgate-pavilion', name: 'Northgate Pavilion', area: '3,345 m²', img: IMG('proj-03') },
   { slug: 'foundry-yard-residences', name: 'Foundry Yard Residences', area: '8,200 m²', img: IMG('proj-04') },
-  { slug: 'the-kiln-works', name: 'The Kiln Works', area: '16,488 m²', img: IMG('proj-05') },
   { slug: 'aster-mansion', name: 'Aster Mansion', area: '991 m²', img: IMG('proj-06') },
   { slug: 'birch-corner-house', name: 'Birch Corner House', area: '435 m²', img: IMG('proj-07') },
-  { slug: 'solstice-hotel-stone-court', name: 'Solstice Hotel Stone Court', area: '58,079 m²', img: IMG('proj-08') },
 ];
 
 const STATS = [
@@ -73,7 +71,24 @@ const CLIENTS = [
   { mark: 'GP', name: 'Greyport' }, { mark: 'AT', name: 'Atlier' },
 ];
 
-const CULTURE_PHOTOS = Array.from({ length: 14 }, (_, i) => IMG(`culture-${String(i + 1).padStart(2, '0')}`));
+const CULTURE_PHOTOS = Array.from({ length: 10 }, (_, i) => IMG(`culture-${String(i + 1).padStart(2, '0')}`));
+
+// Walkthrough of the Ashcombe Ridge House flagship project (see PROJECTS
+// above — same 611 m² figure) via the shared 3D room-tour component.
+const TOUR_ROOMS = withRoomCopy([
+  { tag: 'Floor Plan', title: 'Ashcombe Ridge House',
+    body: '611 m² set into the hillside — every room framed by daylight, every line load-bearing and honest.' },
+  { tag: '01 — Living Room', title: 'The Living Room',
+    body: 'An open frame for gathering, facing the ridge — wide sightlines, warm oak flooring, a low horizon of glass.' },
+  { tag: '02 — Kitchen', title: 'The Kitchen',
+    body: 'Built for the everyday and the occasion alike — a continuous counter, integrated storage, no wasted motion.' },
+  { tag: '03 — Hallway', title: 'The Hallway',
+    body: 'A single run of oak flooring connecting every room — quiet, direct, unadorned.' },
+  { tag: '04 — Bedroom', title: 'The Bedroom',
+    body: 'A quiet register — soft textiles, filtered light, a bed that faces the morning sun.' },
+  { tag: '05 — Bathroom', title: 'The Bathroom',
+    body: 'Spa-quality finishes in a compact footprint — stone surfaces, warm-toned light, considered storage.' },
+]);
 
 const MeridianPage = () => {
   const rootRef = useRef(null);
@@ -81,9 +96,6 @@ const MeridianPage = () => {
   const flagshipImgRef = useRef(null);
   const tooltipRef = useRef(null);
   const officeRowRefs = useRef([]);
-  const xrayContainerRef = useRef(null);
-  const xraySkeletonRef = useRef(null);
-  const xrayLensRef = useRef(null);
   const spokeRefs = useRef([]);
   const spokeLabelRefs = useRef([]);
   const spokeGroupRef = useRef(null);
@@ -121,45 +133,6 @@ const MeridianPage = () => {
       if (tooltip) gsap.set(tooltip, { x: tipX + 16, y: tipY + 16 });
     };
     gsap.ticker.add(tooltipTick);
-
-    // ---------- Section 5: Sketch to System — cursor-driven X-ray lens ----------
-    // Independent of scroll/Lenis entirely (per build-doc revision 2): a
-    // square lens trails the cursor over the flagship photo, clip-revealing
-    // an edge-detected "blueprint" layer underneath. Driven by its own
-    // gsap.ticker lerp loop, never gsap.to() per mousemove (avoids queueing
-    // hundreds of overlapping tweens). Declared in the outer effect scope
-    // (not inside gsap.context) so the cleanup below can reach it.
-    const xrayContainer = xrayContainerRef.current;
-    const xraySkeleton = xraySkeletonRef.current;
-    const xrayLens = xrayLensRef.current;
-    const XRAY_HALF = window.innerWidth < 768 ? 70 : 130;
-    let xrayActive = false, xmx = 0, xmy = 0, xtx = 0, xty = 0;
-    let xrayTick = null;
-    if (xraySkeleton) {
-      gsap.set(xraySkeleton, { clipPath: 'polygon(0 0, 0 0, 0 0, 0 0)' });
-    }
-    const onXrayMove = (e) => {
-      const rect = xrayContainer.getBoundingClientRect();
-      xmx = e.clientX - rect.left;
-      xmy = e.clientY - rect.top;
-    };
-    const onXrayEnter = () => { xrayActive = true; };
-    const onXrayLeave = () => { xrayActive = false; };
-    if (xrayContainer && xraySkeleton) {
-      xrayContainer.addEventListener('mousemove', onXrayMove);
-      xrayContainer.addEventListener('mouseenter', onXrayEnter);
-      xrayContainer.addEventListener('mouseleave', onXrayLeave);
-      xrayTick = () => {
-        xtx += (xmx - xtx) * 0.18;
-        xty += (xmy - xty) * 0.18;
-        const half = xrayActive ? XRAY_HALF : 0;
-        xraySkeleton.style.clipPath = `polygon(${xtx - half}px ${xty - half}px, ${xtx + half}px ${xty - half}px, ${xtx + half}px ${xty + half}px, ${xtx - half}px ${xty + half}px)`;
-        if (xrayLens) {
-          gsap.set(xrayLens, { x: xtx, y: xty, opacity: xrayActive ? 1 : 0 });
-        }
-      };
-      gsap.ticker.add(xrayTick);
-    }
 
     const ctx = gsap.context(() => {
       // ---------- Section 1: Hero ----------
@@ -276,7 +249,7 @@ const MeridianPage = () => {
       // ring-formation straight through the stats cascade, per the "don't
       // destroy/rebuild shared elements" rule).
       const n = photoRefs.current.length;
-      const radius = window.innerWidth < 900 ? 190 : 380;
+      const radius = (window.innerWidth < 900 ? 190 : 380) * 1.5;
       const ringPositions = [];
       const startPositions = [];
       const trailPositions = [];
@@ -304,12 +277,14 @@ const MeridianPage = () => {
             let x = gsap.utils.interpolate(start.x, ring.x, ringT);
             let y = gsap.utils.interpolate(start.y, ring.y, ringT);
             let opacity = ringT;
+            let scale = gsap.utils.interpolate(1, 1.875, ringT);
             if (cascadeT > 0) {
               x = gsap.utils.interpolate(ring.x, trail.x, cascadeT);
               y = gsap.utils.interpolate(ring.y, trail.y, cascadeT);
               opacity = gsap.utils.interpolate(1, 0.2, cascadeT);
+              scale = 1.875; // keep it scaled down the trail
             }
-            gsap.set(el, { x, y, opacity, rotate: start.rotate * (1 - ringT) });
+            gsap.set(el, { x, y, opacity, scale, rotate: start.rotate * (1 - ringT) });
           });
 
           // Fade the caption out over just the first quarter of the cascade
@@ -370,12 +345,6 @@ const MeridianPage = () => {
       window.removeEventListener('load', onWindowLoad);
       window.removeEventListener('mousemove', onMouseMove);
       gsap.ticker.remove(tooltipTick);
-      if (xrayContainer && xraySkeleton) {
-        xrayContainer.removeEventListener('mousemove', onXrayMove);
-        xrayContainer.removeEventListener('mouseenter', onXrayEnter);
-        xrayContainer.removeEventListener('mouseleave', onXrayLeave);
-        if (xrayTick) gsap.ticker.remove(xrayTick);
-      }
       gsap.ticker.remove(rafFn);
       lenis.destroy();
       ctx.revert();
@@ -402,45 +371,7 @@ const MeridianPage = () => {
         />
       </Helmet>
 
-      <Link to="/" className="mer-back">&larr; Infinity Pillars</Link>
       <div className="mer-cursor-tooltip" ref={tooltipRef} />
-
-      {/* Shared SVG filter: turns the flagship photo's edges (mullions, roof
-          lines, structural seams) into a pale blueprint-on-navy outline for
-          the Section 5 hover lens — same pixels as the photo, so the two
-          layers are guaranteed to line up. feConvolveMatrix detects edges as
-          RGB brightness; luminanceToAlpha turns that brightness into an
-          alpha mask; the mask then clips a pale-blue flood ("lines"), which
-          is merged over a navy flood ("bg") — a plain color-matrix on the
-          convolve output can't do this since it can only remap channels,
-          not use edge strength to select where the line color appears. */}
-      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-        <filter id="mer-blueprint">
-          <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true" result="edges" />
-          <feColorMatrix in="edges" type="luminanceToAlpha" result="edgeAlpha" />
-          <feComponentTransfer in="edgeAlpha" result="edgeAlphaBoost">
-            <feFuncA type="linear" slope="2.4" intercept="0" />
-          </feComponentTransfer>
-          <feFlood floodColor="#bfe0ff" result="lineColor" />
-          <feComposite in="lineColor" in2="edgeAlphaBoost" operator="in" result="lines" />
-          <feFlood floodColor="#07182b" result="bg" />
-          <feMerge>
-            <feMergeNode in="bg" />
-            <feMergeNode in="lines" />
-          </feMerge>
-        </filter>
-      </svg>
-
-      {/* ---------- Nav ---------- */}
-      <nav className="mer-nav">
-        <div className="mer-nav__mark">Meridian<br />Architectural<br />Bureau</div>
-        <div className="mer-nav__links">
-          <a href="#index" className="is-active">Index</a>,
-          <a href="#work">Work</a>,
-          <a href="#about">About</a>,
-          <a href="#contact">Contact</a>
-        </div>
-      </nav>
 
       {/* ---------- SECTION 1: Hero ---------- */}
       <section className="mer-hero" id="index">
@@ -535,17 +466,18 @@ const MeridianPage = () => {
         </div>
       </section>
 
-      {/* ---------- SECTION 5: Sketch to System (cursor-driven X-ray lens) ---------- */}
-      <section className="mer-sketch">
-        <div className="mer-sketch__label">Sketch to System</div>
-        <SplitReveal text="Sketch to System" as="h2" className="mer-sketch__heading" trigger="scroll" />
-        <p className="mer-sketch__hint" data-reveal>Move your cursor over the photograph</p>
-        <div className="mer-sketch__canvas xray-container" data-card-reveal ref={xrayContainerRef}>
-          <img className="xray-photo" src={IMG('flagship')} alt="Meridian flagship building — angular roofline and glass facade" />
-          <img className="xray-skeleton" ref={xraySkeletonRef} src={IMG('flagship')} alt="" aria-hidden="true" />
-          <div className="xray-lens" ref={xrayLensRef} />
+      {/* ---------- SECTION 5: Inside Ashcombe Ridge House (3D room tour) ---------- */}
+      <section className="mer-section mer-tour-intro">
+        <div className="mer-wrap">
+          <div className="mer-eyebrow" data-reveal>Realized Work</div>
+          <SplitReveal text="Inside Ashcombe Ridge House" as="h2" className="mer-section-heading" trigger="scroll" />
+          <p className="mer-body" data-reveal>
+            Scroll to walk the plan — living room, kitchen, bedroom, and bath — the way a resident
+            would move through it, room by room.
+          </p>
         </div>
       </section>
+      <RoomTour3D rooms={TOUR_ROOMS} modelUrl={APARTMENT_MODEL_URL} className="mer-tour" />
 
       <section className="mer-section mer-sketch-copy">
         <div className="mer-wrap">
@@ -564,16 +496,10 @@ const MeridianPage = () => {
       <section className="mer-section mer-precision">
         <div className="mer-wrap mer-precision__grid">
           <div className="mer-precision__media" data-card-reveal>
-            <svg viewBox="0 0 600 420" fill="none" className="mer-precision__svg">
-              <path d="M60 360 L60 140 L300 60 L540 140 L540 360" stroke="currentColor" strokeWidth="2" />
-              <path d="M60 360 L540 360" stroke="currentColor" strokeWidth="2" />
-              <path d="M150 360 L150 200 L230 200 L230 360" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M370 360 L370 180 L460 180 L460 360" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="150" y1="150" x2="230" y2="150" stroke="currentColor" strokeWidth="1" />
-              <text x="235" y="150" className="mer-precision__annot">terrace</text>
-              <line x1="380" y1="240" x2="450" y2="240" stroke="currentColor" strokeWidth="1" />
-              <text x="380" y="230" className="mer-precision__annot">glazing</text>
-            </svg>
+            <HouseXray
+              photoSrc="/images/meridian-xray/villa-front.jpg"
+              photoAlt="Meridian villa front elevation — glass, concrete, and timber facade"
+            />
           </div>
           <div className="mer-precision__text" data-reveal>
             <div className="mer-eyebrow">Precision in Practice</div>
@@ -620,15 +546,14 @@ const MeridianPage = () => {
       <section className="mer-radial mer-theme-transition">
         <div className="mer-radial__stage">
           <svg ref={spokeGroupRef} className="mer-radial__svg" viewBox="0 0 800 800">
-            {PROJECTS.map((p, i) => {
-              const angles = [-92, -48, -8, 34, 82, 128, 172, 218];
-              const rad = (angles[i] * Math.PI) / 180;
+            {[-92, -48, -8, 34, 82, 128, 172, 218].map((angle, i) => {
+              const rad = (angle * Math.PI) / 180;
               const x2 = 400 + Math.cos(rad) * 300;
               const y2 = 400 + Math.sin(rad) * 300;
               const lx = 400 + Math.cos(rad) * 340;
               const ly = 400 + Math.sin(rad) * 340;
               return (
-                <g key={p.slug}>
+                <g key={`spoke-${i}`}>
                   <path
                     ref={(el) => { spokeRefs.current[i] = el; }}
                     d={`M400 400 L ${x2} ${y2}`}
@@ -670,10 +595,33 @@ const MeridianPage = () => {
             ))}
           </div>
           <div className="mer-culture__caption" ref={cultureCaptionRef}>
-            <div className="mer-culture__year">2011 <span>Year of Foundation</span></div>
-            <div className="mer-culture__cols">
-              <p>Design grounded in passive strategy, material honesty, and environmental responsibility.</p>
-              <p>Lifecycle-minded architecture — efficient systems, durable choices, long-term value.</p>
+            <div className="mer-culture__year" style={{
+              background: 'linear-gradient(135deg, #FFFFFF 0%, #8A8A85 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '0 4px 20px rgba(255,255,255,0.15)'
+            }}>
+              2011 
+              <span style={{ WebkitTextFillColor: 'var(--mer-fg-muted)', textShadow: 'none' }}>
+                The Genesis
+              </span>
+            </div>
+            <div className="mer-culture__cols" style={{ gap: '3rem' }}>
+              <p style={{
+                color: 'var(--mer-fg)',
+                fontWeight: 500,
+                fontSize: '1.2rem',
+                textShadow: '0 2px 10px rgba(0,0,0,0.5)'
+              }}>
+                Forged from a defiant vision—we rejected the transient to build the timeless. Every structure is a living dialogue between raw nature and human ambition.
+              </p>
+              <p style={{
+                color: 'var(--mer-fg-muted)',
+                fontSize: '1.1rem',
+                textShadow: '0 2px 10px rgba(0,0,0,0.5)'
+              }}>
+                Pioneering passive ecosystems and unapologetic material honesty. We don't just occupy spaces; we orchestrate experiences that echo into the future.
+              </p>
             </div>
           </div>
           <div className="mer-stats__inner">
