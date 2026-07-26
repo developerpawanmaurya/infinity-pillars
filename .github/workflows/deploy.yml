@@ -36,6 +36,15 @@ jobs:
       # job running with no other FTP traffic. Plain curl against the same
       # host/credentials works fine (see deploy-wp-theme below, which never
       # used the action), so every deploy job now uploads via curl instead.
+      #
+      # Two things the first curl attempt got wrong, both fixed here:
+      # - Several real paths contain spaces/parens (e.g. "House structural
+      #   wireframe/…", "rifle (1).glb"), which broke the ftp:// URL
+      #   ("bad/illegal format") — each path segment is now percent-encoded.
+      # - Uploading with `xargs -P 8` had many curl processes calling
+      #   --ftp-create-dirs on overlapping parent directories at once,
+      #   racing each other into "Server denied you to change to the given
+      #   directory". Uploading one file at a time avoids that race.
       - name: Deploy build via curl
         working-directory: dist/apps/web
         env:
@@ -43,9 +52,11 @@ jobs:
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
-          find . -type f | sed 's|^\./||' | xargs -P 8 -I {} \
+          find . -type f | sed 's|^\./||' | while IFS= read -r file; do
+            encoded=$(python3 -c "import urllib.parse,sys; print('/'.join(urllib.parse.quote(p) for p in sys.argv[1].split('/')))" "$file")
             curl --ssl-reqd --insecure --ftp-create-dirs --silent --show-error \
-              -T "{}" "ftp://${FTP_HOST}${WEB_DIR}/{}" -u "${FTP_USER}:${FTP_PASS}"
+              -T "$file" "ftp://${FTP_HOST}${WEB_DIR}/${encoded}" -u "${FTP_USER}:${FTP_PASS}"
+          done
 
   # ── Gutenberg blocks plugin → …/blog/wp-content/plugins/ip-blocks/ ─────────
   deploy-wp-plugin:
@@ -72,9 +83,11 @@ jobs:
             -not -name 'package-lock.json' \
             -not -name 'webpack.config.js' \
             -not -name '.gitignore' \
-            | sed 's|^\./||' | xargs -P 8 -I {} \
+            | sed 's|^\./||' | while IFS= read -r file; do
+            encoded=$(python3 -c "import urllib.parse,sys; print('/'.join(urllib.parse.quote(p) for p in sys.argv[1].split('/')))" "$file")
             curl --ssl-reqd --insecure --ftp-create-dirs --silent --show-error \
-              -T "{}" "ftp://${FTP_HOST}${PLUGIN_DIR}/{}" -u "${FTP_USER}:${FTP_PASS}"
+              -T "$file" "ftp://${FTP_HOST}${PLUGIN_DIR}/${encoded}" -u "${FTP_USER}:${FTP_PASS}"
+          done
 
   # ── Custom theme → …/blog/wp-content/themes/ip-theme/ ─────────────────────
   deploy-wp-theme:
