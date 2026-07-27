@@ -18,10 +18,12 @@ jobs:
       # paths-filter diffs against the previous commit; the default shallow
       # (depth-1) checkout doesn't fetch it, so without this every filter
       # silently fell back to "changed" and all three deploys ran regardless
-      # of which files actually changed.
+      # of which files actually changed. fetch-depth: 2 wasn't reliably
+      # enough (confirmed live — plugin still ran on a workflow-only push),
+      # so this fetches full history per dorny/paths-filter's own guidance.
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
       - uses: dorny/paths-filter@v3
         id: filter
         with:
