@@ -15,7 +15,13 @@ jobs:
       plugin: ${{ steps.filter.outputs.plugin }}
       theme: ${{ steps.filter.outputs.theme }}
     steps:
+      # paths-filter diffs against the previous commit; the default shallow
+      # (depth-1) checkout doesn't fetch it, so without this every filter
+      # silently fell back to "changed" and all three deploys ran regardless
+      # of which files actually changed.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - uses: dorny/paths-filter@v3
         id: filter
         with:
