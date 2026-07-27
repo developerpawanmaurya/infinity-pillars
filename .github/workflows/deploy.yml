@@ -27,10 +27,8 @@ jobs:
               - '.github/workflows/deploy.yml'
             plugin:
               - 'apps/wp-plugin-ip-blocks/**'
-              - '.github/workflows/deploy.yml'
             theme:
               - 'apps/wp-theme-ip/**'
-              - '.github/workflows/deploy.yml'
 
   # ── React SPA → /domains/infinitypillars.com/public_html/ ──────────────────
   deploy-web:
@@ -96,7 +94,7 @@ jobs:
     if: |
       always() &&
       needs.changes.outputs.plugin == 'true' &&
-      needs.changes.result != 'failure'
+      needs['deploy-web'].result != 'failure'
     runs-on: ubuntu-latest
     env:
       PLUGIN_DIR: /domains/infinitypillars.com/public_html/blog/wp-content/plugins/ip-blocks
@@ -138,7 +136,7 @@ jobs:
     if: |
       always() &&
       needs.changes.outputs.theme == 'true' &&
-      needs.changes.result != 'failure'
+      needs['deploy-wp-plugin'].result != 'failure'
     runs-on: ubuntu-latest
     env:
       THEME_DIR: /domains/infinitypillars.com/public_html/blog/wp-content/themes/ip-theme
