@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// TEST COPY of PortfolioPage — renders cards with no static rotate-* tilt,
+// PortfolioPage — renders cards with no static rotate-* tilt,
 // to verify that's what was blurring the images at rest. Delete this file
 // + the /portfolio-test route once confirmed either way.
 const PortfolioPageTest = () => {

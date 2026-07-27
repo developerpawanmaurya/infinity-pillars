@@ -6,8 +6,36 @@ on:
       - master
 
 jobs:
+  # ── Detect which app(s) actually changed, so unrelated apps don't rebuild
+  #    and unrelated deploys aren't blocked by each other's failures ─────────
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      web: ${{ steps.filter.outputs.web }}
+      plugin: ${{ steps.filter.outputs.plugin }}
+      theme: ${{ steps.filter.outputs.theme }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            web:
+              - 'apps/web/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - '.github/workflows/deploy.yml'
+            plugin:
+              - 'apps/wp-plugin-ip-blocks/**'
+              - '.github/workflows/deploy.yml'
+            theme:
+              - 'apps/wp-theme-ip/**'
+              - '.github/workflows/deploy.yml'
+
   # ── React SPA → /domains/infinitypillars.com/public_html/ ──────────────────
   deploy-web:
+    needs: changes
+    if: needs.changes.outputs.web == 'true'
     runs-on: ubuntu-latest
     env:
       WEB_DIR: /domains/infinitypillars.com/public_html
@@ -58,13 +86,17 @@ jobs:
             set net:max-retries 3;
             set net:timeout 20;
             open -u $FTP_USER,$FTP_PASS $FTP_HOST;
-            mirror --reverse --verbose --continue ./ ${WEB_DIR};
+            mirror --reverse --verbose --continue --ignore-time ./ ${WEB_DIR};
             bye
           "
 
   # ── Gutenberg blocks plugin → …/blog/wp-content/plugins/ip-blocks/ ─────────
   deploy-wp-plugin:
-    needs: deploy-web
+    needs: [changes, deploy-web]
+    if: |
+      always() &&
+      needs.changes.outputs.plugin == 'true' &&
+      needs.changes.result != 'failure'
     runs-on: ubuntu-latest
     env:
       PLUGIN_DIR: /domains/infinitypillars.com/public_html/blog/wp-content/plugins/ip-blocks
@@ -88,7 +120,7 @@ jobs:
             set net:max-retries 3;
             set net:timeout 20;
             open -u $FTP_USER,$FTP_PASS $FTP_HOST;
-            mirror --reverse --verbose --continue \
+            mirror --reverse --verbose --continue --ignore-time \
               --exclude-glob node_modules/ \
               --exclude-glob src/ \
               --exclude-glob '.git*' \
@@ -102,7 +134,11 @@ jobs:
 
   # ── Custom theme → …/blog/wp-content/themes/ip-theme/ ─────────────────────
   deploy-wp-theme:
-    needs: deploy-wp-plugin
+    needs: [changes, deploy-wp-plugin]
+    if: |
+      always() &&
+      needs.changes.outputs.theme == 'true' &&
+      needs.changes.result != 'failure'
     runs-on: ubuntu-latest
     env:
       THEME_DIR: /domains/infinitypillars.com/public_html/blog/wp-content/themes/ip-theme
