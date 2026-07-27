@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
@@ -12,17 +12,18 @@ import { ArrowUpRight } from 'lucide-react';
 const PortfolioIndexSection = ({ projects }) => {
   const containerRef = useRef(null);
   const [hovered, setHovered] = useState(null);
-  const [pointerFine, setPointerFine] = useState(false);
+  // Read synchronously (lazy init) rather than defaulting to false and
+  // flipping in an effect — that one-render lag briefly rendered every
+  // row's inline fallback image block (tall layout) before collapsing to
+  // the compact hover-preview layout, which threw off ScrollTrigger
+  // measurements for anything below this section (see AnimatedCounter).
+  const [pointerFine] = useState(() => window.matchMedia('(hover: hover) and (pointer: fine)').matches);
   const prefersReducedMotion = useReducedMotion();
 
   const mvX = useMotionValue(0);
   const mvY = useMotionValue(0);
   const springX = useSpring(mvX, { stiffness: 300, damping: 30, mass: 0.5 });
   const springY = useSpring(mvY, { stiffness: 300, damping: 30, mass: 0.5 });
-
-  useEffect(() => {
-    setPointerFine(window.matchMedia('(hover: hover) and (pointer: fine)').matches);
-  }, []);
 
   const showFloatingPreview = pointerFine && !prefersReducedMotion;
 
